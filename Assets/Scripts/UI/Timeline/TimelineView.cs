@@ -14,6 +14,10 @@ namespace DefqonEngine.UI.Timeline
         [Header("Scroll")]
         public float scrollTime = 0f;
 
+        [Header("Audio")]
+        public AudioSource audioSource;
+
+
         public Action OnViewChanged;
 
         public float Width => panel.rect.width;
@@ -30,7 +34,16 @@ namespace DefqonEngine.UI.Timeline
 
         public void SetScrollTime(float newScrollTime)
         {
-            newScrollTime = Mathf.Max(0f, newScrollTime);
+            if (audioSource == null || audioSource.clip == null)
+            {
+                newScrollTime = Mathf.Max(0f, newScrollTime);
+            }
+            else
+            {
+                // Max scroll = clip length - visible timeline
+                float maxScroll = Mathf.Max(0f, audioSource.clip.length - (Width / pixelsPerSecond));
+                newScrollTime = Mathf.Clamp(newScrollTime, 0f, maxScroll);
+            }
 
             if (Mathf.Abs(scrollTime - newScrollTime) > 0.0001f)
             {
@@ -38,6 +51,7 @@ namespace DefqonEngine.UI.Timeline
                 OnViewChanged?.Invoke();
             }
         }
+
 
         public void PanPixels(float deltaX)
         {
@@ -51,10 +65,22 @@ namespace DefqonEngine.UI.Timeline
 
             float timeUnderMouse = XToTime(mouseX);
 
-            pixelsPerSecond = Mathf.Clamp(pixelsPerSecond * factor, 20f, 600f);
+            // Nieuwe pixelsPerSecond
+            float newPPS = pixelsPerSecond * factor;
 
+            // Clamp: niet verder uitzoomen dan de clip
+            if (audioSource != null && audioSource.clip != null)
+            {
+                float minPPS = Width / audioSource.clip.length;
+                newPPS = Mathf.Max(newPPS, minPPS);
+            }
+
+            pixelsPerSecond = Mathf.Clamp(newPPS, 20f, 600f); // optioneel max zoom in
+
+            // Pas scrollTime aan zodat de tijd onder de muis blijft
             float newScrollTime = timeUnderMouse - (mouseX / pixelsPerSecond);
             SetScrollTime(newScrollTime);
         }
+
     }
 }

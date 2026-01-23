@@ -11,105 +11,119 @@ namespace DefqonEngine.UI.Timeline
         public TimelineView timeline;
 
         [Header("Settings")]
-        public int textureHeight = 60;
+        public int samplesPerPoint = 256;
         public Color waveformColor = Color.cyan;
         public Color backgroundColor = Color.black;
-        public int lineWidth = 2; // aantal pixels breed voor de lijn
+        public int lineWidth = 2;
 
-        private Texture2D waveformTex;
+        struct WaveformPoint
+        {
+            public float min;
+            public float max;
+        }
+
+        private WaveformPoint[] waveform;
+        private Texture2D texture;
         private RawImage rawImage;
-
-        private int lastTexWidth = 0;
 
         void Awake()
         {
             rawImage = GetComponent<RawImage>();
+            rawImage.rectTransform.anchorMin = Vector2.zero;
+            rawImage.rectTransform.anchorMax = Vector2.zero;
+            rawImage.rectTransform.pivot = Vector2.zero;
         }
 
         void Start()
         {
-            if (audioSource == null || audioSource.clip == null || timeline == null) return;
+            if (!audioSource || !audioSource.clip || !timeline) return;
+
+            BuildWaveformData();
             CreateTexture();
             DrawWaveform();
         }
 
-        void LateUpdate()
+        // 🔥 Dit gebeurt EXACT één keer
+        void BuildWaveformData()
         {
-            if (audioSource == null || audioSource.clip == null || timeline == null || waveformTex == null) return;
+            var clip = audioSource.clip;
+            int totalSamples = clip.samples;
+            int channels = clip.channels;
 
-            // Zorg dat de texture width matcht panel width
-            int panelWidth = Mathf.Max(Mathf.CeilToInt(timeline.Width), 1);
-            if (panelWidth != lastTexWidth)
+            float[] data = new float[totalSamples * channels];
+            clip.GetData(data, 0);
+
+            int points = Mathf.CeilToInt((float)totalSamples / samplesPerPoint);
+            waveform = new WaveformPoint[points];
+
+            for (int i = 0; i < points; i++)
             {
-                waveformTex.Reinitialize(panelWidth, textureHeight);
-                DrawWaveform();
-                lastTexWidth = panelWidth;
-            }
+                int start = i * samplesPerPoint;
+                int end = Mathf.Min(start + samplesPerPoint, totalSamples);
 
-            // Scroll waveform met timeline
-            float visibleTime = timeline.Width / timeline.pixelsPerSecond;
-            float xOffset = timeline.scrollTime / audioSource.clip.length;
-            rawImage.uvRect = new Rect(xOffset, 0, visibleTime / audioSource.clip.length, 1);
+                float min = 0f;
+                float max = 0f;
+
+                for (int s = start; s < end; s++)
+                {
+                    float v = data[s * channels]; // left channel
+                    if (v < min) min = v;
+                    if (v > max) max = v;
+                }
+
+                waveform[i] = new WaveformPoint { min = min, max = max };
+            }
         }
 
         void CreateTexture()
         {
-            int width = Mathf.Max(Mathf.CeilToInt(timeline.Width), 1);
-            waveformTex = new Texture2D(width, textureHeight, TextureFormat.RGBA32, false);
-            waveformTex.wrapMode = TextureWrapMode.Clamp;
-            waveformTex.filterMode = FilterMode.Point; // voorkomt blur
-            rawImage.texture = waveformTex;
-            lastTexWidth = width;
+            int height = Mathf.Max(1, Mathf.RoundToInt(((RectTransform)transform).rect.height));
+            texture = new Texture2D(waveform.Length, height, TextureFormat.RGBA32, false);
+            texture.filterMode = FilterMode.Point;
+            texture.wrapMode = TextureWrapMode.Clamp;
+
+            rawImage.texture = texture;
         }
 
         void DrawWaveform()
         {
-            var clip = audioSource.clip;
-            int samples = clip.samples;
-            int channels = clip.channels;
-            float[] data = new float[samples * channels];
-            clip.GetData(data, 0);
+            int w = texture.width;
+            int h = texture.height;
 
-            int texWidth = waveformTex.width;
+            Color32[] pixels = new Color32[w * h];
+            for (int i = 0; i < pixels.Length; i++)
+                pixels[i] = backgroundColor;
 
-            // Clear texture
-            Color32[] colors = new Color32[texWidth * textureHeight];
-            for (int i = 0; i < colors.Length; i++) colors[i] = backgroundColor;
-            waveformTex.SetPixels32(colors);
-
-            // Bepaal hoeveel samples per pixel
-            int packSize = Mathf.CeilToInt((float)samples / texWidth);
-
-            for (int x = 0; x < texWidth; x++)
+            for (int x = 0; x < waveform.Length; x++)
             {
-                int start = x * packSize;
-                int end = Mathf.Min(start + packSize, samples);
+                var p = waveform[x];
 
-                float min = 1f;
-                float max = -1f;
+                int yMin = Mathf.RoundToInt((p.min + 1f) * 0.5f * h);
+                int yMax = Mathf.RoundToInt((p.max + 1f) * 0.5f * h);
 
-                for (int i = start; i < end; i += channels)
-                {
-                    float val = data[i];
-                    if (val < min) min = val;
-                    if (val > max) max = val;
-                }
+                yMin = Mathf.Clamp(yMin, 0, h - 1);
+                yMax = Mathf.Clamp(yMax, 0, h - 1);
 
-                int yMin = Mathf.RoundToInt((min + 1f) * 0.5f * textureHeight);
-                int yMax = Mathf.RoundToInt((max + 1f) * 0.5f * textureHeight);
-
-                
-                for (int lx = 0; lx < lineWidth; lx++)
-                {
-                    int px = x + lx;
-                    if (px >= texWidth) break;
-
-                    for (int y = yMin; y <= yMax; y++)
-                        waveformTex.SetPixel(px, y, waveformColor);
-                }
+                for (int y = yMin; y <= yMax; y++)
+                    pixels[y * w + x] = waveformColor;
             }
 
-            waveformTex.Apply();
+            texture.SetPixels32(pixels);
+            texture.Apply();
+        }
+
+        void LateUpdate()
+        {
+            if (!timeline || !audioSource || !audioSource.clip) return;
+
+            float pixelsPerSecond = timeline.pixelsPerSecond;
+            float secondsPerPoint = (float)samplesPerPoint / audioSource.clip.frequency;
+
+            float widthPx = waveform.Length * secondsPerPoint * pixelsPerSecond;
+            rawImage.rectTransform.sizeDelta = new Vector2(widthPx, rawImage.rectTransform.sizeDelta.y);
+
+            float x = -timeline.scrollTime * pixelsPerSecond;
+            rawImage.rectTransform.anchoredPosition = new Vector2(x, 0);
         }
     }
 }

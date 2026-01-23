@@ -17,11 +17,38 @@ namespace DefqonEngine.UI.Timeline
             if (stopButton != null) stopButton.onClick.AddListener(Stop);
         }
 
+        void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                TogglePlayPause();
+            }
+        }
+
+        void TogglePlayPause()
+        {
+            if (audioSource == null || audioSource.clip == null) return;
+
+            if (audioSource.isPlaying)
+            {
+                Pause();
+            }
+            else
+            {
+                Play();
+            }
+        }
+
         public void Play()
         {
             if (audioSource == null || audioSource.clip == null) return;
+
+            //  clamp tijd eerst
+            audioSource.time = Mathf.Clamp(audioSource.time, 0f, audioSource.clip.length);
+
             audioSource.Play();
         }
+
 
         public void Pause()
         {

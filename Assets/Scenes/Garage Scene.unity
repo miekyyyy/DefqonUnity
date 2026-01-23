@@ -998,7 +998,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.392}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1634,7 +1634,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1049544054}
   m_Direction: 2
   m_Value: 0
-  m_Size: 0.99784684
+  m_Size: 0.76811594
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -2448,6 +2448,97 @@ CanvasRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 600997017}
+  m_CullTransparentMesh: 1
+--- !u!1 &648864280
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 648864281}
+  - component: {fileID: 648864284}
+  - component: {fileID: 648864283}
+  - component: {fileID: 648864282}
+  m_Layer: 5
+  m_Name: Waveform
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &648864281
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 648864280}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1874796017}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 2650, y: 706}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &648864282
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 648864280}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a5ec9677493dadc46be14ae36a468804, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: DefqonEngine::DefqonEngine.UI.Timeline.WaveformDrawer
+  audioSource: {fileID: 2116936544}
+  timeline: {fileID: 1323787500}
+  samplesPerPoint: 256
+  waveformColor: {r: 0, g: 1, b: 1, a: 1}
+  backgroundColor: {r: 0.11372549, g: 0.11372549, b: 0.11372549, a: 1}
+  lineWidth: 2
+--- !u!114 &648864283
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 648864280}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1344c3c82d62a2a41a3576d8abb8e3ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.RawImage
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Texture: {fileID: 0}
+  m_UVRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1
+    height: 1
+--- !u!222 &648864284
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 648864280}
   m_CullTransparentMesh: 1
 --- !u!1 &652668093
 GameObject:
@@ -3366,7 +3457,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.8422555}
+  m_AnchoredPosition: {x: 0, y: 14.836096}
   m_SizeDelta: {x: 0, y: 300}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &856616801
@@ -3771,7 +3862,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1857667852}
   m_Direction: 2
   m_Value: 0
-  m_Size: 0.99784684
+  m_Size: 0.76811594
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -5462,7 +5553,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 0.113000005, g: 0.113000005, b: 0.113000005, a: 1}
+  m_Color: {r: 0.096999995, g: 0.096999995, b: 0.096999995, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -5502,6 +5593,7 @@ MonoBehaviour:
   panel: {fileID: 1323787496}
   pixelsPerSecond: 100
   scrollTime: 0
+  audioSource: {fileID: 0}
 --- !u!1 &1353209974
 GameObject:
   m_ObjectHideFlags: 0
@@ -6871,7 +6963,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.8422555}
+  m_AnchoredPosition: {x: 0, y: 14.836096}
   m_SizeDelta: {x: 0, y: 300}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &1694674231
@@ -7301,6 +7393,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1740673637}
   - component: {fileID: 1740673636}
+  - component: {fileID: 1740673638}
   m_Layer: 0
   m_Name: TimelineInputController
   m_TagString: Untagged
@@ -7336,6 +7429,22 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1740673638
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1740673635}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52ebfc49bfe5f454c97fb4e38a34c538, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: DefqonEngine::DefqonEngine.UI.Timeline.TimelineAudioController
+  audioSource: {fileID: 2116936544}
+  playButton: {fileID: 0}
+  pauseButton: {fileID: 0}
+  stopButton: {fileID: 0}
 --- !u!1 &1759211057
 GameObject:
   m_ObjectHideFlags: 0
@@ -7988,10 +8097,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1874796017}
   - component: {fileID: 1874796020}
-  - component: {fileID: 1874796019}
-  - component: {fileID: 1874796018}
+  - component: {fileID: 1874796021}
   m_Layer: 5
-  m_Name: Waveform
+  m_Name: Waveform Mask
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8004,11 +8112,12 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1874796016}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 648864281}
   m_Father: {fileID: 1323787496}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -8016,51 +8125,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: -50}
   m_SizeDelta: {x: 0, y: -100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1874796018
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1874796016}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a5ec9677493dadc46be14ae36a468804, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: DefqonEngine::DefqonEngine.UI.Timeline.WaveformDrawer
-  audioSource: {fileID: 0}
-  timeline: {fileID: 1323787500}
-  textureHeight: 200
-  waveformColor: {r: 0, g: 1, b: 1, a: 1}
-  backgroundColor: {r: 0, g: 0, b: 0, a: 1}
-  lineWidth: 2
---- !u!114 &1874796019
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1874796016}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1344c3c82d62a2a41a3576d8abb8e3ea, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.RawImage
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Texture: {fileID: 0}
-  m_UVRect:
-    serializedVersion: 2
-    x: 0
-    y: 0
-    width: 1
-    height: 1
 --- !u!222 &1874796020
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -8069,6 +8133,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1874796016}
   m_CullTransparentMesh: 1
+--- !u!114 &1874796021
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1874796016}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3312d7739989d2b4e91e6319e9a96d76, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.RectMask2D
+  m_Padding: {x: 0, y: 0, z: 0, w: 0}
+  m_Softness: {x: 0, y: 0}
 --- !u!1 &1875450385
 GameObject:
   m_ObjectHideFlags: 0
@@ -9064,7 +9142,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_Resource: {fileID: 8300000, guid: 9a9a104786f55c54e85720df71cef1e3, type: 3}
+  m_Resource: {fileID: 8300000, guid: dd401ee016b8c57449f5478d85acc599, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
