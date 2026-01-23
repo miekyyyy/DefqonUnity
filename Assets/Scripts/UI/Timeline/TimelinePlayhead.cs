@@ -9,8 +9,10 @@ namespace DefqonEngine.UI.Timeline
         public TimelineView timeline;
         public AudioSource audioSource;
 
+
         public float scrollMargin = 50f;
         private bool isDragging;
+        private bool isPlaying;
 
         void LateUpdate()
         {
@@ -28,9 +30,9 @@ namespace DefqonEngine.UI.Timeline
         public void BeginDrag()
         {
             isDragging = true;
+            isPlaying = audioSource.isPlaying;
             audioSource.Pause();
         }
-
         public void Drag(PointerEventData pointerEventData)
         {
             if (!RectTransformUtility.ScreenPointToLocalPointInRectangle(
@@ -40,21 +42,30 @@ namespace DefqonEngine.UI.Timeline
                 out Vector2 local))
                 return;
 
-            // Omdat pivot rechts is, is linkerzijde = -timeline.Width
             float x = Mathf.Clamp(local.x + timeline.Width, 0f, timeline.Width);
 
+            // Tijdsberekening
             float time = timeline.scrollTime + (x / timeline.pixelsPerSecond);
-            audioSource.time = Mathf.Clamp(time, 0f, audioSource.clip.length);
+
+            // clamp tijd binnen audio clip
+            if (audioSource.clip != null)
+                time = Mathf.Clamp(time, 0f, audioSource.clip.length);
+
+            audioSource.time = time;
 
             rect.anchoredPosition = new Vector2(x, rect.anchoredPosition.y);
         }
 
 
 
+
+
         public void EndDrag()
         {
             isDragging = false;
-            audioSource.UnPause();
+            if (isPlaying)
+                audioSource.UnPause();
+            isPlaying = false;
         }
 
         void HandleAutoScroll(float x)
