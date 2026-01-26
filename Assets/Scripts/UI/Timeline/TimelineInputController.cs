@@ -4,7 +4,6 @@ namespace DefqonEngine.UI.Timeline
 {
     public class TimelineInputController : MonoBehaviour
     {
-        public TimelineView timeline;
 
         void Update()
         {
@@ -20,13 +19,13 @@ namespace DefqonEngine.UI.Timeline
 
             Vector2 localMouse;
             RectTransformUtility.ScreenPointToLocalPointInRectangle(
-                timeline.panel,
+                TimelineView.Instance.panel,
                 Input.mousePosition,
                 null,
                 out localMouse
             );
 
-            timeline.Zoom(scroll > 0 ? 1.1f : 0.9f, localMouse.x);
+            TimelineView.Instance.Zoom(scroll > 0 ? 1.1f : 0.9f, localMouse.x);
         }
 
         void HandlePan()
@@ -34,7 +33,7 @@ namespace DefqonEngine.UI.Timeline
             if (Input.GetMouseButton(2))
             {
                 float deltaX = Input.GetAxis("Mouse X") * 20f;
-                timeline.PanPixels(deltaX);
+                TimelineView.Instance.PanPixels(deltaX);
             }
         }
     }

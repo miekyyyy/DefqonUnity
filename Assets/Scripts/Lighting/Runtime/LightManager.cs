@@ -16,7 +16,7 @@ namespace DefqonEngine.Lighting.Runtime
     [System.Serializable]
     public class GroupEntry
     {
-        public int id;
+        public int Id => group.id;
         public LampGroup group;
     }
 
@@ -53,7 +53,7 @@ namespace DefqonEngine.Lighting.Runtime
             foreach (var entry in groupList)
             {
                 if (entry.group != null)
-                    groups[entry.id] = entry.group;
+                    groups[entry.Id] = entry.group;
             }
         }
 

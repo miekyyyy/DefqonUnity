@@ -8,7 +8,6 @@ namespace DefqonEngine.UI.Timeline
     public class Ruler : MonoBehaviour
     {
         [Header("References")]
-        public TimelineView timeline;
         public RectTransform tickContainer;
         public GameObject majorTickPrefab;
         public GameObject minorTickPrefab;
@@ -31,19 +30,19 @@ namespace DefqonEngine.UI.Timeline
 
         void Awake()
         {
-            timeline.OnViewChanged += Refresh;
+            TimelineView.Instance.OnViewChanged += Refresh;
         }
 
         void Refresh()
         {
-            if (timeline == null) return;
+            if (TimelineView.Instance == null) return;
             UpdateRuler();
         }
 
         void UpdateRuler()
         {
-            float startTime = timeline.scrollTime;
-            float endTime = timeline.scrollTime + (timeline.Width / timeline.pixelsPerSecond);
+            float startTime = TimelineView.Instance.scrollTime;
+            float endTime = TimelineView.Instance.scrollTime + (TimelineView.Instance.Width / TimelineView.Instance.pixelsPerSecond);
 
 
             // Deactiveer oude ticks/labels
@@ -56,7 +55,7 @@ namespace DefqonEngine.UI.Timeline
             for (float t = Mathf.Floor(startTime / tickIntervalSeconds) * tickIntervalSeconds;
                  t <= endTime; t += tickIntervalSeconds)
             {
-                float x = timeline.TimeToX(t);
+                float x = TimelineView.Instance.TimeToX(t);
 
 
                 // Major tick
@@ -78,7 +77,7 @@ namespace DefqonEngine.UI.Timeline
                 {
                     float minorTime = t + (tickIntervalSeconds / minorTicksPerMajor) * i;
                     if (minorTime > endTime) break;
-                    float minorX = timeline.TimeToX(minorTime);
+                    float minorX = TimelineView.Instance.TimeToX(minorTime);
 
                     GameObject minorTick = GetOrCreate(minorTicks, minorTickPrefab, tickContainer, tickIndex * minorTicksPerMajor + i);
                     minorTick.SetActive(true);
