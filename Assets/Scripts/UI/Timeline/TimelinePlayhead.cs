@@ -6,7 +6,6 @@ namespace DefqonEngine.UI.Timeline
     public class TimelinePlayhead : MonoBehaviour
     {
         public RectTransform rect;
-        public TimelineView timeline;
         public AudioSource audioSource;
 
 
@@ -19,8 +18,8 @@ namespace DefqonEngine.UI.Timeline
             if (isDragging) return;
             if (audioSource == null || audioSource.clip == null) return;
 
-            float x = timeline.TimeToX(audioSource.time);
-            x = Mathf.Clamp(x, 0f, timeline.Width);
+            float x = TimelineView.Instance.TimeToX(audioSource.time);
+            x = Mathf.Clamp(x, 0f, TimelineView.Instance.Width);
 
             rect.anchoredPosition = new Vector2(x, rect.anchoredPosition.y);
 
@@ -36,16 +35,16 @@ namespace DefqonEngine.UI.Timeline
         public void Drag(PointerEventData pointerEventData)
         {
             if (!RectTransformUtility.ScreenPointToLocalPointInRectangle(
-                timeline.panel,
+                TimelineView.Instance.panel,
                 pointerEventData.position,
                 pointerEventData.pressEventCamera,
                 out Vector2 local))
                 return;
 
-            float x = Mathf.Clamp(local.x + timeline.Width, 0f, timeline.Width);
+            float x = Mathf.Clamp(local.x + TimelineView.Instance.Width, 0f, TimelineView.Instance.Width);
 
             // Tijdsberekening
-            float time = timeline.scrollTime + (x / timeline.pixelsPerSecond);
+            float time = TimelineView.Instance.scrollTime + (x / TimelineView.Instance.pixelsPerSecond);
 
             // clamp tijd binnen audio clip
             if (audioSource.clip != null)
@@ -70,18 +69,18 @@ namespace DefqonEngine.UI.Timeline
 
         void HandleAutoScroll(float x)
         {
-            float right = timeline.Width - scrollMargin;
+            float right = TimelineView.Instance.Width - scrollMargin;
             float left = scrollMargin;
 
             if (x > right)
             {
-                float deltaTime = (x - right) / timeline.pixelsPerSecond;
-                timeline.SetScrollTime(timeline.scrollTime + deltaTime);
+                float deltaTime = (x - right) / TimelineView.Instance.pixelsPerSecond;
+                TimelineView.Instance.SetScrollTime(TimelineView.Instance.scrollTime + deltaTime);
             }
             else if (x < left)
             {
-                float deltaTime = (left - x) / timeline.pixelsPerSecond;
-                timeline.SetScrollTime(timeline.scrollTime - deltaTime);
+                float deltaTime = (left - x) / TimelineView.Instance.pixelsPerSecond;
+                TimelineView.Instance.SetScrollTime(TimelineView.Instance.scrollTime - deltaTime);
             }
         }
     }

@@ -8,7 +8,6 @@ namespace DefqonEngine.UI.Timeline
     {
         [Header("References")]
         public AudioSource audioSource;
-        public TimelineView timeline;
 
         [Header("Settings")]
         public int samplesPerPoint = 256;
@@ -36,14 +35,13 @@ namespace DefqonEngine.UI.Timeline
 
         void Start()
         {
-            if (!audioSource || !audioSource.clip || !timeline) return;
+            if (!audioSource || !audioSource.clip || !TimelineView.Instance) return;
 
             BuildWaveformData();
             CreateTexture();
             DrawWaveform();
         }
 
-        // 🔥 Dit gebeurt EXACT één keer
         void BuildWaveformData()
         {
             var clip = audioSource.clip;
@@ -66,7 +64,7 @@ namespace DefqonEngine.UI.Timeline
 
                 for (int s = start; s < end; s++)
                 {
-                    float v = data[s * channels]; // left channel
+                    float v = data[s * channels];
                     if (v < min) min = v;
                     if (v > max) max = v;
                 }
@@ -114,15 +112,15 @@ namespace DefqonEngine.UI.Timeline
 
         void LateUpdate()
         {
-            if (!timeline || !audioSource || !audioSource.clip) return;
+            if (!TimelineView.Instance || !audioSource || !audioSource.clip) return;
 
-            float pixelsPerSecond = timeline.pixelsPerSecond;
+            float pixelsPerSecond = TimelineView.Instance.pixelsPerSecond;
             float secondsPerPoint = (float)samplesPerPoint / audioSource.clip.frequency;
 
             float widthPx = waveform.Length * secondsPerPoint * pixelsPerSecond;
             rawImage.rectTransform.sizeDelta = new Vector2(widthPx, rawImage.rectTransform.sizeDelta.y);
 
-            float x = -timeline.scrollTime * pixelsPerSecond;
+            float x = -TimelineView.Instance.scrollTime * pixelsPerSecond;
             rawImage.rectTransform.anchoredPosition = new Vector2(x, 0);
         }
     }

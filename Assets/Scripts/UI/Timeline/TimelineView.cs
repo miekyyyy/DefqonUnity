@@ -5,6 +5,8 @@ namespace DefqonEngine.UI.Timeline
 {
     public class TimelineView : MonoBehaviour
     {
+
+        public static TimelineView Instance { get; private set; }
         [Header("View")]
         public RectTransform panel;
 
@@ -21,6 +23,11 @@ namespace DefqonEngine.UI.Timeline
         public Action OnViewChanged;
 
         public float Width => panel.rect.width;
+
+        private void Awake()
+        {
+            Instance = this;
+        }
 
         public float TimeToX(float time)
         {

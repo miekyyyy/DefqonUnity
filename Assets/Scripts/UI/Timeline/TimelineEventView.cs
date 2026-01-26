@@ -1,28 +1,75 @@
-using UnityEngine;
+﻿using UnityEngine;
+using UnityEngine.EventSystems;
 using DefqonEngine.Lighting.Data;
 
 namespace DefqonEngine.UI.Timeline
 {
-    public class TimelineEventView : MonoBehaviour
+    public class TimelineEventView : MonoBehaviour, IDragHandler, IBeginDragHandler
     {
-        public LightEvent lightEvent;
-        public TimelineView timeline;
         public RectTransform rect;
-        public int trackIndex;
-        public float trackHeight = 40f;
+        public TimelineTrack track;
+        public LightEvent lightEvent;
 
-        void Update()
+        private float dragOffset;
+
+        public float startTime
         {
-            Refresh();
+            get => lightEvent.time;
+            set
+            {
+                lightEvent.time = value;
+                UpdateVisual();
+            }
         }
 
-        public void Refresh()
+        public float duration
         {
-            float x = timeline.TimeToX(lightEvent.time);
-            float width = timeline.TimeToX(lightEvent.time + lightEvent.duration) - x;
-            float y = -trackIndex * trackHeight;
-            rect.anchoredPosition = new Vector2(x, y);
-            rect.sizeDelta = new Vector2(width, trackHeight - 4);
+            get => lightEvent.duration;
+            set
+            {
+                lightEvent.duration = value;
+                UpdateVisual();
+            }
+        }
+
+        public void Initialize(LightEvent ev, TimelineTrack parentTrack)
+        {
+            lightEvent = ev;
+            track = parentTrack;
+            UpdateVisual();
+        }
+
+        public void UpdateVisual()
+        {
+            float x = TimelineView.Instance.TimeToX(startTime);
+            float width = duration * TimelineView.Instance.pixelsPerSecond;
+            rect.anchoredPosition = new Vector2(x, 0);
+            rect.sizeDelta = new Vector2(width, rect.sizeDelta.y);
+        }
+
+        public void OnBeginDrag(PointerEventData eventData)
+        {
+            RectTransformUtility.ScreenPointToLocalPointInRectangle(
+                TimelineView.Instance.panel,
+                eventData.position,
+                eventData.pressEventCamera,
+                out Vector2 local
+            );
+
+            dragOffset = local.x - TimelineView.Instance.TimeToX(startTime);
+        }
+
+        public void OnDrag(PointerEventData eventData)
+        {
+            RectTransformUtility.ScreenPointToLocalPointInRectangle(
+                TimelineView.Instance.panel,
+                eventData.position,
+                eventData.pressEventCamera,
+                out Vector2 local
+            );
+
+            float time = TimelineView.Instance.XToTime(local.x - dragOffset);
+            startTime = Mathf.Max(0f, time);
         }
     }
 }
