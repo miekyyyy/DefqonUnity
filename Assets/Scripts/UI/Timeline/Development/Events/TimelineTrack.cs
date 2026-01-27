@@ -2,6 +2,7 @@
 using DefqonEngine.Lighting.Groups;
 using DefqonEngine.UI.Timeline.Common;
 using System.Collections.Generic;
+using System.Threading;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -29,76 +30,33 @@ namespace DefqonEngine.UI.Timeline.Development.Events
                 view.Initialize(ev, this);
             }
         }
-        
+
         public void OnPointerClick(PointerEventData eventData)
         {
             if (eventData.button != PointerEventData.InputButton.Right)
                 return;
 
-            float startTime = TimelineView.Instance.scrollTime;
-            float endTime = TimelineView.Instance.scrollTime + (TimelineView.Instance.Width / TimelineView.Instance.pixelsPerSecond);
+            if (TimelineView.Instance == null)
+                return;
 
+            RectTransform panel = TimelineView.Instance.panel;
 
+            RectTransformUtility.ScreenPointToLocalPointInRectangle(
+                panel,
+                eventData.position,
+                eventData.pressEventCamera,
+                out Vector2 local
+            );
 
+            float timeUnderMouse = TimelineView.Instance.XToTime(local.x);
 
-
-
-            //Oude code
-           
-
-            float time = 0f;
-
-            if (TimelineView.Instance != null)
-            {
-                RectTransformUtility.ScreenPointToLocalPointInRectangle(
-                    TimelineView.Instance.panel,
-                    eventData.position,
-                    eventData.pressEventCamera,
-                    out Vector2 local
-                );
-                time = TimelineView.Instance.XToTime(local.x);
-            }
-
-            LightEvent newEvent = new LightEvent
-            {
-                time = Mathf.Max(0f, time),
-                duration = 1f,
-                color = Color.white,
-                trackIndex = trackIndex,
-                targetType = TargetType.Group,
-                targetId = lampGroup.id
-            };
-
-            AddEvent(newEvent);
-
-            Debug.Log($"[Timeline] Added event to track '{lampGroup.groupName}' at {newEvent.time:F2}s");
+            Debug.Log(
+                $"[Timeline] Right-clicked on track '{lampGroup.groupName}' at {timeUnderMouse:F2}s"
+            );
         }
+
+
 #if false
-
-        public void Zoom(float factor, float mouseX)
-        {
-            if (pixelsPerSecond <= 0f) return;
-
-            float timeUnderMouse = XToTime(mouseX);
-
-            // Nieuwe pixelsPerSecond
-            float newPPS = pixelsPerSecond * factor;
-
-            // Clamp: niet verder uitzoomen dan de clip
-            if (audioSource != null && audioSource.clip != null)
-            {
-                float minPPS = Width / audioSource.clip.length;
-                newPPS = Mathf.Max(newPPS, minPPS);
-            }
-
-            pixelsPerSecond = Mathf.Clamp(newPPS, 20f, 600f); // optioneel max zoom in
-
-            // Pas scrollTime aan zodat de tijd onder de muis blijft
-            float newScrollTime = timeUnderMouse - (mouseX / pixelsPerSecond);
-            SetScrollTime(newScrollTime);
-        }
-
-
         void UpdateRuler()
         {
             float startTime = TimelineView.Instance.scrollTime;

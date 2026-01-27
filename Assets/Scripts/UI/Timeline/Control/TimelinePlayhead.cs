@@ -29,10 +29,14 @@ namespace DefqonEngine.UI.Timeline.Control
 
         public void BeginDrag()
         {
-            isDragging = true;
-            isPlaying = audioSource.isPlaying;
-            audioSource.Pause();
+
+            isDragging = true; 
+            isPlaying = audioSource != null && audioSource.isPlaying;
+            if (audioSource != null)
+                audioSource.Pause();
+
         }
+
         public void Drag(PointerEventData pointerEventData)
         {
             if (!RectTransformUtility.ScreenPointToLocalPointInRectangle(
@@ -42,12 +46,10 @@ namespace DefqonEngine.UI.Timeline.Control
                 out Vector2 local))
                 return;
 
-            float x = Mathf.Clamp(local.x + TimelineView.Instance.Width, 0f, TimelineView.Instance.Width);
+            float x = Mathf.Clamp(local.x, 0f, TimelineView.Instance.Width);
 
-            // Tijdsberekening
-            float time = TimelineView.Instance.scrollTime + (x / TimelineView.Instance.pixelsPerSecond);
+            float time = TimelineView.Instance.XToTime(x);
 
-            // clamp tijd binnen audio clip
             if (audioSource.clip != null)
                 time = Mathf.Clamp(time, 0f, audioSource.clip.length);
 
@@ -60,10 +62,11 @@ namespace DefqonEngine.UI.Timeline.Control
 
 
 
+
         public void EndDrag()
         {
             isDragging = false;
-            if (isPlaying)
+            if (isPlaying && audioSource != null)
                 audioSource.UnPause();
             isPlaying = false;
         }

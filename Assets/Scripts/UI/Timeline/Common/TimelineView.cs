@@ -51,12 +51,8 @@ namespace DefqonEngine.UI.Timeline.Common
                 float maxScroll = Mathf.Max(0f, audioSource.clip.length - (Width / pixelsPerSecond));
                 newScrollTime = Mathf.Clamp(newScrollTime, 0f, maxScroll);
             }
-
-            if (Mathf.Abs(scrollTime - newScrollTime) > 0.0001f)
-            {
-                scrollTime = newScrollTime;
-                OnViewChanged?.Invoke();
-            }
+            scrollTime = newScrollTime;
+            OnViewChanged?.Invoke();
         }
 
 
