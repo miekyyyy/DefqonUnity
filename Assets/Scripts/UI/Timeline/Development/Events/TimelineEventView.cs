@@ -1,8 +1,9 @@
 ﻿using UnityEngine;
 using UnityEngine.EventSystems;
 using DefqonEngine.Lighting.Data;
+using DefqonEngine.UI.Timeline.Common;
 
-namespace DefqonEngine.UI.Timeline
+namespace DefqonEngine.UI.Timeline.Development.Events
 {
     public class TimelineEventView : MonoBehaviour, IDragHandler, IBeginDragHandler
     {

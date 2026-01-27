@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace DefqonEngine.UI.Timeline
+namespace DefqonEngine.UI.Timeline.Control
 {
     public class TimelinePlayheadHandle : MonoBehaviour
     {

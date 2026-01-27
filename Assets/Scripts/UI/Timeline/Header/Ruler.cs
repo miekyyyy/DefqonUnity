@@ -1,9 +1,10 @@
+using DefqonEngine.UI.Timeline.Common;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-namespace DefqonEngine.UI.Timeline
+namespace DefqonEngine.UI.Timeline.Header
 {
     public class Ruler : MonoBehaviour
     {

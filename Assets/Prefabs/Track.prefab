@@ -136,14 +136,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 4471743363814422635}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 316530b913c4c854b9b85f8fb565f2a2, type: 3}
+  m_Script: {fileID: 11500000, guid: 799e9210f67cc2240bbc1a3491d2c0df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: DefqonEngine::DefqonEngine.UI.Timeline.TimelineTrack
-  GroupName: 
   lampGroup:
     id: 0
     groupName: 
     lampIds: 
-  content: {fileID: 1082330195207657704}
-  eventPrefab: {fileID: 2138338064286932759, guid: 938bc29bd18011443a6cee83b1af6dbf, type: 3}
+  trackIndex: 0
   events: []
+  eventsContainer: {fileID: 1082330195207657704}
+  eventPrefab: {fileID: 679124670352901299, guid: 938bc29bd18011443a6cee83b1af6dbf, type: 3}

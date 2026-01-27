@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace DefqonEngine.UI.Timeline
+namespace DefqonEngine.UI.Timeline.Common
 {
     public class TimelineView : MonoBehaviour
     {
