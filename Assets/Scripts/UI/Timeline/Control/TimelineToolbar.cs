@@ -1,12 +1,13 @@
 ﻿using DefqonEngine.Lighting.Groups;
 using DefqonEngine.Lighting.Runtime;
 using DefqonEngine.UI.Timeline;
+using DefqonEngine.UI.Timeline.Development.Events;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace DefqonEngine.UI
+namespace DefqonEngine.UI.Timeline.Control
 {
     public class TimelineToolbar : MonoBehaviour
     {

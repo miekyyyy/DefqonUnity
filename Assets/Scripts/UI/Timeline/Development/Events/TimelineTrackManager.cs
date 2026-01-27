@@ -2,7 +2,7 @@ using DefqonEngine.Lighting.Groups;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace DefqonEngine.UI.Timeline
+namespace DefqonEngine.UI.Timeline.Development.Events
 {
     public class TimelineTrackManager : MonoBehaviour
     {

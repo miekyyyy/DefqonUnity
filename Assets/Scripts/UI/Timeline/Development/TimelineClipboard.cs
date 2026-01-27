@@ -1,6 +1,6 @@
 using DefqonEngine.Lighting.Data;
 
-namespace DefqonEngine.UI.Timeline
+namespace DefqonEngine.UI.Timeline.Development
 {
     public static class TimelineClipboard
     {

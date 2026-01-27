@@ -1,10 +1,11 @@
 ﻿using DefqonEngine.Lighting.Data;
 using DefqonEngine.Lighting.Groups;
+using DefqonEngine.UI.Timeline.Common;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace DefqonEngine.UI.Timeline
+namespace DefqonEngine.UI.Timeline.Development.Events
 {
     public class TimelineTrack : MonoBehaviour, IPointerClickHandler
     {
@@ -33,18 +34,17 @@ namespace DefqonEngine.UI.Timeline
             if (eventData.button != PointerEventData.InputButton.Right)
                 return;
 
-            var timeline = GetComponentInParent<TimelineView>();
             float time = 0f;
 
-            if (timeline != null)
+            if (TimelineView.Instance != null)
             {
                 RectTransformUtility.ScreenPointToLocalPointInRectangle(
-                    timeline.panel,
+                    TimelineView.Instance.panel,
                     eventData.position,
                     eventData.pressEventCamera,
                     out Vector2 local
                 );
-                time = timeline.XToTime(local.x);
+                time = TimelineView.Instance.XToTime(local.x);
             }
 
             LightEvent newEvent = new LightEvent

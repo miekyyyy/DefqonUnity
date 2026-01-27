@@ -1,7 +1,8 @@
+using DefqonEngine.UI.Timeline.Common;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace DefqonEngine.UI.Timeline
+namespace DefqonEngine.UI.Timeline.Development.Events
 {
     public enum ResizeSide { Left, Right }
 

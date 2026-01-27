@@ -1,6 +1,7 @@
+using DefqonEngine.UI.Timeline.Common;
 using UnityEngine;
 
-namespace DefqonEngine.UI.Timeline
+namespace DefqonEngine.UI.Timeline.Control
 {
     public class TimelineInputController : MonoBehaviour
     {

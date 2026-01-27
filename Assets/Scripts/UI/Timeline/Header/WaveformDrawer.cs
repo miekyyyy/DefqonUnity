@@ -1,7 +1,8 @@
-﻿using UnityEngine;
+﻿using DefqonEngine.UI.Timeline.Common;
+using UnityEngine;
 using UnityEngine.UI;
 
-namespace DefqonEngine.UI.Timeline
+namespace DefqonEngine.UI.Timeline.Header
 {
     [RequireComponent(typeof(RawImage))]
     public class WaveformDrawer : MonoBehaviour

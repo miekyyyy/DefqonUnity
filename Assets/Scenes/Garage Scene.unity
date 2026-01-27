@@ -1182,7 +1182,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 246281894}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6047e7881ae63a04ab1292ba2848ca11, type: 3}
+  m_Script: {fileID: 11500000, guid: 51a7aafd148c7dd468b2d635501fee97, type: 3}
   m_Name: 
   m_EditorClassIdentifier: DefqonEngine::DefqonEngine.UI.Timeline.TimelinePlayhead
   rect: {fileID: 7675083776447002810}
@@ -1581,7 +1581,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 332401973}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 557d9a331c4cfe9409fe5940d725121b, type: 3}
+  m_Script: {fileID: 11500000, guid: cf5f667b533049a4694d066095ceb1ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: DefqonEngine::DefqonEngine.UI.Timeline.TimelineTrackManager
   tracksParent: {fileID: 262720168}
@@ -1761,7 +1761,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1049544054}
   m_Direction: 2
   m_Value: 0
-  m_Size: 0.99999386
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -8096,7 +8096,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.00012824105}
+  m_AnchoredPosition: {x: 0, y: 0.0008262614}
   m_SizeDelta: {x: 0, y: 300}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &1696532708
@@ -10315,7 +10315,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2128188806}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ec6aaf5153db62c47ab629c000a68ff0, type: 3}
+  m_Script: {fileID: 11500000, guid: 34b4cc28dcb42534abd9c8deb5b69715, type: 3}
   m_Name: 
   m_EditorClassIdentifier: DefqonEngine::DefqonEngine.UI.Timeline.TimelinePlayheadHandle
   playhead: {fileID: 246281895}
