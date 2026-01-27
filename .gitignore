@@ -114,3 +114,5 @@ InitTestScene*.unity*
 # Auto-generated scenes by play mode tests
 /[Aa]ssets/[Ii]nit[Tt]est[Ss]cene*.unity*
 /Assets/Music
+/UserSettings/EditorUserSettings.asset
+/UserSettings/Layouts/default-6000.dwlt
