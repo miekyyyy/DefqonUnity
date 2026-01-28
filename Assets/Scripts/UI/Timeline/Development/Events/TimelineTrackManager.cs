@@ -1,11 +1,14 @@
 using DefqonEngine.Lighting.Groups;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace DefqonEngine.UI.Timeline.Development.Events
 {
     public class TimelineTrackManager : MonoBehaviour
     {
+        public static TimelineTrackManager Instance { get; private set; }
+
         [Header("References")]
         public RectTransform tracksParent;     // Track Content
         public RectTransform labelsParent;     // Track Labels
@@ -14,11 +17,16 @@ namespace DefqonEngine.UI.Timeline.Development.Events
 
         private readonly List<TimelineTrack> tracks = new();
         private readonly Dictionary<TimelineTrack, TimelineTrackLabel> labels = new();
+        void Awake()
+        {
+            Instance = this;
+        }
 
         public TimelineTrack AddTrack(LampGroup group)
         {
             var track = Instantiate(trackPrefab, tracksParent);
             track.lampGroup = group;
+            track.trackIndex = tracks.Count;
 
             tracks.Add(track);
 
@@ -98,6 +106,13 @@ namespace DefqonEngine.UI.Timeline.Development.Events
             return null;
         }
 
+        public TimelineTrack FindTrackByIndex(int index)
+        {
+            return tracks.FirstOrDefault(t => t.trackIndex == index);
+        }
+
+
         public IReadOnlyList<TimelineTrack> Tracks => tracks;
+
     }
 }

@@ -1,6 +1,8 @@
 using DefqonEngine.UI.Timeline.Common;
+using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 namespace DefqonEngine.UI.Timeline.Development.Events
 {
@@ -14,6 +16,10 @@ namespace DefqonEngine.UI.Timeline.Development.Events
 
         float startStartTime;
         float startDuration;
+        [Header("Selections")]
+        [SerializeField] Image image;
+        [SerializeField] Color defaultColor;
+        [SerializeField] Color selectedColor;
 
         public void OnBeginDrag(PointerEventData eventData)
         {
@@ -44,6 +50,16 @@ namespace DefqonEngine.UI.Timeline.Development.Events
             {
                 eventView.duration = Mathf.Max(0.05f, time - startStartTime);
             }
+        }
+
+        public void Deselect()
+        {
+            image.color = defaultColor;
+        }
+
+        public void Select()
+        {
+            image.color = selectedColor;
         }
     }
 }

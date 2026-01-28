@@ -58,11 +58,6 @@ namespace DefqonEngine.UI.Timeline.Control
             rect.anchoredPosition = new Vector2(x, rect.anchoredPosition.y);
         }
 
-
-
-
-
-
         public void EndDrag()
         {
             isDragging = false;
