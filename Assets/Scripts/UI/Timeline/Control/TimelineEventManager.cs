@@ -12,6 +12,7 @@ namespace DefqonEngine.UI.Timeline.Development.Events
         public List<LightEvent> events = new();
 
         public event Action<LightEvent> OnEventAdded;
+        public event Action OnEventRemoved;
 
         void Awake() => Instance = this;
 
@@ -29,5 +30,55 @@ namespace DefqonEngine.UI.Timeline.Development.Events
 
             OnEventAdded?.Invoke(ev);
         }
+
+        public void RemoveEvent()
+        {
+            if (TimelineEventViewManager.Instance.selectedView == null)
+                return;
+
+            LightEvent lightEvent = TimelineEventViewManager.Instance.selectedView.lightEvent;
+
+            events.Remove(lightEvent);
+            OnEventRemoved?.Invoke();
+        }
+
+        public LightEvent GetPreviousEvent(LightEvent ev)
+        {
+            LightEvent prev = null;
+
+            foreach (var e in events)
+            {
+                if (e == ev || e.trackIndex != ev.trackIndex)
+                    continue;
+
+                if (e.time + e.duration <= ev.time)
+                {
+                    if (prev == null || e.time > prev.time)
+                        prev = e;
+                }
+            }
+
+            return prev;
+        }
+
+        public LightEvent GetNextEvent(LightEvent ev)
+        {
+            LightEvent next = null;
+
+            foreach (var e in events)
+            {
+                if (e == ev || e.trackIndex != ev.trackIndex)
+                    continue;
+
+                if (e.time >= ev.time + ev.duration)
+                {
+                    if (next == null || e.time < next.time)
+                        next = e;
+                }
+            }
+
+            return next;
+        }
+
     }
 }
