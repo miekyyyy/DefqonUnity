@@ -17,6 +17,14 @@ namespace DefqonEngine.UI.Timeline.Control
         {
             HandleZoom();
             HandlePan();
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                TimelineAudioController.Instance.TogglePlayPause();
+            }
+            if (Input.GetKeyDown(KeyCode.Delete))
+            {
+                TimelineEventManager.Instance.RemoveEvent();
+            }
         }
 
         public void OnTrackRightClicked(TimelineTrack track, PointerEventData eventData)

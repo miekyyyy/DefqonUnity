@@ -1,5 +1,4 @@
 using DefqonEngine.UI.Timeline.Common;
-using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -41,6 +40,11 @@ namespace DefqonEngine.UI.Timeline.Development.Events
             if (side == ResizeSide.Left)
             {
                 float newStart = Mathf.Min(time, startStartTime + startDuration - 0.05f);
+                var prev = TimelineEventManager.Instance.GetPreviousEvent(eventView.lightEvent);
+                if (prev != null)
+                {
+                    newStart = Mathf.Max(newStart, prev.time + prev.duration);
+                }
                 float delta = startStartTime - newStart;
 
                 eventView.startTime = newStart;
@@ -48,7 +52,16 @@ namespace DefqonEngine.UI.Timeline.Development.Events
             }
             else
             {
-                eventView.duration = Mathf.Max(0.05f, time - startStartTime);
+                float newDuration = Mathf.Max(0.05f, time - startStartTime);
+
+                var next = TimelineEventManager.Instance.GetNextEvent(eventView.lightEvent);
+                if (next != null)
+                {
+                    float maxDuration = next.time - eventView.startTime;
+                    newDuration = Mathf.Min(newDuration, maxDuration);
+                }
+
+                eventView.duration = newDuration;
             }
         }
 

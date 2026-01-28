@@ -20,12 +20,17 @@ namespace DefqonEngine.UI.Timeline.Development.Events
         void OnEnable()
         {
             TimelineEventManager.Instance.OnEventAdded += OnEventAdded;
+            TimelineEventManager.Instance.OnEventRemoved += OnEventRemoved;
         }
+
 
         void OnDisable()
         {
             if (TimelineEventManager.Instance != null)
+            {
                 TimelineEventManager.Instance.OnEventAdded -= OnEventAdded;
+                TimelineEventManager.Instance.OnEventRemoved -= OnEventRemoved;
+            }
         }
 
         private void OnEventAdded(LightEvent ev)
@@ -39,7 +44,13 @@ namespace DefqonEngine.UI.Timeline.Development.Events
 
             TimelineEventView view = Instantiate(eventPrefab, eventsLayer);
             view.Initialize(ev, track);
+            SelectEvent(view);
             Debug.Log($"Event toegevoegd: track {ev.trackIndex}, time {ev.time}, op x {((RectTransform)view.transform).anchoredPosition.x} en y {((RectTransform)view.transform).anchoredPosition.y}");
+        }
+        private void OnEventRemoved()
+        {
+            Destroy(selectedView.gameObject);
+            selectedView = null;
         }
 
         public void SelectEvent(TimelineEventView timelineEventView)
@@ -48,7 +59,18 @@ namespace DefqonEngine.UI.Timeline.Development.Events
             {
                 selectedView.Deselect();
             }
+            selectedView = timelineEventView;
+            timelineEventView.Select();
 
+        }
+
+        public void DeselectEvent()
+        {
+            if (selectedView != null)
+            {
+                selectedView.Deselect();
+            }
+            selectedView = null;
         }
     }
 }
