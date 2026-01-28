@@ -5,10 +5,16 @@ namespace DefqonEngine.UI.Timeline.Control
 {
     public class TimelineAudioController : MonoBehaviour
     {
+        public static TimelineAudioController Instance { get; private set; }
         public AudioSource audioSource;
         public Button playButton;
         public Button pauseButton;
         public Button stopButton;
+
+        private void Awake()
+        {
+            Instance = this;
+        }
 
         void Start()
         {
@@ -17,15 +23,7 @@ namespace DefqonEngine.UI.Timeline.Control
             if (stopButton != null) stopButton.onClick.AddListener(Stop);
         }
 
-        void Update()
-        {
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                TogglePlayPause();
-            }
-        }
-
-        void TogglePlayPause()
+        public void TogglePlayPause()
         {
             if (audioSource == null || audioSource.clip == null) return;
 

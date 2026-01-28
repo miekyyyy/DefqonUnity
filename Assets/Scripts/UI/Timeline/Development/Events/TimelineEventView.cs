@@ -95,9 +95,44 @@ namespace DefqonEngine.UI.Timeline.Development.Events
             );
 
             float x = Mathf.Max(0f, local.x - dragOffset);
-            lightEvent.time = TimelineView.Instance.XToTime(x);
+            lightEvent.time = CheckCollision(TimelineView.Instance.XToTime(x));
             UpdateVisual();
         }
+
+        private float CheckCollision(float candidateTime)
+        {
+            float start = candidateTime;
+            float end = candidateTime + lightEvent.duration;
+
+            foreach (var other in TimelineEventManager.Instance.events)
+            {
+                if (other == lightEvent)
+                    continue;
+
+                if (other.trackIndex != lightEvent.trackIndex)
+                    continue;
+
+                float otherStart = other.time;
+                float otherEnd = other.time + other.duration;
+
+                if (start < otherEnd && end > otherStart)
+                {
+                    if (candidateTime > lightEvent.time)
+                    {
+                        start = otherStart - lightEvent.duration;
+                    }
+                    else
+                    {
+                        start = otherEnd;
+                    }
+
+                    end = start + lightEvent.duration;
+                }
+            }
+
+            return Mathf.Max(0f, start);
+        }
+
 
         public void Deselect()
         {
