@@ -18,9 +18,10 @@ namespace DefqonEngine.UI.Timeline.Development.Events
         [SerializeField] Color defaultColor;
         [SerializeField] Color selectedColor;
         [Header("Settings")]
-        public LightEvent lightEvent;
+        public TimelineEvent lightEvent;
         public TimelineTrack track;
         public float minDuration = 0.1f;
+        [SerializeField] float minWidthForHandles = 80f;
 
         private float dragOffset;
 
@@ -45,7 +46,7 @@ namespace DefqonEngine.UI.Timeline.Development.Events
         }
 
 
-        public void Initialize(LightEvent ev, TimelineTrack t)
+        public void Initialize(TimelineEvent ev, TimelineTrack t)
         {
             lightEvent = ev;
             track = t;
@@ -66,8 +67,20 @@ namespace DefqonEngine.UI.Timeline.Development.Events
 
             rect.anchoredPosition = new Vector2(x, track.GetTrackY());
             rect.sizeDelta = new Vector2(w, rect.sizeDelta.y);
+
+            UpdateResizeHandles(w);
         }
-        
+        private void UpdateResizeHandles(float width)
+        {
+            bool showVisuals = width >= minWidthForHandles;
+
+            foreach (var handle in resizeHandles)
+            {
+                handle.SetVisible(showVisuals);
+            }
+        }
+
+
         public void OnPointerClick(PointerEventData eventData)
         {
             TimelineEventViewManager.Instance.SelectEvent(this);

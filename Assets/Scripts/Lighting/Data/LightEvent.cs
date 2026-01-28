@@ -1,20 +1,28 @@
+using Unity.Plastic.Newtonsoft.Json;
+using Unity.Plastic.Newtonsoft.Json.Converters;
+using UnityEngine;
+
 namespace DefqonEngine.Lighting.Data
 {
-    [System.Serializable]
-    public class LightEvent
+    [JsonObject(MemberSerialization.OptIn)]
+    public class LightEvent : TimelineEvent
     {
-        public float time;
-        public float duration;
-        public UnityEngine.Color color;
+        [JsonProperty] public LightEffectType lightEffectType;
+        [JsonProperty] public Color color = Color.white;
+        [JsonProperty] public AnimationCurve fadeCurve = AnimationCurve.Linear(0, 0, 1, 1);
 
-        public int trackIndex;
-        public TargetType targetType = TargetType.Lamp;
-        public int targetId;
+        public LightEvent()
+        {
+            type = EventType.Light;
+        }
     }
-    public enum TargetType
+    [JsonConverter(typeof(StringEnumConverter))]
+    public enum LightEffectType
     {
-        Lamp,
-        Group
+        Static,
+        Fade,
+        Chase,
+        Converge,
     }
 
 }
