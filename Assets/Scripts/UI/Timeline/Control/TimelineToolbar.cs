@@ -17,9 +17,6 @@ namespace DefqonEngine.UI.Timeline.Control
         public Button snappingButton;
         public TMP_Dropdown groupDropdown;
 
-        [Header("Managers")]
-        public TimelineTrackManager trackManager;
-
         private bool dropdownOpen = false;
         private bool adding = false;
         private bool removing = false;
@@ -50,7 +47,7 @@ namespace DefqonEngine.UI.Timeline.Control
                     var group = groupsToAdd[groupIndex];
                     if (group != null)
                     {
-                        trackManager.AddTrack(group);
+                        TimelineTrackManager.Instance.AddTrack(group);
                     }
                 }
             }
@@ -64,7 +61,7 @@ namespace DefqonEngine.UI.Timeline.Control
                     var track = tracksToRemove[trackIndex];
                     if (track != null)
                     {
-                        trackManager.RemoveTrack(track);
+                        TimelineTrackManager.Instance.RemoveTrack(track);
                     }
                 }
             }
@@ -125,15 +122,11 @@ namespace DefqonEngine.UI.Timeline.Control
 
             List<string> optionNames = new() { "No track selected" };
 
-            foreach (var track in trackManager.Tracks)
+            foreach (var track in TimelineTrackManager.Instance.Tracks)
                 if (track.lampGroup != null)
                     optionNames.Add(track.lampGroup.groupName);
 
             groupDropdown.AddOptions(optionNames);
-
-            // Zorg dat de dropdown een minimale height heeft zodat hij zichtbaar is
-            RectTransform dropdownRect = groupDropdown.GetComponent<RectTransform>();
-            dropdownRect.sizeDelta = new Vector2(dropdownRect.sizeDelta.x, Mathf.Max(150f, optionNames.Count * 30f));
 
             groupDropdown.value = 0;
             groupDropdown.RefreshShownValue();
@@ -145,7 +138,7 @@ namespace DefqonEngine.UI.Timeline.Control
             List<LampGroup> available = new();
             foreach (var entry in LightManager.Instance.groupList)
             {
-                if (trackManager.FindTrackFromGroup(entry.group) == null)
+                if (TimelineTrackManager.Instance.FindTrackFromGroup(entry.group) == null)
                     available.Add(entry.group);
             }
             return available;
@@ -153,7 +146,7 @@ namespace DefqonEngine.UI.Timeline.Control
 
         private List<TimelineTrack> GetTracksForRemove()
         {
-            return new List<TimelineTrack>(trackManager.Tracks);
+            return new List<TimelineTrack>(TimelineTrackManager.Instance.Tracks);
         }
 
         private void ShowDropdownNearButton(Button button)
