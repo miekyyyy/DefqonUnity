@@ -1,4 +1,5 @@
 using DefqonEngine.Lighting.Data;
+using DefqonEngine.Lighting.Groups;
 using DefqonEngine.UI.Timeline.Common;
 using DefqonEngine.UI.Timeline.Development.Events;
 using UnityEngine;
@@ -39,8 +40,7 @@ namespace DefqonEngine.UI.Timeline.Control
             float time = Mathf.Max(0f, TimelineView.Instance.XToTime(local.x));
 
             // stuur naar EventManager
-            Debug.Log($"Right click op track {track.trackIndex} op tijd {time}, op x {local.x} en y {local.y}");
-            TimelineEventManager.Instance.CreateEvent(track.trackIndex, time);
+            TimelineEventManager.Instance.CreateEvent<LightEvent>(track.trackIndex, track.lampGroup.id, time);
         }
 
         void HandleZoom()

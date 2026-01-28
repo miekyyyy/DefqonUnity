@@ -9,6 +9,7 @@ namespace DefqonEngine.Lighting.Groups
         public int id;
         public string groupName;
         public List<int> lampIds;
+        public int priority = 0;
 
         public void SetColor(Color color)
         {

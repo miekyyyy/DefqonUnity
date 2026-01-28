@@ -56,22 +56,14 @@ namespace DefqonEngine.Lighting.Runtime
                     groups[entry.Id] = entry.group;
             }
         }
-
-        public void ApplyEvent(LightEvent e)
+        public void ApplyEvent(LightEvent e, Color color)
         {
-            switch (e.targetType)
+            if (groups.TryGetValue(e.targetId, out var group))
             {
-                case TargetType.Lamp:
-                    if (lamps.TryGetValue(e.targetId, out var lamp))
-                        lamp.SetColor(e.color);
-                    break;
-
-                case TargetType.Group:
-                    if (groups.TryGetValue(e.targetId, out var group))
-                        group.SetColor(e.color);
-                    break;
+                group.SetColor(color);
             }
         }
+
 
         public void RegisterLamp(int id, EmissiveLamp lamp)
         {

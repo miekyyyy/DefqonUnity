@@ -38,13 +38,16 @@ namespace DefqonEngine.Lighting.Runtime
         public void ApplyColorEmissive(Color color, float intensity)
         {
             Color emissive = color * intensity;
+
             materialInstance.SetColor("_EmissionColor", emissive);
             DynamicGI.SetEmissive(rend, emissive);
         }
+
 
         public void SetColor(Color color)
         {
             ApplyColorEmissive(color, intensity);
         }
+
     }
 }

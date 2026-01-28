@@ -33,7 +33,7 @@ namespace DefqonEngine.UI.Timeline.Development.Events
             }
         }
 
-        private void OnEventAdded(LightEvent ev)
+        private void OnEventAdded(TimelineEvent ev)
         {
             TimelineTrack track = TimelineTrackManager.Instance.FindTrackByIndex(ev.trackIndex);
             if (track == null)
@@ -45,7 +45,6 @@ namespace DefqonEngine.UI.Timeline.Development.Events
             TimelineEventView view = Instantiate(eventPrefab, eventsLayer);
             view.Initialize(ev, track);
             SelectEvent(view);
-            Debug.Log($"Event toegevoegd: track {ev.trackIndex}, time {ev.time}, op x {((RectTransform)view.transform).anchoredPosition.x} en y {((RectTransform)view.transform).anchoredPosition.y}");
         }
         private void OnEventRemoved()
         {

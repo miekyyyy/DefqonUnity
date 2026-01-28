@@ -1,52 +1,50 @@
+using Unity.Plastic.Newtonsoft.Json;
+using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
-using DefqonEngine.Lighting.Data;
-using System.Collections.Generic;
 using DefqonEngine.UI.Timeline.Development.Events;
 
 namespace DefqonEngine.UI.Timeline.Common
 {
-    [System.Serializable]
-    public class TimelineSaveData
-    {
-        public List<LightEvent> events = new();
-    }
-
     public class TimelineSaveManager : MonoBehaviour
     {
+        [SerializeField] string directoryName = "TimelineSaves";
+        string SavePath => Path.Combine(Application.persistentDataPath, directoryName, "events.json");
 
-        string SavePath => Path.Combine(Application.persistentDataPath, "timeline.json");
+        private JsonSerializerSettings settings = new JsonSerializerSettings
+        {
+            TypeNameHandling = TypeNameHandling.All,  // Cruciaal voor polymorfisme
+            Formatting = Formatting.Indented
+        };
 
-        //public void Save()
-        //{
-        //    var data = new TimelineSaveData();
-        //    foreach (var track in trackManager.Tracks)
-        //        data.events.AddRange(track.events);
+        public void SaveCurrentManager()
+        {
+            TimelineEventManager manager = TimelineEventManager.Instance;
+            Save(manager.events);
+        }
+        public void LoadToCurrentManager()
+        {
+            TimelineEventManager manager = TimelineEventManager.Instance;
+            List<TimelineEvent> events = Load();
+            manager.SetEvents(events);
+        }
 
-        //    File.WriteAllText(SavePath, JsonUtility.ToJson(data, true));
-        //    Debug.Log("Timeline saved");
-        //}
+        public void Save(List<TimelineEvent> events)
+        {
+            string json = JsonConvert.SerializeObject(events, settings);
+            File.WriteAllText(SavePath, json);
+            Debug.Log($"Timeline saved to {SavePath}");
+        }
 
-        //public void Load()
-        //{
-        //    if (!File.Exists(SavePath))
-        //    {
-        //        Debug.LogWarning("No save file found");
-        //        return;
-        //    }
+        public List<TimelineEvent> Load()
+        {
+            if (!File.Exists(SavePath))
+                return new List<TimelineEvent>();
 
-        //    string json = File.ReadAllText(SavePath);
-        //    var data = JsonUtility.FromJson<TimelineSaveData>(json);
-
-        //    trackManager.ClearAll();
-
-        //    foreach (var ev in data.events)
-        //    {
-        //        var track = trackManager.Tracks[ev.trackIndex];
-        //        track.AddEvent(ev);
-        //    }
-
-        //    Debug.Log("Timeline loaded");
-        //}
+            string json = File.ReadAllText(SavePath);
+            List<TimelineEvent> events = JsonConvert.DeserializeObject<List<TimelineEvent>>(json, settings);
+            Debug.Log($"Timeline loaded from {SavePath}, {events.Count} events");
+            return events;
+        }
     }
 }

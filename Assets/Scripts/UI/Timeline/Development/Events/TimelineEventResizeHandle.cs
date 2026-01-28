@@ -16,7 +16,9 @@ namespace DefqonEngine.UI.Timeline.Development.Events
         float startStartTime;
         float startDuration;
         [Header("Selections")]
-        [SerializeField] Image image;
+        [SerializeField] Image visual;
+        [SerializeField] Image hitArea;
+
         [SerializeField] Color defaultColor;
         [SerializeField] Color selectedColor;
 
@@ -67,12 +69,18 @@ namespace DefqonEngine.UI.Timeline.Development.Events
 
         public void Deselect()
         {
-            image.color = defaultColor;
+            visual.color = defaultColor;
         }
 
         public void Select()
         {
-            image.color = selectedColor;
+            visual.color = selectedColor;
         }
+
+        public void SetVisible(bool visible)
+        {
+            visual.enabled = visible;
+        }
+
     }
 }
