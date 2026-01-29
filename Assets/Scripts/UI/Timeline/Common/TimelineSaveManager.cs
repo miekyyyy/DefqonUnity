@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 using DefqonEngine.UI.Timeline.Development.Events;
+using DefqonEngine.Common;
 
 namespace DefqonEngine.UI.Timeline.Common
 {
@@ -31,20 +32,28 @@ namespace DefqonEngine.UI.Timeline.Common
 
         public void Save(List<TimelineEvent> events)
         {
+            // Ensure directory exists
+            string dir = Path.GetDirectoryName(SavePath);
+            if (!Directory.Exists(dir))
+                Directory.CreateDirectory(dir);
+
             string json = JsonConvert.SerializeObject(events, settings);
             File.WriteAllText(SavePath, json);
+
             Debug.Log($"Timeline saved to {SavePath}");
         }
 
         public List<TimelineEvent> Load()
         {
             if (!File.Exists(SavePath))
+            {
+                Debug.Log("No timeline save found, returning empty list");
                 return new List<TimelineEvent>();
+            }
 
             string json = File.ReadAllText(SavePath);
-            List<TimelineEvent> events = JsonConvert.DeserializeObject<List<TimelineEvent>>(json, settings);
-            Debug.Log($"Timeline loaded from {SavePath}, {events.Count} events");
-            return events;
+            return JsonConvert.DeserializeObject<List<TimelineEvent>>(json, settings)
+                   ?? new List<TimelineEvent>();
         }
     }
 }

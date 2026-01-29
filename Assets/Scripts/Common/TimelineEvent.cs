@@ -2,7 +2,7 @@ using Unity.Plastic.Newtonsoft.Json;
 using Unity.Plastic.Newtonsoft.Json.Converters;
 using UnityEngine;
 
-namespace DefqonEngine
+namespace DefqonEngine.Common
 {
     [JsonObject(MemberSerialization.OptIn)]
     public class TimelineEvent
