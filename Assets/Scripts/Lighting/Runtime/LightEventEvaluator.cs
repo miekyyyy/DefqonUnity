@@ -17,6 +17,8 @@ public static class LightEventEvaluator
         // normaliseer tijd over duration
         float t = (globalTime - start) / e.duration;
         t = Mathf.Clamp01(t);
+        if(e.inverted)
+            t = 1f - t;
 
         switch (e.lightEffectType)
         {
@@ -26,8 +28,7 @@ public static class LightEventEvaluator
 
             case LightEffectType.Fade:
                 {
-                    float curveT = e.fadeCurve.Evaluate(t);
-                    result = Color.LerpUnclamped(lowerColor, e.color, curveT);
+                    result = CalculateFade(e, lowerColor, t);
                     break;
                 }
 
@@ -40,5 +41,32 @@ public static class LightEventEvaluator
         }
 
         return true;
+    }
+
+
+    static Color CalculateFade(LightEvent e, Color lowerColor, float t)
+    {
+        switch (e.fadeCurve)
+        {
+            case CurveType.EaseIn:
+                {
+                    float curveT = t * t;
+                    return Color.LerpUnclamped(lowerColor, e.color, curveT);
+                }
+
+            case CurveType.EaseOut:
+                {
+                    float curveT = t * (2 - t);
+                    return Color.LerpUnclamped(lowerColor, e.color, curveT);
+                }
+
+            case CurveType.EaseInOut:
+                {
+                    float curveT = t < 0.5f ? 2 * t * t : -1 + (4 - 2 * t) * t;
+                    return Color.LerpUnclamped(lowerColor, e.color, curveT);
+                }
+            default:
+                return Color.LerpUnclamped(lowerColor, e.color, t);
+        }
     }
 }

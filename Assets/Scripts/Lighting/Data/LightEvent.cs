@@ -1,6 +1,9 @@
+using DefqonEngine.Common;
+using DefqonEngine.Common.Data;
 using Unity.Plastic.Newtonsoft.Json;
 using Unity.Plastic.Newtonsoft.Json.Converters;
 using UnityEngine;
+using EventType = DefqonEngine.Common.EventType;
 
 namespace DefqonEngine.Lighting.Data
 {
@@ -8,8 +11,9 @@ namespace DefqonEngine.Lighting.Data
     public class LightEvent : TimelineEvent
     {
         [JsonProperty] public LightEffectType lightEffectType;
-        [JsonProperty] public Color color = Color.white;
-        [JsonProperty] public AnimationCurve fadeCurve = AnimationCurve.Linear(0, 0, 1, 1);
+        [JsonProperty] public SerializableColor color = Color.white;
+        [JsonProperty] public CurveType fadeCurve = CurveType.Linear;
+        [JsonProperty] public bool inverted = false;
 
         public LightEvent()
         {
@@ -23,6 +27,15 @@ namespace DefqonEngine.Lighting.Data
         Fade,
         Chase,
         Converge,
+    }
+
+    [JsonConverter(typeof(StringEnumConverter))]
+    public enum CurveType
+    {
+        Linear,
+        EaseIn,
+        EaseOut,
+        EaseInOut,
     }
 
 }

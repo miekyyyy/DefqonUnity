@@ -1,3 +1,4 @@
+using DefqonEngine.Common;
 using DefqonEngine.Lighting.Data;
 using DefqonEngine.UI.Timeline.Common;
 using System;
@@ -21,6 +22,7 @@ namespace DefqonEngine.UI.Timeline.Development.Events
         {
             TimelineEventManager.Instance.OnEventAdded += OnEventAdded;
             TimelineEventManager.Instance.OnEventRemoved += OnEventRemoved;
+            TimelineEventManager.Instance.OnEventRemovedSpecified += OnEventRemovedSpecified;
         }
 
 
@@ -30,6 +32,7 @@ namespace DefqonEngine.UI.Timeline.Development.Events
             {
                 TimelineEventManager.Instance.OnEventAdded -= OnEventAdded;
                 TimelineEventManager.Instance.OnEventRemoved -= OnEventRemoved;
+                TimelineEventManager.Instance.OnEventRemovedSpecified -= OnEventRemovedSpecified;
             }
         }
 
@@ -50,6 +53,10 @@ namespace DefqonEngine.UI.Timeline.Development.Events
         {
             Destroy(selectedView.gameObject);
             selectedView = null;
+        }
+        private void OnEventRemovedSpecified(TimelineEvent timelineEvent)
+        {
+            //Destroy(timelineEvent.gameObject);
         }
 
         public void SelectEvent(TimelineEventView timelineEventView)

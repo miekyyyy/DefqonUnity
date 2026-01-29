@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using DefqonEngine.Lighting.Data;
 using DefqonEngine.Lighting.Groups;
+using DefqonEngine.Common;
 
 namespace DefqonEngine.UI.Timeline.Development.Events
 {
@@ -14,6 +15,7 @@ namespace DefqonEngine.UI.Timeline.Development.Events
 
         public event Action<TimelineEvent> OnEventAdded;
         public event Action OnEventRemoved;
+        public event Action<TimelineEvent> OnEventRemovedSpecified;
 
         void Awake() => Instance = this;
 
@@ -47,7 +49,7 @@ namespace DefqonEngine.UI.Timeline.Development.Events
         public void RemoveEvent(TimelineEvent timelineEvent)
         {
             events.Remove(timelineEvent);
-            OnEventRemoved?.Invoke();
+            OnEventRemovedSpecified?.Invoke(timelineEvent);
         }
 
         public TimelineEvent GetPreviousEvent(TimelineEvent ev)
