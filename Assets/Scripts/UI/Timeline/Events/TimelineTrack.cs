@@ -1,12 +1,9 @@
-﻿
-using DefqonEngine.Lighting.Data;
-using DefqonEngine.Lighting.Groups;
-using DefqonEngine.UI.Timeline.Common;
+﻿using DefqonEngine.Lighting.Groups;
 using DefqonEngine.UI.Timeline.Control;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace DefqonEngine.UI.Timeline.Development.Events
+namespace DefqonEngine.UI.Timeline.Events
 {
     public class TimelineTrack : MonoBehaviour, IPointerClickHandler
     {

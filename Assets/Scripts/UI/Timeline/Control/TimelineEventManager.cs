@@ -1,11 +1,9 @@
+using DefqonEngine.Common;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using DefqonEngine.Lighting.Data;
-using DefqonEngine.Lighting.Groups;
-using DefqonEngine.Common;
 
-namespace DefqonEngine.UI.Timeline.Development.Events
+namespace DefqonEngine.UI.Timeline.Events
 {
     public class TimelineEventManager : MonoBehaviour
     {
@@ -16,6 +14,7 @@ namespace DefqonEngine.UI.Timeline.Development.Events
         public event Action<TimelineEvent> OnEventAdded;
         public event Action OnEventRemoved;
         public event Action<TimelineEvent> OnEventRemovedSpecified;
+        public event Action<TimelineEvent> OnEventSelected;
 
         void Awake() => Instance = this;
 
@@ -40,7 +39,7 @@ namespace DefqonEngine.UI.Timeline.Development.Events
             if (TimelineEventViewManager.Instance.selectedView == null)
                 return;
 
-            TimelineEvent selectedTimelineEvent = TimelineEventViewManager.Instance.selectedView.lightEvent;
+            TimelineEvent selectedTimelineEvent = TimelineEventViewManager.Instance.selectedView.timelineEvent;
 
             events.Remove(selectedTimelineEvent);
             OnEventRemoved?.Invoke();
@@ -97,6 +96,11 @@ namespace DefqonEngine.UI.Timeline.Development.Events
                 RemoveEvent(timelineEvent);
             }
             this.events = events;
+        }
+
+        public void SelectEvent(TimelineEvent lightEvent)
+        {
+            OnEventSelected.Invoke(lightEvent);
         }
     }
 }
