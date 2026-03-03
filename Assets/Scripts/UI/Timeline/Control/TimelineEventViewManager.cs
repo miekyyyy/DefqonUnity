@@ -1,18 +1,22 @@
 using DefqonEngine.Common;
-using DefqonEngine.Lighting.Data;
-using DefqonEngine.UI.Timeline.Common;
 using System;
+using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
-namespace DefqonEngine.UI.Timeline.Development.Events
+namespace DefqonEngine.UI.Timeline.Events
 {
     public class TimelineEventViewManager : MonoBehaviour
     {
         public static TimelineEventViewManager Instance { get; private set; }
+
+        public List<TimelineEventView> views = new();
+
         public Transform eventsLayer;           // Parent voor alle event visuals
         public TimelineEventView eventPrefab;   // Prefab voor individuele events
 
         public TimelineEventView selectedView;
+
 
         private void Awake()
         {
@@ -23,8 +27,9 @@ namespace DefqonEngine.UI.Timeline.Development.Events
             TimelineEventManager.Instance.OnEventAdded += OnEventAdded;
             TimelineEventManager.Instance.OnEventRemoved += OnEventRemoved;
             TimelineEventManager.Instance.OnEventRemovedSpecified += OnEventRemovedSpecified;
+            TimelineEventManager.Instance.OnEventSelected += OnEventSelected;
         }
-
+         
 
         void OnDisable()
         {
@@ -33,6 +38,7 @@ namespace DefqonEngine.UI.Timeline.Development.Events
                 TimelineEventManager.Instance.OnEventAdded -= OnEventAdded;
                 TimelineEventManager.Instance.OnEventRemoved -= OnEventRemoved;
                 TimelineEventManager.Instance.OnEventRemovedSpecified -= OnEventRemovedSpecified;
+                TimelineEventManager.Instance.OnEventSelected -= OnEventSelected;
             }
         }
 
@@ -47,8 +53,14 @@ namespace DefqonEngine.UI.Timeline.Development.Events
 
             TimelineEventView view = Instantiate(eventPrefab, eventsLayer);
             view.Initialize(ev, track);
-            SelectEvent(view);
+            OnEventSelected(view.timelineEvent);
         }
+        
+        public TimelineEventView GetViewFromEvent(TimelineEvent timelineEvent)
+        {
+            return views.FirstOrDefault(view => view.timelineEvent == timelineEvent);
+        }
+
         private void OnEventRemoved()
         {
             Destroy(selectedView.gameObject);
@@ -56,18 +68,18 @@ namespace DefqonEngine.UI.Timeline.Development.Events
         }
         private void OnEventRemovedSpecified(TimelineEvent timelineEvent)
         {
-            //Destroy(timelineEvent.gameObject);
+            Destroy(GetViewFromEvent(timelineEvent).gameObject);
         }
 
-        public void SelectEvent(TimelineEventView timelineEventView)
+        public void OnEventSelected(TimelineEvent timelineEvent)
         {
-            if(selectedView != null)
+
+            if (selectedView != null)
             {
                 selectedView.Deselect();
             }
-            selectedView = timelineEventView;
-            timelineEventView.Select();
-
+            selectedView = GetViewFromEvent(timelineEvent);
+            selectedView.Select();
         }
 
         public void DeselectEvent()

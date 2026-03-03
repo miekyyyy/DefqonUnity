@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-namespace DefqonEngine.UI.Timeline.Development.Events
+namespace DefqonEngine.UI.Timeline.Events
 {
     public class TimelineTrackManager : MonoBehaviour
     {

@@ -1,14 +1,12 @@
-﻿using UnityEngine;
-using UnityEngine.EventSystems;
-using DefqonEngine.Lighting.Data;
+﻿using DefqonEngine.Common;
 using DefqonEngine.UI.Timeline.Common;
-using System;
-using UnityEngine.UI;
-using NUnit.Framework;
+using DefqonEngine.UI.Timeline.Events;
 using System.Collections.Generic;
-using DefqonEngine.Common;
+using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
-namespace DefqonEngine.UI.Timeline.Development.Events
+namespace DefqonEngine.UI.Timeline.Events
 {
     public class TimelineEventView : MonoBehaviour, IBeginDragHandler, IDragHandler, IPointerClickHandler
     {
@@ -19,7 +17,7 @@ namespace DefqonEngine.UI.Timeline.Development.Events
         [SerializeField] Color defaultColor;
         [SerializeField] Color selectedColor;
         [Header("Settings")]
-        public TimelineEvent lightEvent;
+        public TimelineEvent timelineEvent;
         public TimelineTrack track;
         public float minDuration = 0.1f;
         [SerializeField] float minWidthForHandles = 80f;
@@ -28,20 +26,20 @@ namespace DefqonEngine.UI.Timeline.Development.Events
 
         public float startTime
         {
-            get => lightEvent.time;
+            get => timelineEvent.time;
             set
             {
-                lightEvent.time = value;
+                timelineEvent.time = value;
                 UpdateVisual();
             }
         }
 
         public float duration
         {
-            get => lightEvent.duration;
+            get => timelineEvent.duration;
             set
             {
-                lightEvent.duration = Mathf.Max(value, minDuration);
+                timelineEvent.duration = Mathf.Max(value, minDuration);
                 UpdateVisual();
             }
         }
@@ -49,9 +47,10 @@ namespace DefqonEngine.UI.Timeline.Development.Events
 
         public void Initialize(TimelineEvent ev, TimelineTrack t)
         {
-            lightEvent = ev;
+            timelineEvent = ev;
             track = t;
             TimelineView.Instance.OnViewChanged += UpdateVisual;
+            TimelineEventViewManager.Instance.views.Add(this);
             UpdateVisual();
         }
 
@@ -59,12 +58,14 @@ namespace DefqonEngine.UI.Timeline.Development.Events
         {
             if (TimelineView.Instance != null)
                 TimelineView.Instance.OnViewChanged -= UpdateVisual;
+            if(TimelineEventViewManager.Instance != null)
+                TimelineEventViewManager.Instance.views.Remove(this);
         }
 
         public void UpdateVisual()
         {
-            float x = TimelineView.Instance.TimeToX(lightEvent.time);
-            float w = lightEvent.duration * TimelineView.Instance.pixelsPerSecond;
+            float x = TimelineView.Instance.TimeToX(timelineEvent.time);
+            float w = timelineEvent.duration * TimelineView.Instance.pixelsPerSecond;
 
             rect.anchoredPosition = new Vector2(x, track.GetTrackY());
             rect.sizeDelta = new Vector2(w, rect.sizeDelta.y);
@@ -84,7 +85,7 @@ namespace DefqonEngine.UI.Timeline.Development.Events
 
         public void OnPointerClick(PointerEventData eventData)
         {
-            TimelineEventViewManager.Instance.SelectEvent(this);
+            TimelineEventManager.Instance.SelectEvent(this.timelineEvent);
         }
 
         public void OnBeginDrag(PointerEventData eventData)
@@ -109,21 +110,21 @@ namespace DefqonEngine.UI.Timeline.Development.Events
             );
 
             float x = Mathf.Max(0f, local.x - dragOffset);
-            lightEvent.time = CheckCollision(TimelineView.Instance.XToTime(x));
+            timelineEvent.time = CheckCollision(TimelineView.Instance.XToTime(x));
             UpdateVisual();
         }
 
         private float CheckCollision(float candidateTime)
         {
             float start = candidateTime;
-            float end = candidateTime + lightEvent.duration;
+            float end = candidateTime + timelineEvent.duration;
 
             foreach (var other in TimelineEventManager.Instance.events)
             {
-                if (other == lightEvent)
+                if (other == timelineEvent)
                     continue;
 
-                if (other.trackIndex != lightEvent.trackIndex)
+                if (other.trackIndex != timelineEvent.trackIndex)
                     continue;
 
                 float otherStart = other.time;
@@ -131,16 +132,16 @@ namespace DefqonEngine.UI.Timeline.Development.Events
 
                 if (start < otherEnd && end > otherStart)
                 {
-                    if (candidateTime > lightEvent.time)
+                    if (candidateTime > timelineEvent.time)
                     {
-                        start = otherStart - lightEvent.duration;
+                        start = otherStart - timelineEvent.duration;
                     }
                     else
                     {
                         start = otherEnd;
                     }
 
-                    end = start + lightEvent.duration;
+                    end = start + timelineEvent.duration;
                 }
             }
 
