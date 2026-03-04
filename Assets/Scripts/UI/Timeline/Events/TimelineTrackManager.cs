@@ -1,4 +1,5 @@
 using DefqonEngine.Lighting.Groups;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -17,6 +18,9 @@ namespace DefqonEngine.UI.Timeline.Events
 
         private readonly List<TimelineTrack> tracks = new();
         private readonly Dictionary<TimelineTrack, TimelineTrackLabel> labels = new();
+
+        public event Action<TimelineTrack> OnTrackAdded;
+        public event Action<TimelineTrack> OnTrackRemoved;
         void Awake()
         {
             Instance = this;
@@ -36,6 +40,7 @@ namespace DefqonEngine.UI.Timeline.Events
             labels[track] = label;
 
             RebuildLayout();
+            OnTrackAdded?.Invoke(track);
             return track;
         }
 
@@ -53,7 +58,7 @@ namespace DefqonEngine.UI.Timeline.Events
                 if (label != null)
                     Destroy(label.gameObject);
             }
-
+            OnTrackRemoved?.Invoke(track);
             RebuildLayout();
         }
 

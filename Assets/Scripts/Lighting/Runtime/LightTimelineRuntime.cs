@@ -1,4 +1,5 @@
 ﻿using DefqonEngine.Lighting.Data;
+using DefqonEngine.UI.Timeline.Control;
 using DefqonEngine.UI.Timeline.Events;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,7 +8,6 @@ namespace DefqonEngine.Lighting.Runtime
 {
     public class LightTimelineRuntime : MonoBehaviour
     {
-        public AudioSource audioSource;
         private struct ActiveLightEvent
         {
             public int priority;
@@ -16,9 +16,8 @@ namespace DefqonEngine.Lighting.Runtime
 
         void LateUpdate()
         {
-            if (audioSource == null) return;
 
-            float currentTime = audioSource.time;
+            float currentTime = TimelineAudioController.Instance.GetCurrentTime();
 
             // Verzamel actieve events per lamp
             Dictionary<int, List<ActiveLightEvent>> perLampEvents = new();

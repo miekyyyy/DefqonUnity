@@ -1,6 +1,5 @@
 ﻿using DefqonEngine.Common;
 using DefqonEngine.UI.Timeline.Common;
-using DefqonEngine.UI.Timeline.Events;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -16,6 +15,7 @@ namespace DefqonEngine.UI.Timeline.Events
         [SerializeField] Image image;
         [SerializeField] Color defaultColor;
         [SerializeField] Color selectedColor;
+
         [Header("Settings")]
         public TimelineEvent timelineEvent;
         public TimelineTrack track;
@@ -44,12 +44,12 @@ namespace DefqonEngine.UI.Timeline.Events
             }
         }
 
-
         public void Initialize(TimelineEvent ev, TimelineTrack t)
         {
             timelineEvent = ev;
             track = t;
             TimelineView.Instance.OnViewChanged += UpdateVisual;
+            TimelineTrackManager.Instance.OnTrackRemoved += OnTrackRemoved;
             UpdateVisual();
         }
 
@@ -57,6 +57,12 @@ namespace DefqonEngine.UI.Timeline.Events
         {
             if (TimelineView.Instance != null)
                 TimelineView.Instance.OnViewChanged -= UpdateVisual;
+        }
+
+        void OnTrackRemoved(TimelineTrack removedTrack)
+        {
+            if (removedTrack == track)
+                TimelineEventManager.Instance.RemoveEvent(timelineEvent);
         }
 
         public void UpdateVisual()
@@ -69,16 +75,13 @@ namespace DefqonEngine.UI.Timeline.Events
 
             UpdateResizeHandles(w);
         }
+
         private void UpdateResizeHandles(float width)
         {
             bool showVisuals = width >= minWidthForHandles;
-
             foreach (var handle in resizeHandles)
-            {
                 handle.SetVisible(showVisuals);
-            }
         }
-
 
         public void OnPointerClick(PointerEventData eventData)
         {
@@ -93,7 +96,6 @@ namespace DefqonEngine.UI.Timeline.Events
                 eventData.pressEventCamera,
                 out Vector2 local
             );
-
             dragOffset = local.x - rect.anchoredPosition.x;
         }
 
@@ -118,10 +120,7 @@ namespace DefqonEngine.UI.Timeline.Events
 
             foreach (var other in TimelineEventManager.Instance.events)
             {
-                if (other == timelineEvent)
-                    continue;
-
-                if (other.trackIndex != timelineEvent.trackIndex)
+                if (other == timelineEvent || other.trackIndex != timelineEvent.trackIndex)
                     continue;
 
                 float otherStart = other.time;
@@ -130,13 +129,9 @@ namespace DefqonEngine.UI.Timeline.Events
                 if (start < otherEnd && end > otherStart)
                 {
                     if (candidateTime > timelineEvent.time)
-                    {
                         start = otherStart - timelineEvent.duration;
-                    }
                     else
-                    {
                         start = otherEnd;
-                    }
 
                     end = start + timelineEvent.duration;
                 }
@@ -145,22 +140,18 @@ namespace DefqonEngine.UI.Timeline.Events
             return Mathf.Max(0f, start);
         }
 
-
         public void Deselect()
         {
             image.color = defaultColor;
             foreach (var item in resizeHandles)
-            {
                 item.Deselect();
-            }
         }
+
         public void Select()
         {
             image.color = selectedColor;
             foreach (var item in resizeHandles)
-            {
                 item.Select();
-            }
         }
     }
 }

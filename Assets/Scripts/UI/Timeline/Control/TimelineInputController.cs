@@ -24,7 +24,7 @@ namespace DefqonEngine.UI.Timeline.Control
             }
             if (Input.GetKeyDown(KeyCode.Delete))
             {
-                TimelineEventManager.Instance.RemoveEvent();
+                TimelineEventManager.Instance.RemoveEventSelected();
             }
         }
 

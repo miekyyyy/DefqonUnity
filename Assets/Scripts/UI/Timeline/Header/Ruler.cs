@@ -1,4 +1,6 @@
 using DefqonEngine.UI.Timeline.Common;
+using DefqonEngine.UI.Timeline.Control;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -9,6 +11,7 @@ namespace DefqonEngine.UI.Timeline.Header
     public class Ruler : MonoBehaviour
     {
         [Header("References")]
+        [SerializeField] TextMeshProUGUI timeDisplay;
         public RectTransform tickContainer;
         public GameObject majorTickPrefab;
         public GameObject minorTickPrefab;
@@ -32,6 +35,12 @@ namespace DefqonEngine.UI.Timeline.Header
         void Awake()
         {
             TimelineView.Instance.OnViewChanged += Refresh;
+        }
+
+        void Update()
+        {
+            TimeSpan time = TimeSpan.FromSeconds(TimelineAudioController.Instance.GetCurrentTime());
+            timeDisplay.text = time.ToString("mm':'ss':'ff");
         }
 
         void Refresh()
