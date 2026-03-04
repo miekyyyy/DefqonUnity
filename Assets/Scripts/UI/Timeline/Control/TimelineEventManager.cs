@@ -15,6 +15,7 @@ namespace DefqonEngine.UI.Timeline.Events
         public event Action OnEventRemoved;
         public event Action<TimelineEvent> OnEventRemovedSpecified;
         public event Action<TimelineEvent> OnEventSelected;
+        public event Action OnEventDeselected;
 
         void Awake() => Instance = this;
 
@@ -89,18 +90,25 @@ namespace DefqonEngine.UI.Timeline.Events
             return next;
         }
 
-        public void SetEvents(List<TimelineEvent> events)
+        public void SetEvents(List<TimelineEvent> incomingEvents)
         {
-            foreach (var timelineEvent in events)
+            foreach (var timelineEvent in new List<TimelineEvent>(events))
             {
                 RemoveEvent(timelineEvent);
             }
-            this.events = events;
+
+            events.Clear();
+            events = incomingEvents;
         }
 
         public void SelectEvent(TimelineEvent lightEvent)
         {
+            DeselectEvent();
             OnEventSelected.Invoke(lightEvent);
+        }
+        public void DeselectEvent()
+        {
+            OnEventDeselected.Invoke();
         }
     }
 }
