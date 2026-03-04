@@ -46,10 +46,10 @@ namespace DefqonEngine.UI.Timeline.Control
 
         private void UpdateLightEvent()
         {
-            if (TimelineEventViewManager.Instance.selectedView == null)
+            if (TimelineEventManager.Instance.selectedEvent == null)
                 return;
 
-            if (TimelineEventViewManager.Instance.selectedView.timelineEvent is not LightEvent lightEvent)
+            if (TimelineEventManager.Instance.selectedEvent is not LightEvent lightEvent)
                 return;
 
             Color newColor = new Color(

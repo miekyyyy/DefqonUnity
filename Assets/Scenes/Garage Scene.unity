@@ -1343,53 +1343,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 231307063}
   m_CullTransparentMesh: 1
---- !u!1 &246281894
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 246281896}
-  - component: {fileID: 246281895}
-  m_Layer: 0
-  m_Name: TimelinePlayhead
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &246281895
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 246281894}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 51a7aafd148c7dd468b2d635501fee97, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: DefqonEngine::DefqonEngine.UI.Timeline.TimelinePlayhead
-  rect: {fileID: 7675083776447002810}
-  audioSource: {fileID: 2116936544}
-  scrollMargin: 50
---- !u!4 &246281896
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 246281894}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -933.0465, y: 670.15283, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1072299307}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &262720167
 GameObject:
   m_ObjectHideFlags: 0
@@ -1501,28 +1454,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 273402312}
-  - component: {fileID: 273402311}
+  - component: {fileID: 273402313}
   m_Layer: 0
-  m_Name: TimelinePlayer
+  m_Name: TimelineAudioController
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &273402311
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 273402310}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f2c771f5552533e419d78ec973002e50, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: DefqonEngine::DefqonEngine.Lighting.Runtime.LightTimelinePlayer
-  audioSource: {fileID: 2116936544}
-  timeDisplay: {fileID: 1819201778}
 --- !u!4 &273402312
 Transform:
   m_ObjectHideFlags: 0
@@ -1539,6 +1478,22 @@ Transform:
   - {fileID: 2116936543}
   m_Father: {fileID: 1072299307}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &273402313
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 273402310}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52ebfc49bfe5f454c97fb4e38a34c538, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: DefqonEngine::DefqonEngine.UI.Timeline.TimelineAudioController
+  audioSource: {fileID: 2116936544}
+  playButton: {fileID: 0}
+  pauseButton: {fileID: 0}
+  stopButton: {fileID: 0}
 --- !u!1 &291510324
 GameObject:
   m_ObjectHideFlags: 0
@@ -6698,6 +6653,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20d63427a1a5e03479bd8fcfa3abd89d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: DefqonEngine::DefqonEngine.UI.Timeline.Development.Events.TimelineEventManager
+  eventsLayer: {fileID: 1989079775}
+  viewPrefab: {fileID: 679124670352901299, guid: 938bc29bd18011443a6cee83b1af6dbf, type: 3}
 --- !u!1 &332401973
 GameObject:
   m_ObjectHideFlags: 0
@@ -7134,7 +7091,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1049544054}
   m_Direction: 2
   m_Value: 0
-  m_Size: 0.99999875
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -7893,7 +7850,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e8532c5ce7d56c48b41c7ab5150fe17, type: 3}
   m_Name: 
   m_EditorClassIdentifier: DefqonEngine::DefqonEngine.Lighting.Runtime.LightTimelineRuntime
-  audioSource: {fileID: 2116936544}
 --- !u!1 &491089553
 GameObject:
   m_ObjectHideFlags: 0
@@ -8769,54 +8725,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: -20}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!1 &669230569
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 669230570}
-  - component: {fileID: 669230571}
-  m_Layer: 0
-  m_Name: TimelineEventViewManage
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &669230570
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 669230569}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1072299307}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &669230571
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 669230569}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 42829b5e629d4cc4a849fedd821d28d0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: DefqonEngine::DefqonEngine.UI.Timeline.Development.Events.TimelineEventViewManager
-  views: []
-  eventsLayer: {fileID: 1989079775}
-  eventPrefab: {fileID: 679124670352901299, guid: 938bc29bd18011443a6cee83b1af6dbf, type: 3}
-  selectedView: {fileID: 0}
 --- !u!1 &671453954
 GameObject:
   m_ObjectHideFlags: 0
@@ -17128,9 +17036,7 @@ Transform:
   m_Children:
   - {fileID: 273402312}
   - {fileID: 1740673637}
-  - {fileID: 246281896}
   - {fileID: 332401975}
-  - {fileID: 669230570}
   - {fileID: 327888529}
   - {fileID: 381427795}
   - {fileID: 489799201}
@@ -25977,7 +25883,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.00068021414}
+  m_AnchoredPosition: {x: 0, y: 0.0000586658}
   m_SizeDelta: {x: 0, y: 300}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &1696532708
@@ -26282,7 +26188,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1740673637}
   - component: {fileID: 1740673636}
-  - component: {fileID: 1740673638}
   m_Layer: 0
   m_Name: TimelineInputController
   m_TagString: Untagged
@@ -26317,22 +26222,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1072299307}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1740673638
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1740673635}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 52ebfc49bfe5f454c97fb4e38a34c538, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: DefqonEngine::DefqonEngine.UI.Timeline.TimelineAudioController
-  audioSource: {fileID: 2116936544}
-  playButton: {fileID: 0}
-  pauseButton: {fileID: 0}
-  stopButton: {fileID: 0}
 --- !u!1 &1748295364
 GameObject:
   m_ObjectHideFlags: 0
@@ -33269,6 +33158,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 834a3635df829414aaa9a56c574b971e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: DefqonEngine::DefqonEngine.UI.Timeline.Ruler
+  timeDisplay: {fileID: 1819201778}
   tickContainer: {fileID: 941637610}
   majorTickPrefab: {fileID: 6695854426328060108, guid: 3c6ddf2fa2d9129459c992d1e5973a6f, type: 3}
   minorTickPrefab: {fileID: 6695854426328060108, guid: cdc3b1d188e3319418e87583b1654e06, type: 3}
@@ -33547,7 +33437,6 @@ GameObject:
   - component: {fileID: 2128188807}
   - component: {fileID: 2128188809}
   - component: {fileID: 2128188808}
-  - component: {fileID: 2128188810}
   - component: {fileID: 2128188811}
   m_Layer: 5
   m_Name: PlayheadHandle
@@ -33613,19 +33502,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2128188806}
   m_CullTransparentMesh: 1
---- !u!114 &2128188810
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2128188806}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 34b4cc28dcb42534abd9c8deb5b69715, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: DefqonEngine::DefqonEngine.UI.Timeline.TimelinePlayheadHandle
-  playhead: {fileID: 246281895}
 --- !u!114 &2128188811
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -33643,10 +33519,10 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 2128188810}
-          m_TargetAssemblyTypeName: DefqonEngine.UI.Timeline.TimelinePlayheadHandle,
+        - m_Target: {fileID: 7675083776447002811}
+          m_TargetAssemblyTypeName: DefqonEngine.UI.Timeline.Control.TimelinePlayhead,
             DefqonEngine
-          m_MethodName: OnBeginDrag
+          m_MethodName: BeginDrag
           m_Mode: 0
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -33660,10 +33536,10 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 2128188810}
-          m_TargetAssemblyTypeName: DefqonEngine.UI.Timeline.TimelinePlayheadHandle,
+        - m_Target: {fileID: 7675083776447002811}
+          m_TargetAssemblyTypeName: DefqonEngine.UI.Timeline.Control.TimelinePlayhead,
             DefqonEngine
-          m_MethodName: OnDrag
+          m_MethodName: Drag
           m_Mode: 0
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -33677,10 +33553,10 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 2128188810}
-          m_TargetAssemblyTypeName: DefqonEngine.UI.Timeline.TimelinePlayheadHandle,
+        - m_Target: {fileID: 7675083776447002811}
+          m_TargetAssemblyTypeName: DefqonEngine.UI.Timeline.Control.TimelinePlayhead,
             DefqonEngine
-          m_MethodName: OnEndDrag
+          m_MethodName: EndDrag
           m_Mode: 0
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -42776,6 +42652,7 @@ GameObject:
   - component: {fileID: 7675083776447002810}
   - component: {fileID: 6655199026708237243}
   - component: {fileID: 6834763345241641997}
+  - component: {fileID: 7675083776447002811}
   m_Layer: 5
   m_Name: Playhead
   m_TagString: Untagged
@@ -44046,6 +43923,20 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 4, y: 1046.3}
   m_Pivot: {x: 0.5, y: 1}
+--- !u!114 &7675083776447002811
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6695854425746026689}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 51a7aafd148c7dd468b2d635501fee97, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: DefqonEngine::DefqonEngine.UI.Timeline.TimelinePlayhead
+  rect: {fileID: 7675083776447002810}
+  scrollMargin: 50
 --- !u!23 &7689261420976166001
 MeshRenderer:
   m_ObjectHideFlags: 0

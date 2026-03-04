@@ -6,10 +6,10 @@ namespace DefqonEngine.UI.Timeline.Control
     public class TimelineAudioController : MonoBehaviour
     {
         public static TimelineAudioController Instance { get; private set; }
-        public AudioSource audioSource;
-        public Button playButton;
-        public Button pauseButton;
-        public Button stopButton;
+        [SerializeField] AudioSource audioSource;
+        [SerializeField] Button playButton;
+        [SerializeField] Button pauseButton;
+        [SerializeField] Button stopButton;
 
         private void Awake()
         {
@@ -58,6 +58,34 @@ namespace DefqonEngine.UI.Timeline.Control
         {
             if (audioSource == null) return;
             audioSource.Stop();
+        }
+
+        public void SetTime(float time)
+        {
+            if (audioSource == null || audioSource.clip == null) return;
+
+            // Zorg dat tijd binnen clip boundaries blijft
+            float clampedTime = Mathf.Clamp(time, 0f, audioSource.clip.length);
+
+            // Forceer AudioSource initialisatie
+            if (!audioSource.isPlaying)
+            {
+                audioSource.Play();
+                audioSource.Pause();
+            }
+
+            audioSource.time = clampedTime;
+        }
+
+        public float GetCurrentTime()
+        {
+            if (audioSource == null) return 0f;
+            return audioSource.time;
+        }
+
+        public bool IsPlaying()
+        {
+            return audioSource != null && audioSource.isPlaying;
         }
     }
 }

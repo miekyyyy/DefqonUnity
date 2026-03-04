@@ -7,7 +7,6 @@ namespace DefqonEngine.UI.Timeline.Control
     public class TimelinePlayhead : MonoBehaviour
     {
         public RectTransform rect;
-        public AudioSource audioSource;
 
 
         public float scrollMargin = 50f;
@@ -17,9 +16,8 @@ namespace DefqonEngine.UI.Timeline.Control
         void LateUpdate()
         {
             if (isDragging) return;
-            if (audioSource == null || audioSource.clip == null) return;
 
-            float x = TimelineView.Instance.TimeToX(audioSource.time);
+            float x = TimelineView.Instance.TimeToX(TimelineAudioController.Instance.GetCurrentTime());
             x = Mathf.Clamp(x, 0f, TimelineView.Instance.Width);
 
             rect.anchoredPosition = new Vector2(x, rect.anchoredPosition.y);
@@ -27,18 +25,21 @@ namespace DefqonEngine.UI.Timeline.Control
             HandleAutoScroll(x);
         }
 
-        public void BeginDrag()
+        public void BeginDrag(BaseEventData eventData)
         {
 
             isDragging = true; 
-            isPlaying = audioSource != null && audioSource.isPlaying;
-            if (audioSource != null)
-                audioSource.Pause();
 
+            isPlaying = TimelineAudioController.Instance.IsPlaying();
+            TimelineAudioController.Instance.Pause();
         }
 
-        public void Drag(PointerEventData pointerEventData)
+        public void Drag(BaseEventData eventData)
         {
+            if(eventData is not PointerEventData)
+                return;
+            PointerEventData pointerEventData = (PointerEventData)eventData;
+
             if (!RectTransformUtility.ScreenPointToLocalPointInRectangle(
                 TimelineView.Instance.panel,
                 pointerEventData.position,
@@ -50,19 +51,16 @@ namespace DefqonEngine.UI.Timeline.Control
 
             float time = TimelineView.Instance.XToTime(x);
 
-            if (audioSource.clip != null)
-                time = Mathf.Clamp(time, 0f, audioSource.clip.length);
-
-            audioSource.time = time;
+            TimelineAudioController.Instance.SetTime(time);
 
             rect.anchoredPosition = new Vector2(x, rect.anchoredPosition.y);
         }
 
-        public void EndDrag()
+        public void EndDrag(BaseEventData eventData)
         {
             isDragging = false;
-            if (isPlaying && audioSource != null)
-                audioSource.UnPause();
+            if (isPlaying)
+                TimelineAudioController.Instance.Play();
             isPlaying = false;
         }
 
