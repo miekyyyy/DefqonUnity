@@ -50,7 +50,6 @@ namespace DefqonEngine.UI.Timeline.Events
             timelineEvent = ev;
             track = t;
             TimelineView.Instance.OnViewChanged += UpdateVisual;
-            TimelineEventViewManager.Instance.views.Add(this);
             UpdateVisual();
         }
 
@@ -58,8 +57,6 @@ namespace DefqonEngine.UI.Timeline.Events
         {
             if (TimelineView.Instance != null)
                 TimelineView.Instance.OnViewChanged -= UpdateVisual;
-            if(TimelineEventViewManager.Instance != null)
-                TimelineEventViewManager.Instance.views.Remove(this);
         }
 
         public void UpdateVisual()

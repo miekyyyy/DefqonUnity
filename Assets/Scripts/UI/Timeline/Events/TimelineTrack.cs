@@ -13,7 +13,7 @@ namespace DefqonEngine.UI.Timeline.Events
         {
             if (eventData.button != PointerEventData.InputButton.Right)
             {
-                TimelineEventViewManager.Instance.DeselectEvent();
+                TimelineEventManager.Instance.DeselectEvent();
                 return;
             }
             TimelineInputController.Instance.OnTrackRightClicked(this, eventData);
