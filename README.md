@@ -6,7 +6,7 @@ Whats cooler than having your own mini stage at home?!
 
 ## Overview
 
-This project is designed to be used together with the [Defqon Editor](https://github.com/miekyyyy/DefqonUnity).
+This project is designed to be used together with the [Defqon Stage](https://github.com/miekyyyy/Defqon).
 
 ---
 
