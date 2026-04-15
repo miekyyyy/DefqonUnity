@@ -1,6 +1,10 @@
 using DefqonEngine.Common;
 using DefqonEngine.Lighting.Data;
+using DefqonEngine.Lighting.Groups;
+using DefqonEngine.Lighting.Runtime;
 using DefqonEngine.UI.Timeline.Events;
+using System;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -9,6 +13,8 @@ namespace DefqonEngine.UI.Timeline.Control
 {
     public class LightEventEditor : MonoBehaviour
     {
+        public static LightEventEditor Instance { get; private set; }
+
         [Header("Display")]
         [SerializeField] TMP_Text valueRText;
         [SerializeField] TMP_Text valueGText;
@@ -19,6 +25,21 @@ namespace DefqonEngine.UI.Timeline.Control
         [SerializeField] Slider valueRInput;
         [SerializeField] Slider valueGInput;
         [SerializeField] Slider valueBInput;
+
+        [Header("Groups")]
+        [SerializeField] GameObject groupParent;
+        [SerializeField] LightEventGroupButton groupButton;
+
+        public void Awake()
+        {
+            if (Instance != null && Instance != this)
+            {
+                Destroy(this);
+                return;
+            }
+            Instance = this;
+            LoadGroups();
+        }
 
         public void SetDisplayR(float r)
         {
@@ -33,18 +54,27 @@ namespace DefqonEngine.UI.Timeline.Control
             SetDisplay(valueBText, b);
         }
 
+        private void LoadGroups()
+        {
+            var available = LightManager.Instance.groupList;
+            foreach (var g in available)
+            {
+                Instantiate(groupButton, groupParent.transform).Initialize(g.group);
+            }
+        }
+
         private void SetDisplay(TMP_Text targetText, float value)
         {
             targetText.text = value.ToString("0");
-            UpdateColor();
-            UpdateLightEvent();
+            UpdateColorDisplay();
+            UpdateLightEventColor();
         }
-        private void UpdateColor()
+        private void UpdateColorDisplay()
         {
             colorDisplay.color = new Color(valueRInput.value / 255f, valueGInput.value / 255f, valueBInput.value / 255f);
         }
 
-        private void UpdateLightEvent()
+        private void UpdateLightEventColor()
         {
             if (TimelineEventManager.Instance.selectedEvent == null)
                 return;
@@ -70,18 +100,24 @@ namespace DefqonEngine.UI.Timeline.Control
                 return;
             }
 
-            Debug.Log("LightEvent found, loading color data...");
             Color c = lightEvent.color;
 
             valueRInput.value = c.r * 255f;
-            Debug.Log($"Loaded R: {valueRInput.value}");
             valueGInput.value = c.g * 255f;
-            Debug.Log($"Loaded G: {valueGInput.value}");
             valueBInput.value = c.b * 255f;
-            Debug.Log($"Loaded B: {valueBInput.value}");
 
             //Force Sliders to update their display values
-            UpdateColor();
+            UpdateColorDisplay();
+        }
+
+        public void UpdateLightEventGroup(LampGroup lampGroup)
+        {
+            if (TimelineEventManager.Instance.selectedEvent == null)
+                return;
+            if (TimelineEventManager.Instance.selectedEvent is not LightEvent lightEvent)
+                return;
+
+            lightEvent.targetId = lampGroup.id;
         }
     }
 }

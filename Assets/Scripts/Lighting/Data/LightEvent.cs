@@ -1,7 +1,7 @@
 using DefqonEngine.Common;
 using DefqonEngine.Common.Data;
-using Unity.Plastic.Newtonsoft.Json;
-using Unity.Plastic.Newtonsoft.Json.Converters;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using UnityEngine;
 using EventType = DefqonEngine.Common.EventType;
 

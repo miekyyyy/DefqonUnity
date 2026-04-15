@@ -4,7 +4,8 @@ namespace DefqonEngine.Lighting.Data
     {
         None,
         Seconds,
-        BPM
+        BPM,
+        Events
     }
 
     [System.Serializable]

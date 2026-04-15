@@ -7,7 +7,6 @@ namespace DefqonEngine.UI.Timeline.Events
 {
     public class TimelineTrack : MonoBehaviour, IPointerClickHandler
     {
-        public LampGroup lampGroup;
         public int trackIndex;
         public void OnPointerClick(PointerEventData eventData)
         {
@@ -23,7 +22,5 @@ namespace DefqonEngine.UI.Timeline.Events
         {
             return GetComponent<RectTransform>().anchoredPosition.y;
         }
-
-        public string GroupName => lampGroup.groupName; // leesbare naam voor labels
     }
 }

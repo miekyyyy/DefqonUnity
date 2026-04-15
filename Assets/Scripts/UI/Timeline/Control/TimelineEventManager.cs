@@ -1,7 +1,9 @@
 using DefqonEngine.Common;
+using DefqonEngine.Lighting.Data;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using EventType = DefqonEngine.Common.EventType;
 
 namespace DefqonEngine.UI.Timeline.Events
 {
@@ -59,6 +61,43 @@ namespace DefqonEngine.UI.Timeline.Events
             views[timelineEvent] = view;
 
             OnEventAdded?.Invoke(timelineEvent);
+        }
+
+        public void ReplaceEvent(String eventType)
+        {
+            if (!Enum.TryParse(eventType, out EventType parsedType))
+            {
+                Debug.LogError($"Invalid event type: {eventType}");
+                return;
+            }
+
+            if (selectedEvent == null)
+            {
+                Debug.LogWarning("No event selected to replace.");
+                return;
+            }
+
+            EventType type = parsedType;
+            TimelineEvent newEvent = type switch
+            {
+                EventType.Light => new LightEvent
+                {
+                    trackIndex = selectedEvent.trackIndex,
+                    targetId = selectedEvent.targetId,
+                    time = selectedEvent.time,
+                    duration = selectedEvent.duration
+                },
+                EventType.Smoke => new SmokeEvent
+                {
+                    trackIndex = selectedEvent.trackIndex,
+                    targetId = selectedEvent.targetId,
+                    time = selectedEvent.time,
+                    duration = selectedEvent.duration
+                },
+                _ => throw new NotImplementedException()
+            };
+            RemoveEvent(selectedEvent);
+            AddEvent(newEvent);
         }
 
         public void RemoveEvent(TimelineEvent timelineEvent)

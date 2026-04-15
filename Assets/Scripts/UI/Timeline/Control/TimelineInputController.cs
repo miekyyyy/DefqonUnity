@@ -1,3 +1,5 @@
+using DefqonEngine.Common;
+using DefqonEngine.Common.Data;
 using DefqonEngine.Lighting.Data;
 using DefqonEngine.Lighting.Groups;
 using DefqonEngine.UI.Timeline.Common;
@@ -40,7 +42,17 @@ namespace DefqonEngine.UI.Timeline.Control
             float time = Mathf.Max(0f, TimelineView.Instance.XToTime(local.x));
 
             // stuur naar EventManager
-            TimelineEventManager.Instance.CreateEvent<LightEvent>(track.trackIndex, track.lampGroup.id, time);
+            EventPreset selectedPreset = PresetManager.Instance.GetSelectedPreset();
+            if (selectedPreset == null || selectedPreset.timelineEvent == null)
+            {
+                TimelineEventManager.Instance.CreateEvent<LightEvent>(track.trackIndex, 0, time);
+                return;
+            }
+            TimelineEvent newEvent = selectedPreset.timelineEvent;
+            newEvent.duration = 1f;
+            newEvent.time = time;
+            newEvent.trackIndex = track.trackIndex;
+            TimelineEventManager.Instance.AddEvent(newEvent);
         }
 
         void HandleZoom()

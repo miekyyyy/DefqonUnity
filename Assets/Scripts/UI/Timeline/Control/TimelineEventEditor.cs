@@ -49,11 +49,8 @@ namespace DefqonEngine.UI.Timeline.Control
                 case EventType.Light:
                     editor.GetComponent<LightEventEditor>().LoadFromEvent(timelineEvent);
                     break;
-                case EventType.Laser:
-                    break;
-                case EventType.Servo:
-                    break;
                 case EventType.Smoke:
+                    editor.GetComponent<SmokeEventEditor>().LoadFromEvent(timelineEvent);
                     break;
                 default:
                     Debug.LogWarning("[TimelineEventEditor] EventType not implemented yet]");

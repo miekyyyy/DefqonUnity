@@ -15,24 +15,24 @@ namespace DefqonEngine.UI.Timeline.Control
         public Button addTrackButton;
         public Button removeTrackButton;
         public Button snappingButton;
-        public TMP_Dropdown groupDropdown;
+        //public TMP_Dropdown groupDropdown;
 
-        private bool dropdownOpen = false;
-        private bool adding = false;
-        private bool removing = false;
+        //private bool dropdownOpen = false;
+        //private bool adding = false;
+        //private bool removing = false;
 
         void Start()
         {
-            groupDropdown.gameObject.SetActive(false);
+            //groupDropdown.gameObject.SetActive(false);
 
             addTrackButton.onClick.AddListener(OnAddTrackClicked);
             removeTrackButton.onClick.AddListener(OnRemoveTrackClicked);
             snappingButton.onClick.AddListener(OnSnappingClicked);
 
-            groupDropdown.onValueChanged.AddListener(OnDropdownSelected);
+            //groupDropdown.onValueChanged.AddListener(OnDropdownSelected);
         }
 
-        private void OnDropdownSelected(int index)
+        /*private void OnDropdownSelected(int index)
         {
             if (index <= 0)
                 return; // placeholder gekozen → niks doen
@@ -68,33 +68,26 @@ namespace DefqonEngine.UI.Timeline.Control
 
             HideDropdown();
         }
+        */
 
         private void OnAddTrackClicked()
         {
-            if (dropdownOpen && adding)
-            {
-                HideDropdown();
-                return;
-            }
-
-            adding = true;
-            removing = false;
-            PopulateDropdownForAdd();
-            ShowDropdownNearButton(addTrackButton);
+            TimelineTrackManager.Instance.AddTrack();
         }
 
         private void OnRemoveTrackClicked()
         {
-            if (dropdownOpen && removing)
-            {
-                HideDropdown();
-                return;
-            }
+            TimelineTrackManager.Instance.RemoveTrack();
+            //if (dropdownOpen && removing)
+            //{
+            //    HideDropdown();
+            //    return;
+            //}
 
-            adding = false;
-            removing = true;
-            PopulateDropdownForRemove();
-            ShowDropdownNearButton(removeTrackButton);
+            //adding = false;
+            //removing = true;
+            //PopulateDropdownForRemove();
+            //ShowDropdownNearButton(removeTrackButton);
         }
 
         private void OnSnappingClicked()
@@ -102,6 +95,7 @@ namespace DefqonEngine.UI.Timeline.Control
             Debug.Log("[Toolbar] Snapping clicked (not implemented)");
         }
 
+        /*
         private void PopulateDropdownForAdd()
         {
             groupDropdown.ClearOptions();
@@ -171,5 +165,6 @@ namespace DefqonEngine.UI.Timeline.Control
             adding = false;
             removing = false;
         }
+        */
     }
 }
