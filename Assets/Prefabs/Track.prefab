@@ -36,7 +36,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 2200, y: 100}
+  m_SizeDelta: {x: 2646.8, y: 100}
   m_Pivot: {x: 0, y: 1}
 --- !u!222 &3998739262894136200
 CanvasRenderer:
@@ -88,11 +88,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 799e9210f67cc2240bbc1a3491d2c0df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: DefqonEngine::DefqonEngine.UI.Timeline.TimelineTrack
-  lampGroup:
-    id: 0
-    groupName: 
-    lampIds: 
   trackIndex: 0
-  events: []
-  eventsContainer: {fileID: 0}
-  eventPrefab: {fileID: 679124670352901299, guid: 938bc29bd18011443a6cee83b1af6dbf, type: 3}

@@ -64,6 +64,15 @@ namespace DefqonEngine.UI.Timeline.Control
             isPlaying = false;
         }
 
+        public void OnClickRuler(BaseEventData eventData)
+        {
+            if (eventData is not PointerEventData)
+                return;
+            BeginDrag(eventData);
+            Drag(eventData);
+            EndDrag(eventData);
+        }
+
         void HandleAutoScroll(float x)
         {
             float right = TimelineView.Instance.Width - scrollMargin;

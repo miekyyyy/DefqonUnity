@@ -11,7 +11,7 @@ namespace DefqonEngine.UI.Timeline.Events
         void Update()
         {
             if (track)
-                label.text = track.GroupName;
+                label.text = $"Track {track.trackIndex + 1}";
         }
     }
 }

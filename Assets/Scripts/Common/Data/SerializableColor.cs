@@ -1,7 +1,8 @@
-using Unity.Plastic.Newtonsoft.Json;
+using Newtonsoft.Json;
 using UnityEngine;
 
-namespace DefqonEngine.Common.Data{
+namespace DefqonEngine.Common.Data
+{
     [JsonObject(MemberSerialization.OptIn)]
     public struct SerializableColor
     {

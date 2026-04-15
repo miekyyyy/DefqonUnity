@@ -26,10 +26,9 @@ namespace DefqonEngine.UI.Timeline.Events
             Instance = this;
         }
 
-        public TimelineTrack AddTrack(LampGroup group)
+        public TimelineTrack AddTrack()
         {
             var track = Instantiate(trackPrefab, tracksParent);
-            track.lampGroup = group;
             track.trackIndex = tracks.Count;
 
             tracks.Add(track);
@@ -42,6 +41,13 @@ namespace DefqonEngine.UI.Timeline.Events
             RebuildLayout();
             OnTrackAdded?.Invoke(track);
             return track;
+        }
+        
+        public void RemoveTrack()
+        {
+            if (tracks.Count == 0) return;
+            var track = tracks.Last();
+            RemoveTrack(track);
         }
 
         public void RemoveTrack(TimelineTrack track)
@@ -101,14 +107,6 @@ namespace DefqonEngine.UI.Timeline.Events
             }
 
             tracksParent.sizeDelta = new Vector2(tracksParent.sizeDelta.x, y);
-        }
-
-        public TimelineTrack FindTrackFromGroup(LampGroup group)
-        {
-            foreach (var track in tracks)
-                if (track.lampGroup == group)
-                    return track;
-            return null;
         }
 
         public TimelineTrack FindTrackByIndex(int index)
