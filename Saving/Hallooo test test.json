@@ -1,0 +1,22 @@
+{
+  "$type": "DefqonEngine.EventPreset, DefqonEngine",
+  "Name": "Hallooo test test",
+  "timelineEvent": {
+    "$type": "DefqonEngine.Lighting.Data.LightEvent, DefqonEngine",
+    "lightEffectType": "Static",
+    "color": {
+      "$type": "DefqonEngine.Common.Data.SerializableColor, DefqonEngine",
+      "r": 1.0,
+      "g": 0.0,
+      "b": 0.0,
+      "a": 1.0
+    },
+    "fadeCurve": "Linear",
+    "inverted": false,
+    "time": 3.450632,
+    "duration": 4.81191,
+    "trackIndex": 1,
+    "targetId": 0,
+    "type": "Light"
+  }
+}

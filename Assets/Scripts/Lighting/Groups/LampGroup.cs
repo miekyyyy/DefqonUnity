@@ -1,3 +1,4 @@
+using DefqonEngine.Lighting.Runtime;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -15,7 +16,7 @@ namespace DefqonEngine.Lighting.Groups
         {
             foreach (int lampId in lampIds)
             {
-                if (Runtime.LightManager.Instance.lamps.TryGetValue(lampId, out var lamp))
+                if (LightManager.Instance.lamps.TryGetValue(lampId, out var lamp))
                     lamp.SetColor(color);
             }
         }
