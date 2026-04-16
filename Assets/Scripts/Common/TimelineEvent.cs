@@ -1,8 +1,5 @@
-using DefqonEngine.Lighting.Data;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
-using System;
-using UnityEngine;
 
 namespace DefqonEngine.Common
 {
