@@ -117,3 +117,4 @@ InitTestScene*.unity*
 /UserSettings/Layouts/default-6000.dwlt
 /Assets/NuGet.config
 /Assets/NuGet.config.meta
+/.nuget/

@@ -48,11 +48,7 @@ namespace DefqonEngine.UI.Timeline.Control
                 TimelineEventManager.Instance.CreateEvent<LightEvent>(track.trackIndex, 0, time);
                 return;
             }
-            TimelineEvent newEvent = selectedPreset.timelineEvent;
-            newEvent.duration = 1f;
-            newEvent.time = time;
-            newEvent.trackIndex = track.trackIndex;
-            TimelineEventManager.Instance.AddEvent(newEvent);
+            TimelineEventManager.Instance.CreateEvent(selectedPreset, track.trackIndex, time);
         }
 
         void HandleZoom()

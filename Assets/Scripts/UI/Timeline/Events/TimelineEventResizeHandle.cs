@@ -41,7 +41,10 @@ namespace DefqonEngine.UI.Timeline.Events
 
             if (side == ResizeSide.Left)
             {
-                float newStart = Mathf.Min(time, startStartTime + startDuration - 0.05f);
+                float newStart = Mathf.Min(time, startStartTime + startDuration - 0.05f); // Zorg dat de duur minimaal 0.05 seconden blijft
+
+                newStart = Mathf.Max(0, newStart); // Zorg dat de starttijd niet negatief wordt
+
                 var prev = TimelineEventManager.Instance.GetPreviousEvent(eventView.timelineEvent);
                 if (prev != null)
                 {

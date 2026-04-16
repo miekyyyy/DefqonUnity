@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 namespace DefqonEngine.UI.Timeline.Events
 {
-    public class TimelineEventView : MonoBehaviour, IBeginDragHandler, IDragHandler, IPointerClickHandler
+    public class TimelineEventView : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerClickHandler
     {
         [Header("UI")]
         public RectTransform rect;
@@ -97,6 +97,8 @@ namespace DefqonEngine.UI.Timeline.Events
                 out Vector2 local
             );
             dragOffset = local.x - rect.anchoredPosition.x;
+            
+            rect.SetAsLastSibling(); // Zorg dat het event boven andere events komt tijdens het slepen
         }
 
         public void OnDrag(PointerEventData eventData)
@@ -109,35 +111,17 @@ namespace DefqonEngine.UI.Timeline.Events
             );
 
             float x = Mathf.Max(0f, local.x - dragOffset);
-            timelineEvent.time = CheckCollision(TimelineView.Instance.XToTime(x));
+            float t = TimelineView.Instance.XToTime(x);
+
+            // Alleen visueel verplaatsen
+            timelineEvent.time = t;
             UpdateVisual();
         }
-
-        private float CheckCollision(float candidateTime)
+        public void OnEndDrag(PointerEventData eventData)
         {
-            float start = candidateTime;
-            float end = candidateTime + timelineEvent.duration;
-
-            foreach (var other in TimelineEventManager.Instance.events)
-            {
-                if (other == timelineEvent || other.trackIndex != timelineEvent.trackIndex)
-                    continue;
-
-                float otherStart = other.time;
-                float otherEnd = other.time + other.duration;
-
-                if (start < otherEnd && end > otherStart)
-                {
-                    if (candidateTime > timelineEvent.time)
-                        start = otherStart - timelineEvent.duration;
-                    else
-                        start = otherEnd;
-
-                    end = start + timelineEvent.duration;
-                }
-            }
-
-            return Mathf.Max(0f, start);
+            // Pas trimmen nadat het event los wordt gelaten, zodat andere events niet direct weg worden gehaald
+            TimelineEventManager.Instance.ApplyTrim(timelineEvent, timelineEvent.time);
+            UpdateVisual();
         }
 
         public void Deselect()
