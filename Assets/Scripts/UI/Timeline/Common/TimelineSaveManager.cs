@@ -27,7 +27,7 @@ namespace DefqonEngine.UI.Timeline.Common
         }
         public void LoadToCurrentManager()
         {
-            var paths = StandaloneFileBrowser.OpenFilePanel("Load Presets", "", "json", false);
+            var paths = StandaloneFileBrowser.OpenFilePanel("Load Timeline", "", "json", false);
             if (paths.Length == 0)
                 return;
 
