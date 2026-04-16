@@ -6,7 +6,6 @@ namespace DefqonEngine.Lighting.Runtime
 [RequireComponent(typeof(Renderer))]
     public class EmissiveLamp : MonoBehaviour
     {
-        [HideInInspector] public int lampId = 0;
         public float intensity = 10f;
         Material materialInstance;
         Renderer rend;
