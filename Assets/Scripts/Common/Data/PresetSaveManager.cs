@@ -29,7 +29,6 @@ namespace DefqonEngine.Common.Data
                 [typeof(LightEvent).FullName] = typeof(LightEvent),
                 [typeof(SmokeEvent).FullName] = typeof(SmokeEvent)
             };
-            private static readonly HashSet<Type> AllowedTypeSet = new HashSet<Type>(AllowedTypes.Values);
 
             public Type BindToType(string assemblyName, string typeName)
             {
@@ -43,7 +42,7 @@ namespace DefqonEngine.Common.Data
 
             public void BindToName(Type serializedType, out string assemblyName, out string typeName)
             {
-                if (!AllowedTypeSet.Contains(serializedType))
+                if (!AllowedTypes.ContainsValue(serializedType))
                 {
                     throw new JsonSerializationException($"Type '{serializedType.FullName}' is not allowed for preset serialization.");
                 }
