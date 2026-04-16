@@ -19,7 +19,7 @@ namespace DefqonEngine.Common.Data
         {
             //File saving
             var path = StandaloneFileBrowser.SaveFilePanel("Save Preset", "", "preset", "json");
-            if (string.IsNullOrEmpty(path))
+            if (string.IsNullOrEmpty(path) || TimelineEventManager.Instance.selectedEvent == null)
                 return;
 
             var preset = new EventPreset(
