@@ -1,6 +1,10 @@
 using DefqonEngine.UI.Timeline.Events;
+using DefqonEngine.Lighting.Data;
+using DefqonEngine.Common;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 using SFB;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
@@ -11,9 +15,43 @@ namespace DefqonEngine.Common.Data
     {
         private JsonSerializerSettings settings = new JsonSerializerSettings
         {
-            TypeNameHandling = TypeNameHandling.All,  // Cruciaal voor polymorfisme
+            TypeNameHandling = TypeNameHandling.Auto,
+            SerializationBinder = new PresetSerializationBinder(),
             Formatting = Formatting.Indented
         };
+
+        private sealed class PresetSerializationBinder : ISerializationBinder
+        {
+            private static readonly Dictionary<string, Type> AllowedTypes = new Dictionary<string, Type>
+            {
+                [typeof(EventPreset).FullName] = typeof(EventPreset),
+                [typeof(TimelineEvent).FullName] = typeof(TimelineEvent),
+                [typeof(LightEvent).FullName] = typeof(LightEvent),
+                [typeof(SmokeEvent).FullName] = typeof(SmokeEvent)
+            };
+            private static readonly HashSet<Type> AllowedTypeSet = new HashSet<Type>(AllowedTypes.Values);
+
+            public Type BindToType(string assemblyName, string typeName)
+            {
+                if (AllowedTypes.TryGetValue(typeName, out var type))
+                {
+                    return type;
+                }
+
+                throw new JsonSerializationException($"Type '{typeName}' is not allowed for preset deserialization.");
+            }
+
+            public void BindToName(Type serializedType, out string assemblyName, out string typeName)
+            {
+                if (!AllowedTypeSet.Contains(serializedType))
+                {
+                    throw new JsonSerializationException($"Type '{serializedType.FullName}' is not allowed for preset serialization.");
+                }
+
+                assemblyName = null;
+                typeName = serializedType.FullName;
+            }
+        }
         public void SavePreset()
         {
             //File saving
