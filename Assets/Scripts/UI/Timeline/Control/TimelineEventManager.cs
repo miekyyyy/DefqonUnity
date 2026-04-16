@@ -119,40 +119,50 @@ namespace DefqonEngine.UI.Timeline.Events
 
         public static T CloneEvent<T>(T source) where T : TimelineEvent, new()
         {
-            switch (source.type)
+            if (source == null)
             {
-                case EventType.Light:
-                    return (T)(TimelineEvent)new LightEvent
-                    {
-                        trackIndex = source.trackIndex,
-                        targetId = source.targetId,
-                        time = source.time,
-                        duration = source.duration,
-                        lightEffectType = (source as LightEvent).lightEffectType,
-                        color = (source as LightEvent).color,
-                        fadeCurve = (source as LightEvent).fadeCurve,
-                        inverted = (source as LightEvent).inverted,
-                        type = source.type
-                    };
-                case EventType.Smoke:
-                    return (T)(TimelineEvent)new SmokeEvent
-                    {
-                        trackIndex = source.trackIndex,
-                        targetId = source.targetId,
-                        time = source.time,
-                        duration = source.duration,
-                        type = source.type
-                    };
-                default:
-                    return (T)(TimelineEvent)new LightEvent
-                    {
-                        trackIndex = source.trackIndex,
-                        targetId = source.targetId,
-                        time = source.time,
-                        duration = source.duration,
-                        type = source.type
-                    };
+                throw new ArgumentNullException(nameof(source));
             }
+
+            if (source is LightEvent lightEvent)
+            {
+                if (source.type != EventType.Light)
+                {
+                    throw new InvalidOperationException($"Timeline event runtime type '{nameof(LightEvent)}' does not match declared type '{source.type}'.");
+                }
+
+                return (T)(TimelineEvent)new LightEvent
+                {
+                    trackIndex = source.trackIndex,
+                    targetId = source.targetId,
+                    time = source.time,
+                    duration = source.duration,
+                    lightEffectType = lightEvent.lightEffectType,
+                    color = lightEvent.color,
+                    fadeCurve = lightEvent.fadeCurve,
+                    inverted = lightEvent.inverted,
+                    type = source.type
+                };
+            }
+
+            if (source is SmokeEvent smokeEvent)
+            {
+                if (source.type != EventType.Smoke)
+                {
+                    throw new InvalidOperationException($"Timeline event runtime type '{nameof(SmokeEvent)}' does not match declared type '{source.type}'.");
+                }
+
+                return (T)(TimelineEvent)new SmokeEvent
+                {
+                    trackIndex = source.trackIndex,
+                    targetId = source.targetId,
+                    time = source.time,
+                    duration = source.duration,
+                    type = source.type
+                };
+            }
+
+            throw new NotImplementedException($"Cloning is not implemented for timeline event runtime type '{source.GetType().Name}'.");
         }
 
         public void RemoveEvent(TimelineEvent timelineEvent)
