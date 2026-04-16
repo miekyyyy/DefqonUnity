@@ -29,8 +29,6 @@ namespace DefqonEngine.Common.Data
             // Initialize standard buttons
             AddButton(new EventPreset("Light", new LightEvent()), true);
             AddButton(new EventPreset("Smoke", new SmokeEvent()), true);
-            AddButton(new EventPreset("Smoke 2", new SmokeEvent()), false);
-            AddButton(new EventPreset("Light 2", new LightEvent()), false);
         }
 
         public void AddButton(EventPreset preset, bool isDefault = false)

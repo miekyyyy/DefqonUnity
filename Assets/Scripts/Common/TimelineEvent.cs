@@ -1,5 +1,7 @@
+using DefqonEngine.Lighting.Data;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
+using System;
 using UnityEngine;
 
 namespace DefqonEngine.Common
@@ -11,7 +13,7 @@ namespace DefqonEngine.Common
         [JsonProperty] public float duration;
         [JsonProperty] public int trackIndex;
         [JsonProperty] public int targetId;
-        [JsonProperty] public EventType type = EventType.Light; // Nieuw veld voor type
+        [JsonProperty] public EventType type = EventType.Light;
     }
     [JsonConverter(typeof(StringEnumConverter))]
     public enum EventType

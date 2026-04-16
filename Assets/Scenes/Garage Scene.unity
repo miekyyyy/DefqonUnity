@@ -1805,6 +1805,7 @@ RectTransform:
   - {fileID: 491089554}
   - {fileID: 2074543918}
   - {fileID: 463255514}
+  - {fileID: 1657045256}
   m_Father: {fileID: 378523508}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -1862,6 +1863,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f32ea7f3f5b4dc47b8ebf3d3e7a15e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: DefqonEngine::DefqonEngine.UI.Timeline.Control.SmokeEventEditor
+  groupParent: {fileID: 2062016502}
+  groupButton: {fileID: 411718942970365537, guid: 524bccd28591ae04ba2f4e6f2526153d, type: 3}
 --- !u!1 &327888528
 GameObject:
   m_ObjectHideFlags: 0
@@ -2649,11 +2652,11 @@ Transform:
   m_GameObject: {fileID: 406676707}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1958.5492, y: 1289.1035, z: 0}
+  m_LocalPosition: {x: 241.52148, y: 279.51373, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1977288146}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &412435028
 GameObject:
@@ -3088,6 +3091,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 479875426}
+  - {fileID: 1839754330}
   m_Father: {fileID: 320471164}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
@@ -3827,8 +3831,9 @@ GameObject:
   - component: {fileID: 546680662}
   - component: {fileID: 546680664}
   - component: {fileID: 546680663}
+  - component: {fileID: 546680665}
   m_Layer: 0
-  m_Name: Particle System (7)
+  m_Name: Smoke 3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8652,6 +8657,19 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     vectorLabel1_3: W
+--- !u!114 &546680665
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 546680661}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a953d4be7d77fb14684a7369a1a0c716, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: DefqonEngine::DefqonEngine.SmokeMachine
+  _smokeParticleSystem: {fileID: 546680664}
 --- !u!1 &554527475
 GameObject:
   m_ObjectHideFlags: 0
@@ -8755,7 +8773,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd158e07bcef5cd4d8f43b78264e9ef2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EmissiveLamp
-  lampId: 0
   intensity: 10
 --- !u!1 &587270808
 GameObject:
@@ -8983,6 +9000,132 @@ CanvasRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 594498284}
+  m_CullTransparentMesh: 1
+--- !u!1 &647553613
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 647553614}
+  - component: {fileID: 647553617}
+  - component: {fileID: 647553616}
+  - component: {fileID: 647553615}
+  m_Layer: 5
+  m_Name: Scrollbar Vertical
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &647553614
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 647553613}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 2110707408}
+  m_Father: {fileID: 1657045256}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 1, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 20, y: 0}
+  m_Pivot: {x: 1, y: 0.5}
+--- !u!114 &647553615
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 647553613}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a4db7a114972834c8e4117be1d82ba3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Scrollbar
+  m_Navigation:
+    m_Mode: 3
+    m_WrapAround: 0
+    m_SelectOnUp: {fileID: 0}
+    m_SelectOnDown: {fileID: 0}
+    m_SelectOnLeft: {fileID: 0}
+    m_SelectOnRight: {fileID: 0}
+  m_Transition: 1
+  m_Colors:
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_ColorMultiplier: 1
+    m_FadeDuration: 0.1
+  m_SpriteState:
+    m_HighlightedSprite: {fileID: 0}
+    m_PressedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: 0}
+    m_DisabledSprite: {fileID: 0}
+  m_AnimationTriggers:
+    m_NormalTrigger: Normal
+    m_HighlightedTrigger: Highlighted
+    m_PressedTrigger: Pressed
+    m_SelectedTrigger: Selected
+    m_DisabledTrigger: Disabled
+  m_Interactable: 1
+  m_TargetGraphic: {fileID: 2039426373}
+  m_HandleRect: {fileID: 2039426372}
+  m_Direction: 2
+  m_Value: 0
+  m_Size: 1
+  m_NumberOfSteps: 0
+  m_OnValueChanged:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &647553616
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 647553613}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.13333334, g: 0.13333334, b: 0.13333334, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 0}
+  m_Type: 1
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &647553617
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 647553613}
   m_CullTransparentMesh: 1
 --- !u!1 &648864280
 GameObject:
@@ -9937,7 +10080,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 535.7322, y: -48.15088}
+  m_AnchoredPosition: {x: 535.7322, y: -48.151}
   m_SizeDelta: {x: 535.7322, y: 96.302}
   m_Pivot: {x: 1, y: 0.5}
 --- !u!114 &771813125
@@ -10069,7 +10212,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd158e07bcef5cd4d8f43b78264e9ef2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EmissiveLamp
-  lampId: 0
   intensity: 10
 --- !u!1 &788139146
 GameObject:
@@ -10768,7 +10910,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 903797078}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 926280951}
+        m_TargetAssemblyTypeName: DefqonEngine.Common.Data.PresetSaveManager, DefqonEngine
+        m_MethodName: SavePreset
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &903797078
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11217,12 +11371,12 @@ Transform:
   m_Children:
   - {fileID: 1748295367}
   - {fileID: 1135266903}
-  - {fileID: 1511908825}
-  - {fileID: 1551502911}
   - {fileID: 546680662}
   - {fileID: 2030834770}
   - {fileID: 1961775609}
   - {fileID: 1919016544}
+  - {fileID: 1511908825}
+  - {fileID: 1551502911}
   - {fileID: 4591754748740121146}
   - {fileID: 7994214521908069004}
   - {fileID: 6962848729393322438}
@@ -11814,7 +11968,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd158e07bcef5cd4d8f43b78264e9ef2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EmissiveLamp
-  lampId: 0
   intensity: 10
 --- !u!1 &1011809176
 GameObject:
@@ -12235,7 +12388,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1057611338}
   m_Layer: 0
-  m_Name: Leds
+  m_Name: Effects
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -12913,7 +13066,7 @@ RectTransform:
   m_Father: {fileID: 1300819964}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 0.9999981}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -12966,8 +13119,9 @@ GameObject:
   - component: {fileID: 1135266903}
   - component: {fileID: 1135266905}
   - component: {fileID: 1135266904}
+  - component: {fileID: 1135266906}
   m_Layer: 0
-  m_Name: Particle System (4)
+  m_Name: Smoke 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -17791,6 +17945,19 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     vectorLabel1_3: W
+--- !u!114 &1135266906
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1135266902}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a953d4be7d77fb14684a7369a1a0c716, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: DefqonEngine::DefqonEngine.SmokeMachine
+  _smokeParticleSystem: {fileID: 1135266905}
 --- !u!1 &1144601477
 GameObject:
   m_ObjectHideFlags: 0
@@ -19187,7 +19354,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd158e07bcef5cd4d8f43b78264e9ef2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EmissiveLamp
-  lampId: 0
   intensity: 10
 --- !u!1 &1326472625
 GameObject:
@@ -19912,7 +20078,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd158e07bcef5cd4d8f43b78264e9ef2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EmissiveLamp
-  lampId: 0
   intensity: 10
 --- !u!1 &1473349811
 GameObject:
@@ -20053,7 +20218,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd158e07bcef5cd4d8f43b78264e9ef2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EmissiveLamp
-  lampId: 0
   intensity: 10
 --- !u!1 &1475983931
 GameObject:
@@ -20194,7 +20358,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd158e07bcef5cd4d8f43b78264e9ef2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EmissiveLamp
-  lampId: 0
   intensity: 10
 --- !u!1 &1511908824
 GameObject:
@@ -20207,8 +20370,9 @@ GameObject:
   - component: {fileID: 1511908825}
   - component: {fileID: 1511908827}
   - component: {fileID: 1511908826}
+  - component: {fileID: 1511908828}
   m_Layer: 0
-  m_Name: Particle System (5)
+  m_Name: Smoke 7
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -25032,6 +25196,19 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     vectorLabel1_3: W
+--- !u!114 &1511908828
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1511908824}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a953d4be7d77fb14684a7369a1a0c716, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: DefqonEngine::DefqonEngine.SmokeMachine
+  _smokeParticleSystem: {fileID: 1511908827}
 --- !u!1 &1515308750
 GameObject:
   m_ObjectHideFlags: 0
@@ -25180,8 +25357,9 @@ GameObject:
   - component: {fileID: 1551502911}
   - component: {fileID: 1551502913}
   - component: {fileID: 1551502912}
+  - component: {fileID: 1551502914}
   m_Layer: 0
-  m_Name: Particle System (6)
+  m_Name: Smoke 8
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -30005,6 +30183,19 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     vectorLabel1_3: W
+--- !u!114 &1551502914
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1551502910}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a953d4be7d77fb14684a7369a1a0c716, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: DefqonEngine::DefqonEngine.SmokeMachine
+  _smokeParticleSystem: {fileID: 1551502913}
 --- !u!1 &1567378870
 GameObject:
   m_ObjectHideFlags: 0
@@ -30722,7 +30913,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1119876869}
   m_Direction: 2
   m_Value: 0
-  m_Size: 0.9999981
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -30868,8 +31059,205 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd158e07bcef5cd4d8f43b78264e9ef2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EmissiveLamp
-  lampId: 0
   intensity: 10
+--- !u!1 &1654738217
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1654738218}
+  - component: {fileID: 1654738221}
+  - component: {fileID: 1654738220}
+  - component: {fileID: 1654738219}
+  m_Layer: 5
+  m_Name: Viewport
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1654738218
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1654738217}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 2062016505}
+  m_Father: {fileID: 1657045256}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: -17, y: 0}
+  m_Pivot: {x: 0, y: 1}
+--- !u!114 &1654738219
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1654738217}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31a19414c41e5ae4aae2af33fee712f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Mask
+  m_ShowMaskGraphic: 0
+--- !u!114 &1654738220
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1654738217}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 10917, guid: 0000000000000000f000000000000000, type: 0}
+  m_Type: 1
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &1654738221
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1654738217}
+  m_CullTransparentMesh: 1
+--- !u!1 &1657045255
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1657045256}
+  - component: {fileID: 1657045259}
+  - component: {fileID: 1657045258}
+  - component: {fileID: 1657045257}
+  m_Layer: 5
+  m_Name: EffectTypes (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1657045256
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1657045255}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1654738218}
+  - {fileID: 647553614}
+  m_Father: {fileID: 320471164}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0.000061035156, y: -393.79102}
+  m_SizeDelta: {x: 0, y: -787.5814}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1657045257
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1657045255}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1aa08ab6e0800fa44ae55d278d1423e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.ScrollRect
+  m_Content: {fileID: 2062016505}
+  m_Horizontal: 0
+  m_Vertical: 1
+  m_MovementType: 1
+  m_Elasticity: 0.1
+  m_Inertia: 1
+  m_DecelerationRate: 0.135
+  m_ScrollSensitivity: 1
+  m_Viewport: {fileID: 1654738218}
+  m_HorizontalScrollbar: {fileID: 0}
+  m_VerticalScrollbar: {fileID: 647553615}
+  m_HorizontalScrollbarVisibility: 2
+  m_VerticalScrollbarVisibility: 2
+  m_HorizontalScrollbarSpacing: -3
+  m_VerticalScrollbarSpacing: -3
+  m_OnValueChanged:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &1657045258
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1657045255}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.113000005, g: 0.113000005, b: 0.113000005, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 0}
+  m_Type: 1
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &1657045259
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1657045255}
+  m_CullTransparentMesh: 1
 --- !u!1 &1664445432
 GameObject:
   m_ObjectHideFlags: 0
@@ -31495,8 +31883,9 @@ GameObject:
   - component: {fileID: 1748295367}
   - component: {fileID: 1748295366}
   - component: {fileID: 1748295365}
+  - component: {fileID: 1748295368}
   m_Layer: 0
-  m_Name: Particle System
+  m_Name: Smoke 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -36320,6 +36709,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 941439641}
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
+--- !u!114 &1748295368
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1748295364}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a953d4be7d77fb14684a7369a1a0c716, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: DefqonEngine::DefqonEngine.SmokeMachine
+  _smokeParticleSystem: {fileID: 1748295366}
 --- !u!1 &1749875643
 GameObject:
   m_ObjectHideFlags: 0
@@ -36423,8 +36825,82 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd158e07bcef5cd4d8f43b78264e9ef2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EmissiveLamp
-  lampId: 0
   intensity: 10
+--- !u!1 &1774156208
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1774156209}
+  - component: {fileID: 1774156211}
+  - component: {fileID: 1774156210}
+  m_Layer: 5
+  m_Name: Image
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1774156209
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1774156208}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1839754330}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1774156210
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1774156208}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: f3fcf1c33e1ed494f95e6dadd95aaf43, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &1774156211
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1774156208}
+  m_CullTransparentMesh: 1
 --- !u!1 &1784926264
 GameObject:
   m_ObjectHideFlags: 0
@@ -36773,7 +37249,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd158e07bcef5cd4d8f43b78264e9ef2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EmissiveLamp
-  lampId: 0
   intensity: 10
 --- !u!1 &1811110054
 GameObject:
@@ -37164,6 +37639,139 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!1 &1839754329
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1839754330}
+  - component: {fileID: 1839754333}
+  - component: {fileID: 1839754332}
+  - component: {fileID: 1839754331}
+  m_Layer: 5
+  m_Name: Button
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1839754330
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1839754329}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1774156209}
+  m_Father: {fileID: 463255514}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 1, y: 0.5}
+  m_AnchorMax: {x: 1, y: 0.5}
+  m_AnchoredPosition: {x: -20.000122, y: 0}
+  m_SizeDelta: {x: 80, y: 80}
+  m_Pivot: {x: 1, y: 0.5}
+--- !u!114 &1839754331
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1839754329}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Button
+  m_Navigation:
+    m_Mode: 3
+    m_WrapAround: 0
+    m_SelectOnUp: {fileID: 0}
+    m_SelectOnDown: {fileID: 0}
+    m_SelectOnLeft: {fileID: 0}
+    m_SelectOnRight: {fileID: 0}
+  m_Transition: 1
+  m_Colors:
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_ColorMultiplier: 1
+    m_FadeDuration: 0.1
+  m_SpriteState:
+    m_HighlightedSprite: {fileID: 0}
+    m_PressedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: 0}
+    m_DisabledSprite: {fileID: 0}
+  m_AnimationTriggers:
+    m_NormalTrigger: Normal
+    m_HighlightedTrigger: Highlighted
+    m_PressedTrigger: Pressed
+    m_SelectedTrigger: Selected
+    m_DisabledTrigger: Disabled
+  m_Interactable: 1
+  m_TargetGraphic: {fileID: 1839754332}
+  m_OnClick:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 926280951}
+        m_TargetAssemblyTypeName: DefqonEngine.Common.Data.PresetSaveManager, DefqonEngine
+        m_MethodName: SavePreset
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &1839754332
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1839754329}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.21960786, g: 0.21960786, b: 0.21960786, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: 76a28ccb9997a96428e153d08595c78f, type: 3}
+  m_Type: 1
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 7
+--- !u!222 &1839754333
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1839754329}
+  m_CullTransparentMesh: 1
 --- !u!1 &1857667851
 GameObject:
   m_ObjectHideFlags: 0
@@ -37299,6 +37907,83 @@ MonoBehaviour:
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.RectMask2D
   m_Padding: {x: 0, y: 0, z: 0, w: 0}
   m_Softness: {x: 0, y: 0}
+--- !u!1 &1875357655
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1875357656}
+  - component: {fileID: 1875357657}
+  m_Layer: 0
+  m_Name: SmokeManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1875357656
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1875357655}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1977288146}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1875357657
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1875357655}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d9621edf86109242907faae1c243207, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: DefqonEngine::DefqonEngine.SmokeManager
+  smokeList:
+  - id: 0
+    smokeMachine: {fileID: 1748295368}
+  - id: 1
+    smokeMachine: {fileID: 1135266906}
+  - id: 2
+    smokeMachine: {fileID: 546680665}
+  - id: 3
+    smokeMachine: {fileID: 2030834773}
+  - id: 4
+    smokeMachine: {fileID: 1961775612}
+  - id: 5
+    smokeMachine: {fileID: 1919016547}
+  - id: 6
+    smokeMachine: {fileID: 1511908828}
+  - id: 7
+    smokeMachine: {fileID: 1551502914}
+  groupList:
+  - group:
+      id: 0
+      groupName: Everything
+      smokeIds: 0000000001000000020000000300000004000000050000000600000007000000
+      priority: 0
+  - group:
+      id: 1
+      groupName: Front
+      smokeIds: 02000000030000000400000005000000
+      priority: 1
+  - group:
+      id: 2
+      groupName: Back
+      smokeIds: 00000000010000000600000007000000
+      priority: 1
 --- !u!1 &1875450385
 GameObject:
   m_ObjectHideFlags: 0
@@ -37573,8 +38258,9 @@ GameObject:
   - component: {fileID: 1919016544}
   - component: {fileID: 1919016546}
   - component: {fileID: 1919016545}
+  - component: {fileID: 1919016547}
   m_Layer: 0
-  m_Name: Particle System (10)
+  m_Name: Smoke 6
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -42398,6 +43084,19 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     vectorLabel1_3: W
+--- !u!114 &1919016547
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1919016543}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a953d4be7d77fb14684a7369a1a0c716, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: DefqonEngine::DefqonEngine.SmokeMachine
+  _smokeParticleSystem: {fileID: 1919016546}
 --- !u!1 &1922490493
 GameObject:
   m_ObjectHideFlags: 0
@@ -42641,8 +43340,9 @@ GameObject:
   - component: {fileID: 1961775609}
   - component: {fileID: 1961775611}
   - component: {fileID: 1961775610}
+  - component: {fileID: 1961775612}
   m_Layer: 0
-  m_Name: Particle System (9)
+  m_Name: Smoke 5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -47466,6 +48166,19 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     vectorLabel1_3: W
+--- !u!114 &1961775612
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1961775608}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a953d4be7d77fb14684a7369a1a0c716, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: DefqonEngine::DefqonEngine.SmokeMachine
+  _smokeParticleSystem: {fileID: 1961775611}
 --- !u!1 &1962722055
 GameObject:
   m_ObjectHideFlags: 0
@@ -47548,6 +48261,39 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1962722055}
   m_CullTransparentMesh: 1
+--- !u!1 &1977288145
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1977288146}
+  m_Layer: 0
+  m_Name: EffectManagers
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1977288146
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1977288145}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1717.0277, y: 1009.5898, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 406676709}
+  - {fileID: 1875357656}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1977766306
 GameObject:
   m_ObjectHideFlags: 0
@@ -47724,7 +48470,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 2550, y: -240}
+  m_SizeDelta: {x: 2646.8, y: -240}
   m_Pivot: {x: 0, y: 0}
 --- !u!114 &1989079776
 MonoBehaviour:
@@ -47891,8 +48637,9 @@ GameObject:
   - component: {fileID: 2030834770}
   - component: {fileID: 2030834772}
   - component: {fileID: 2030834771}
+  - component: {fileID: 2030834773}
   m_Layer: 0
-  m_Name: Particle System (8)
+  m_Name: Smoke 4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -52716,6 +53463,19 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     vectorLabel1_3: W
+--- !u!114 &2030834773
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2030834769}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a953d4be7d77fb14684a7369a1a0c716, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: DefqonEngine::DefqonEngine.SmokeMachine
+  _smokeParticleSystem: {fileID: 2030834772}
 --- !u!1 &2034821684
 GameObject:
   m_ObjectHideFlags: 0
@@ -52848,6 +53608,81 @@ CanvasRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2034821684}
+  m_CullTransparentMesh: 1
+--- !u!1 &2039426371
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2039426372}
+  - component: {fileID: 2039426374}
+  - component: {fileID: 2039426373}
+  m_Layer: 5
+  m_Name: Handle
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &2039426372
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2039426371}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2110707408}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 20, y: 20}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &2039426373
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2039426371}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.37254903, g: 0.37254903, b: 0.37254903, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: 76a28ccb9997a96428e153d08595c78f, type: 3}
+  m_Type: 1
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 7
+--- !u!222 &2039426374
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2039426371}
   m_CullTransparentMesh: 1
 --- !u!1 &2050177979
 GameObject:
@@ -53088,6 +53923,83 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!1 &2062016502
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2062016505}
+  - component: {fileID: 2062016504}
+  - component: {fileID: 2062016503}
+  m_Layer: 5
+  m_Name: Content
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &2062016503
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2062016502}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59f8146938fff824cb5fd77236b75775, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.VerticalLayoutGroup
+  m_Padding:
+    m_Left: 0
+    m_Right: 0
+    m_Top: 50
+    m_Bottom: 50
+  m_ChildAlignment: 1
+  m_Spacing: 50
+  m_ChildForceExpandWidth: 0
+  m_ChildForceExpandHeight: 0
+  m_ChildControlWidth: 0
+  m_ChildControlHeight: 0
+  m_ChildScaleWidth: 0
+  m_ChildScaleHeight: 0
+  m_ReverseArrangement: 0
+--- !u!114 &2062016504
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2062016502}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3245ec927659c4140ac4f8d17403cc18, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.ContentSizeFitter
+  m_HorizontalFit: 0
+  m_VerticalFit: 2
+--- !u!224 &2062016505
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2062016502}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1654738218}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0.00033688793}
+  m_SizeDelta: {x: 0, y: 100}
+  m_Pivot: {x: 0, y: 1}
 --- !u!1 &2074543917
 GameObject:
   m_ObjectHideFlags: 0
@@ -53370,6 +54282,42 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+--- !u!1 &2110707407
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2110707408}
+  m_Layer: 5
+  m_Name: Sliding Area
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &2110707408
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2110707407}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 2039426372}
+  m_Father: {fileID: 647553614}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: -20, y: -20}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &2116936542
 GameObject:
   m_ObjectHideFlags: 0
@@ -56860,7 +57808,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd158e07bcef5cd4d8f43b78264e9ef2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EmissiveLamp
-  lampId: 0
   intensity: 10
 --- !u!4 &3060585391614823211
 Transform:
@@ -57823,7 +58770,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd158e07bcef5cd4d8f43b78264e9ef2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EmissiveLamp
-  lampId: 0
   intensity: 10
 --- !u!1 &4078543484591348921
 GameObject:
@@ -58506,7 +59452,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd158e07bcef5cd4d8f43b78264e9ef2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EmissiveLamp
-  lampId: 0
   intensity: 10
 --- !u!4 &4942415437234604408
 Transform:
@@ -58647,7 +59592,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd158e07bcef5cd4d8f43b78264e9ef2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EmissiveLamp
-  lampId: 0
   intensity: 12
 --- !u!23 &5062616617419669979
 MeshRenderer:
@@ -59213,7 +60157,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd158e07bcef5cd4d8f43b78264e9ef2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EmissiveLamp
-  lampId: 0
   intensity: 10
 --- !u!33 &5531121034641634684
 MeshFilter:
@@ -59595,7 +60538,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd158e07bcef5cd4d8f43b78264e9ef2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EmissiveLamp
-  lampId: 0
   intensity: 10
 --- !u!4 &5795077115442452889
 Transform:
@@ -59771,7 +60713,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd158e07bcef5cd4d8f43b78264e9ef2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EmissiveLamp
-  lampId: 0
   intensity: 12
 --- !u!33 &5835659713977748837
 MeshFilter:
@@ -60291,7 +61232,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd158e07bcef5cd4d8f43b78264e9ef2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EmissiveLamp
-  lampId: 0
   intensity: 10
 --- !u!4 &6308319247535565836
 Transform:
@@ -60433,7 +61373,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd158e07bcef5cd4d8f43b78264e9ef2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EmissiveLamp
-  lampId: 0
   intensity: 10
 --- !u!23 &6447075437455467112
 MeshRenderer:
@@ -60563,7 +61502,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd158e07bcef5cd4d8f43b78264e9ef2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EmissiveLamp
-  lampId: 0
   intensity: 10
 --- !u!1 &6540413317136327555
 GameObject:
@@ -60919,7 +61857,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd158e07bcef5cd4d8f43b78264e9ef2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EmissiveLamp
-  lampId: 0
   intensity: 10
 --- !u!4 &6766228821939373091
 Transform:
@@ -61285,7 +62222,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd158e07bcef5cd4d8f43b78264e9ef2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EmissiveLamp
-  lampId: 0
   intensity: 10
 --- !u!23 &7033474028548612536
 MeshRenderer:
@@ -61367,7 +62303,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd158e07bcef5cd4d8f43b78264e9ef2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EmissiveLamp
-  lampId: 0
   intensity: 10
 --- !u!1 &7133321353387388562
 GameObject:
@@ -61429,7 +62364,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd158e07bcef5cd4d8f43b78264e9ef2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EmissiveLamp
-  lampId: 0
   intensity: 12
 --- !u!1 &7214538447456753315
 GameObject:
@@ -61462,7 +62396,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd158e07bcef5cd4d8f43b78264e9ef2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EmissiveLamp
-  lampId: 0
   intensity: 10
 --- !u!4 &7242058983761605105
 Transform:
@@ -61955,7 +62888,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd158e07bcef5cd4d8f43b78264e9ef2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EmissiveLamp
-  lampId: 0
   intensity: 10
 --- !u!33 &7695769206378452758
 MeshFilter:
@@ -62128,7 +63060,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd158e07bcef5cd4d8f43b78264e9ef2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EmissiveLamp
-  lampId: 0
   intensity: 10
 --- !u!1 &7836673821954256513
 GameObject:
@@ -62179,7 +63110,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd158e07bcef5cd4d8f43b78264e9ef2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EmissiveLamp
-  lampId: 0
   intensity: 10
 --- !u!23 &7896888046272210571
 MeshRenderer:
@@ -62310,7 +63240,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd158e07bcef5cd4d8f43b78264e9ef2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EmissiveLamp
-  lampId: 0
   intensity: 10
 --- !u!4 &7965292115387112284
 Transform:
@@ -62358,7 +63287,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd158e07bcef5cd4d8f43b78264e9ef2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EmissiveLamp
-  lampId: 0
   intensity: 10
 --- !u!23 &7983099857471474446
 MeshRenderer:
@@ -62700,7 +63628,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd158e07bcef5cd4d8f43b78264e9ef2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EmissiveLamp
-  lampId: 0
   intensity: 10
 --- !u!23 &8215919653277093896
 MeshRenderer:
@@ -62812,7 +63739,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd158e07bcef5cd4d8f43b78264e9ef2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EmissiveLamp
-  lampId: 0
   intensity: 10
 --- !u!4 &8287660312462457402
 Transform:
@@ -62841,7 +63767,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd158e07bcef5cd4d8f43b78264e9ef2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EmissiveLamp
-  lampId: 0
   intensity: 10
 --- !u!23 &8289646186056890375
 MeshRenderer:
@@ -63028,7 +63953,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd158e07bcef5cd4d8f43b78264e9ef2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EmissiveLamp
-  lampId: 0
   intensity: 10
 --- !u!1 &8471736707192258448
 GameObject:
@@ -63061,7 +63985,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd158e07bcef5cd4d8f43b78264e9ef2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EmissiveLamp
-  lampId: 0
   intensity: 10
 --- !u!4 &8498085121813447778
 Transform:
@@ -63240,7 +64163,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd158e07bcef5cd4d8f43b78264e9ef2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EmissiveLamp
-  lampId: 0
   intensity: 10
 --- !u!4 &8666913099548657667
 Transform:
@@ -63288,7 +64210,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd158e07bcef5cd4d8f43b78264e9ef2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EmissiveLamp
-  lampId: 0
   intensity: 10
 --- !u!23 &8723328502226216711
 MeshRenderer:
@@ -63400,7 +64321,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd158e07bcef5cd4d8f43b78264e9ef2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EmissiveLamp
-  lampId: 0
   intensity: 10
 --- !u!4 &8736474102822608186
 Transform:
@@ -63429,7 +64349,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd158e07bcef5cd4d8f43b78264e9ef2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EmissiveLamp
-  lampId: 0
   intensity: 10
 --- !u!33 &8749796153858194806
 MeshFilter:
@@ -63539,7 +64458,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd158e07bcef5cd4d8f43b78264e9ef2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EmissiveLamp
-  lampId: 0
   intensity: 10
 --- !u!33 &8879110969696647620
 MeshFilter:
@@ -63561,7 +64479,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd158e07bcef5cd4d8f43b78264e9ef2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EmissiveLamp
-  lampId: 0
   intensity: 10
 --- !u!4 &8890920980028737100
 Transform:
@@ -63627,7 +64544,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd158e07bcef5cd4d8f43b78264e9ef2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EmissiveLamp
-  lampId: 0
   intensity: 10
 --- !u!33 &8940500876486027269
 MeshFilter:
@@ -63765,7 +64681,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd158e07bcef5cd4d8f43b78264e9ef2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EmissiveLamp
-  lampId: 0
   intensity: 10
 --- !u!4 &9039314764257018073
 Transform:
@@ -63907,7 +64822,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd158e07bcef5cd4d8f43b78264e9ef2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EmissiveLamp
-  lampId: 0
   intensity: 10
 --- !u!1 &9149982578584072261
 GameObject:
@@ -64014,4 +64928,4 @@ SceneRoots:
   - {fileID: 1824661940}
   - {fileID: 1696532711}
   - {fileID: 1072299307}
-  - {fileID: 406676709}
+  - {fileID: 1977288146}

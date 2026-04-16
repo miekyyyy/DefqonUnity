@@ -26,6 +26,18 @@ namespace DefqonEngine.UI.Timeline.Events
             Instance = this;
         }
 
+        public int TrackCount => tracks.Count;
+
+        public List<TimelineTrack> AddTracks(int count)
+        {
+            List<TimelineTrack> newTracks = new List<TimelineTrack>();
+            for (int i = 0; i < count; i++)
+            {
+                newTracks.Add(AddTrack());
+            }
+            return newTracks;
+        }
+
         public TimelineTrack AddTrack()
         {
             var track = Instantiate(trackPrefab, tracksParent);
