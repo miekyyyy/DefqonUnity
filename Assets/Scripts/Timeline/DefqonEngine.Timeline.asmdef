@@ -1,10 +1,9 @@
 {
-    "name": "DefqonEngine",
-    "rootNamespace": "DefqonEngine",
+    "name": "DefqonEngine.Timeline",
+    "rootNamespace": "DefqonEngine.Timeline",
     "references": [
         "GUID:6055be8ebefd69e48b49212b09b47b2f",
-        "GUID:4085ba33379a1374ba6ecb8798187f96",
-        "GUID:cbcf0380d891da04daab69f90e54530a"
+        "GUID:4085ba33379a1374ba6ecb8798187f96"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

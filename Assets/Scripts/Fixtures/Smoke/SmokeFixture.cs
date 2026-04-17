@@ -2,7 +2,7 @@
 
 namespace DefqonEngine
 {
-    public class SmokeMachine : MonoBehaviour
+    public class SmokeFixture : MonoBehaviour
     {
         [SerializeField] private ParticleSystem _smokeParticleSystem;
 

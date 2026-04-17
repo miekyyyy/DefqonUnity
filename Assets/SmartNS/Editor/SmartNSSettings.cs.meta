@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: d4f9f0c7df201e840ace940c6e573ac2
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 109633
+  packageName: SmartNS
+  packageVersion: 2.0.2
+  assetPath: Assets/SmartNS/Editor/SmartNSSettings.cs
+  uploadId: 408471

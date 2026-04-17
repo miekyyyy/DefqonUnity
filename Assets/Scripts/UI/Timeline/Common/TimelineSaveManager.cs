@@ -1,4 +1,5 @@
 using DefqonEngine.Common;
+using DefqonEngine.Common.Data;
 using DefqonEngine.UI.Timeline.Events;
 using Newtonsoft.Json;
 using SFB;
@@ -10,12 +11,6 @@ namespace DefqonEngine.UI.Timeline.Common
 {
     public class TimelineSaveManager : MonoBehaviour
     {
-
-        private JsonSerializerSettings settings = new JsonSerializerSettings
-        {
-            TypeNameHandling = TypeNameHandling.All,  // Cruciaal voor polymorfisme
-            Formatting = Formatting.Indented
-        };
 
         public void SaveCurrentManager()
         {
@@ -51,7 +46,7 @@ namespace DefqonEngine.UI.Timeline.Common
             if (!Directory.Exists(dir))
                 Directory.CreateDirectory(dir);
 
-            string json = JsonConvert.SerializeObject(events, settings);
+            string json = JsonConvert.SerializeObject(events, PresetSaveManager.settings);
             File.WriteAllText(path, json);
 
             Debug.Log($"Timeline saved to {path}");
@@ -68,7 +63,7 @@ namespace DefqonEngine.UI.Timeline.Common
             try
             {
                 string json = File.ReadAllText(path);
-                return JsonConvert.DeserializeObject<List<TimelineEvent>>(json, settings)
+                return JsonConvert.DeserializeObject<List<TimelineEvent>>(json, PresetSaveManager.settings)
                        ?? new List<TimelineEvent>();
             }
             catch (JsonException ex)
