@@ -1,6 +1,4 @@
-using DefqonEngine.Lighting.Data;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 namespace DefqonEngine.Common.Data
@@ -46,7 +44,7 @@ namespace DefqonEngine.Common.Data
             }
             selectedPreset = preset;
             var selectedButton = GetPresetButtonFromPreset(preset);
-            if(isRemovingPreset)
+            if (isRemovingPreset)
             {
                 RemovePreset();
                 return;
@@ -56,7 +54,7 @@ namespace DefqonEngine.Common.Data
                 selectedButton.OnSelect();
             }
         }
-        
+
         public EventPreset GetSelectedPreset()
         {
             return selectedPreset;

@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace DefqonEngine
+namespace DefqonEngine.Fixtures.Smoke
 {
     public class SmokeFixture : MonoBehaviour
     {

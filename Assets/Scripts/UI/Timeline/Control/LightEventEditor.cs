@@ -1,8 +1,6 @@
-using DefqonEngine.Common;
-using DefqonEngine.Lighting.Data;
-using DefqonEngine.Lighting.Groups;
-using DefqonEngine.Lighting.Runtime;
-using DefqonEngine.UI.Timeline.Events;
+﻿using DefqonEngine.Common.Data;
+using DefqonEngine.Fixtures.Light;
+using DefqonEngine.Fixtures.Management;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;

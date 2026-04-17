@@ -1,7 +1,4 @@
-using DefqonEngine.Common;
-using DefqonEngine.Common.Data;
-using DefqonEngine.Lighting.Data;
-using DefqonEngine.Lighting.Groups;
+﻿using DefqonEngine.Common.Data;
 using DefqonEngine.UI.Timeline.Common;
 using DefqonEngine.UI.Timeline.Events;
 using UnityEngine;

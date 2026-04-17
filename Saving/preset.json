@@ -1,0 +1,20 @@
+{
+  "Name": "preset",
+  "timelineEvent": {
+    "$type": "DefqonEngine.Common.Data.LightEvent",
+    "lightEffectType": "Static",
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 0.0,
+      "a": 1.0
+    },
+    "fadeCurve": "Linear",
+    "inverted": false,
+    "time": 3.02184582,
+    "duration": 8.813896,
+    "trackIndex": 0,
+    "targetId": 1,
+    "type": "Light"
+  }
+}

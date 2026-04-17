@@ -1,7 +1,7 @@
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
-namespace DefqonEngine.Common
+namespace DefqonEngine.Common.Data
 {
     [JsonObject(MemberSerialization.OptIn)]
     public class TimelineEvent

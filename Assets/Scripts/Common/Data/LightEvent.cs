@@ -1,11 +1,8 @@
-using DefqonEngine.Common;
-using DefqonEngine.Common.Data;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using UnityEngine;
-using EventType = DefqonEngine.Common.EventType;
 
-namespace DefqonEngine.Lighting.Data
+namespace DefqonEngine.Common.Data
 {
     [JsonObject(MemberSerialization.OptIn)]
     public class LightEvent : TimelineEvent

@@ -1,7 +1,7 @@
+﻿using DefqonEngine.Fixtures.Management;
 using System.Collections.Generic;
-using UnityEngine;
 
-namespace DefqonEngine.Lighting.Groups
+namespace DefqonEngine.Fixtures.Smoke
 {
     [System.Serializable]
     public class SmokeGroup

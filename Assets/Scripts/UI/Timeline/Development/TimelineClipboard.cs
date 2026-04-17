@@ -1,10 +1,10 @@
-using DefqonEngine.Lighting.Data;
+﻿using DefqonEngine.Common.Data;
 
 namespace DefqonEngine.UI.Timeline.Development
 {
     public static class TimelineClipboard
     {
-        public static LightEvent copiedEvent;
+        public static TimelineEvent copiedEvent;
 
         //public static void Copy(LightEvent e)
         //{

@@ -1,9 +1,4 @@
-﻿using DefqonEngine.Lighting.Groups;
-using DefqonEngine.Lighting.Runtime;
-using DefqonEngine.UI.Timeline;
-using DefqonEngine.UI.Timeline.Events;
-using System.Collections.Generic;
-using TMPro;
+﻿using DefqonEngine.UI.Timeline.Events;
 using UnityEngine;
 using UnityEngine.UI;
 

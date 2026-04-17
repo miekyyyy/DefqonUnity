@@ -1,6 +1,4 @@
-using DefqonEngine.Lighting.Groups;
-using DefqonEngine.UI.Timeline.Control;
-using TMPro;
+﻿using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -24,7 +22,7 @@ namespace DefqonEngine.Common.Data
             //Highlight the button
             button.interactable = false;
         }
-        
+
         public void OnDeselect()
         {
             //Unhighlight the button
@@ -33,7 +31,7 @@ namespace DefqonEngine.Common.Data
 
         public void StartDeleting()
         {
-            if(isDefault) return;
+            if (isDefault) return;
             button.colors = new ColorBlock()
             {
                 normalColor = button.colors.normalColor,

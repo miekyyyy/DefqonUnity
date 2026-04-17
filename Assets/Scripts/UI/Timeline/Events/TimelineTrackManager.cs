@@ -1,5 +1,4 @@
-using DefqonEngine.Lighting.Groups;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -54,7 +53,7 @@ namespace DefqonEngine.UI.Timeline.Events
             OnTrackAdded?.Invoke(track);
             return track;
         }
-        
+
         public void RemoveTrack()
         {
             if (tracks.Count == 0) return;

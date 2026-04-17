@@ -1,9 +1,9 @@
-using DefqonEngine.Lighting.Groups;
+﻿using DefqonEngine.Fixtures.Smoke;
 using System.Collections.Generic;
 using UnityEngine;
 
 
-namespace DefqonEngine
+namespace DefqonEngine.Fixtures.Management
 {
     public class SmokeManager : MonoBehaviour
     {

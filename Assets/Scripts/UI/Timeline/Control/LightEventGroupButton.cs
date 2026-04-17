@@ -1,18 +1,18 @@
-using DefqonEngine.Lighting.Groups;
-using DefqonEngine.Lighting.Runtime;
-using DefqonEngine.UI.Timeline.Control;
-using System;
-using System.Collections.Generic;
+﻿using DefqonEngine.Fixtures.Light;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class LightEventGroupButton : MonoBehaviour
+namespace DefqonEngine.UI.Timeline.Control
 {
-    [SerializeField] TMPro.TMP_Text nameText;
-    [SerializeField] Button button;
-    public void Initialize(LampGroup lampGroup)
+
+    public class LightEventGroupButton : MonoBehaviour
     {
-        nameText.text = lampGroup.groupName;
-        button.onClick.AddListener(() => LightEventEditor.Instance.UpdateLightEventGroup(lampGroup));
+        [SerializeField] TMPro.TMP_Text nameText;
+        [SerializeField] Button button;
+        public void Initialize(LampGroup lampGroup)
+        {
+            nameText.text = lampGroup.groupName;
+            button.onClick.AddListener(() => LightEventEditor.Instance.UpdateLightEventGroup(lampGroup));
+        }
     }
 }
