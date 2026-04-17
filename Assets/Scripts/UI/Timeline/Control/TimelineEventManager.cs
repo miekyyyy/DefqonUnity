@@ -1,11 +1,11 @@
-﻿using DefqonEngine.Common;
-using DefqonEngine.Lighting.Data;
+﻿using DefqonEngine.Common.Data;
+using DefqonEngine.UI.Timeline.Events;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using EventType = DefqonEngine.Common.EventType;
+using EventType = DefqonEngine.Common.Data.EventType;
 
-namespace DefqonEngine.UI.Timeline.Events
+namespace DefqonEngine.UI.Timeline.Control
 {
     public class TimelineEventManager : MonoBehaviour
     {
@@ -178,7 +178,7 @@ namespace DefqonEngine.UI.Timeline.Events
                 views.Remove(timelineEvent);
             }
 
-            if(selectedEvent == timelineEvent)
+            if (selectedEvent == timelineEvent)
                 DeselectEvent();
 
             OnEventRemoved?.Invoke(timelineEvent);

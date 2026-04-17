@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections;
 using UnityEngine;
-namespace DefqonEngine.Lighting.Runtime
+namespace DefqonEngine.Fixtures.Light
 {
 [RequireComponent(typeof(Renderer))]
     public class LightFixture : MonoBehaviour

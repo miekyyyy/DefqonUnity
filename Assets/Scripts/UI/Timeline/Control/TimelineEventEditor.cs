@@ -1,9 +1,8 @@
-using DefqonEngine.Common;
-using DefqonEngine.UI.Timeline.Events;
+﻿using DefqonEngine.Common.Data;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using EventType = DefqonEngine.Common.EventType;
+using EventType = DefqonEngine.Common.Data.EventType;
 namespace DefqonEngine.UI.Timeline.Control
 {
     public class TimelineEventEditor : MonoBehaviour

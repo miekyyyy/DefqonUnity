@@ -1,12 +1,7 @@
-using DefqonEngine.Common;
-using DefqonEngine.Lighting.Data;
-using DefqonEngine.Lighting.Groups;
-using DefqonEngine.Lighting.Runtime;
-using DefqonEngine.UI.Timeline.Events;
-using System;
-using TMPro;
+﻿using DefqonEngine.Common.Data;
+using DefqonEngine.Fixtures.Management;
+using DefqonEngine.Fixtures.Smoke;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace DefqonEngine.UI.Timeline.Control
 {

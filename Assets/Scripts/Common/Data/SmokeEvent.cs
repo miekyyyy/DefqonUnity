@@ -1,8 +1,6 @@
-using DefqonEngine.Common;
-using Newtonsoft.Json;
-using EventType = DefqonEngine.Common.EventType;
+﻿using Newtonsoft.Json;
 
-namespace DefqonEngine.Lighting.Data
+namespace DefqonEngine.Common.Data
 {
     [JsonObject(MemberSerialization.OptIn)]
     public class SmokeEvent : TimelineEvent

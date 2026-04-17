@@ -1,8 +1,8 @@
-using DefqonEngine.Lighting.Groups;
+﻿using DefqonEngine.Fixtures.Light;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace DefqonEngine.Lighting.Runtime
+namespace DefqonEngine.Fixtures.Management
 {
     [System.Serializable]
     public class LampEntry

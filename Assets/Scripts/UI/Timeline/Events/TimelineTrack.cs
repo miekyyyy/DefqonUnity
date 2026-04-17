@@ -1,5 +1,4 @@
-﻿using DefqonEngine.Lighting.Groups;
-using DefqonEngine.UI.Timeline.Control;
+﻿using DefqonEngine.UI.Timeline.Control;
 using UnityEngine;
 using UnityEngine.EventSystems;
 

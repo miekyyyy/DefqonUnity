@@ -1,10 +1,9 @@
-﻿using DefqonEngine.Common;
-using DefqonEngine.Lighting.Data;
+﻿using DefqonEngine.Common.Data;
+using DefqonEngine.Fixtures.Management;
 using DefqonEngine.UI.Timeline.Control;
-using DefqonEngine.UI.Timeline.Events;
 using System.Collections.Generic;
 using UnityEngine;
-using EventType = DefqonEngine.Common.EventType;
+using EventType = DefqonEngine.Common.Data.EventType;
 
 namespace DefqonEngine.Lighting.Runtime
 {

@@ -1,7 +1,7 @@
-using DefqonEngine.Common;
+﻿using DefqonEngine.Common;
 using Newtonsoft.Json;
 
-namespace DefqonEngine
+namespace DefqonEngine.Common.Data
 {
     [JsonObject(MemberSerialization.OptIn)]
     public class EventPreset

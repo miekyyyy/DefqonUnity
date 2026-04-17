@@ -1,15 +1,18 @@
-using DefqonEngine.Lighting.Groups;
-using DefqonEngine.UI.Timeline.Control;
+﻿using DefqonEngine.Fixtures.Smoke;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SmokeEventGroupButton : MonoBehaviour
+namespace DefqonEngine.UI.Timeline.Control
 {
-    [SerializeField] TMPro.TMP_Text nameText;
-    [SerializeField] Button button;
-    public void Initialize(SmokeGroup smokeGroup)
+
+    public class SmokeEventGroupButton : MonoBehaviour
     {
-        nameText.text = smokeGroup.groupName;
-        button.onClick.AddListener(() => SmokeEventEditor.Instance.UpdateSmokeEventGroup(smokeGroup));
+        [SerializeField] TMPro.TMP_Text nameText;
+        [SerializeField] Button button;
+        public void Initialize(SmokeGroup smokeGroup)
+        {
+            nameText.text = smokeGroup.groupName;
+            button.onClick.AddListener(() => SmokeEventEditor.Instance.UpdateSmokeEventGroup(smokeGroup));
+        }
     }
 }

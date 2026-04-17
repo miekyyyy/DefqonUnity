@@ -1,4 +1,4 @@
-using DefqonEngine.UI.Timeline.Common;
+﻿using DefqonEngine.UI.Timeline.Common;
 using DefqonEngine.UI.Timeline.Control;
 using System;
 using System.Collections;
