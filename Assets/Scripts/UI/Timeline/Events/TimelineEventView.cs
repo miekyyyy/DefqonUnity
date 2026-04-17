@@ -1,5 +1,8 @@
-﻿using DefqonEngine.Common;
+﻿using DefqonEngine.Core.Timeline.Events;
+using DefqonEngine.Core.Timeline.Tracks;
+using DefqonEngine.Sequencing.Data.Events;
 using DefqonEngine.UI.Timeline.Common;
+using DefqonEngine.UI.Timeline.Tracks;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -97,7 +100,7 @@ namespace DefqonEngine.UI.Timeline.Events
                 out Vector2 local
             );
             dragOffset = local.x - rect.anchoredPosition.x;
-            
+
             rect.SetAsLastSibling(); // Zorg dat het event boven andere events komt tijdens het slepen
         }
 

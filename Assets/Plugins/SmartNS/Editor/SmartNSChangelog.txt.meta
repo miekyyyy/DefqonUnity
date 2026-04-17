@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 4f76458a0fbf1a14ba0a13c437bdec76
+TextScriptImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 109633
+  packageName: SmartNS
+  packageVersion: 2.0.2
+  assetPath: Assets/SmartNS/Editor/SmartNSChangelog.txt
+  uploadId: 408471
