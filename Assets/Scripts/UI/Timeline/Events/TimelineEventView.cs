@@ -1,6 +1,8 @@
-﻿using DefqonEngine.Common.Data;
+﻿using DefqonEngine.Core.Timeline.Events;
+using DefqonEngine.Core.Timeline.Tracks;
+using DefqonEngine.Sequencing.Data.Events;
 using DefqonEngine.UI.Timeline.Common;
-using DefqonEngine.UI.Timeline.Control;
+using DefqonEngine.UI.Timeline.Tracks;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
