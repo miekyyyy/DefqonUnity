@@ -1,6 +1,5 @@
-using DefqonEngine.UI.Timeline.Events;
 using DefqonEngine.Lighting.Data;
-using DefqonEngine.Common;
+using DefqonEngine.UI.Timeline.Events;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using SFB;
@@ -13,7 +12,7 @@ namespace DefqonEngine.Common.Data
 {
     public class PresetSaveManager : MonoBehaviour
     {
-        private JsonSerializerSettings settings = new JsonSerializerSettings
+        public static JsonSerializerSettings settings = new JsonSerializerSettings
         {
             TypeNameHandling = TypeNameHandling.Auto,
             SerializationBinder = new PresetSerializationBinder(),

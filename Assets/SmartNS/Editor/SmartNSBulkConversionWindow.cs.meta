@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: 99398fd32b7ae6d46afbc7e79a7b64ac
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 109633
+  packageName: SmartNS
+  packageVersion: 2.0.2
+  assetPath: Assets/SmartNS/Editor/SmartNSBulkConversionWindow.cs
+  uploadId: 408471

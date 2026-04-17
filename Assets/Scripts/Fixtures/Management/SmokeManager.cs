@@ -1,7 +1,7 @@
 using DefqonEngine.Lighting.Groups;
-using DefqonEngine.Lighting.Runtime;
 using System.Collections.Generic;
 using UnityEngine;
+
 
 namespace DefqonEngine
 {
@@ -12,7 +12,7 @@ namespace DefqonEngine
         public class SmokeMachineEntry
         {
             public int id;
-            public SmokeMachine smokeMachine;
+            public SmokeFixture smokeMachine;
         }
 
         [System.Serializable]
@@ -29,7 +29,7 @@ namespace DefqonEngine
         public List<SmokeGroupEntry> groupList = new();
 
         [HideInInspector]
-        public Dictionary<int, SmokeMachine> smokeMachines = new();
+        public Dictionary<int, SmokeFixture> smokeMachines = new();
 
         [HideInInspector]
         public Dictionary<int, SmokeGroup> groups = new();

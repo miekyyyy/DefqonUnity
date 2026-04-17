@@ -1,8 +1,6 @@
+using DefqonEngine.Lighting.Groups;
 using System.Collections.Generic;
 using UnityEngine;
-using DefqonEngine.Lighting.Groups;
-using DefqonEngine.Lighting.Data;
-using DefqonEngine.Lighting.Runtime;
 
 namespace DefqonEngine.Lighting.Runtime
 {
@@ -10,7 +8,7 @@ namespace DefqonEngine.Lighting.Runtime
     public class LampEntry
     {
         public int id;
-        public EmissiveLamp lamp;
+        public LightFixture lamp;
     }
 
     [System.Serializable]
@@ -31,7 +29,7 @@ namespace DefqonEngine.Lighting.Runtime
         public List<LampGroupEntry> groupList = new();
 
         [HideInInspector]
-        public Dictionary<int, EmissiveLamp> lamps = new();
+        public Dictionary<int, LightFixture> lamps = new();
 
         [HideInInspector]
         public Dictionary<int, LampGroup> groups = new();

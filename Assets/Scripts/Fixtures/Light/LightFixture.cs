@@ -4,7 +4,7 @@ using UnityEngine;
 namespace DefqonEngine.Lighting.Runtime
 {
 [RequireComponent(typeof(Renderer))]
-    public class EmissiveLamp : MonoBehaviour
+    public class LightFixture : MonoBehaviour
     {
         public float intensity = 10f;
         Material materialInstance;

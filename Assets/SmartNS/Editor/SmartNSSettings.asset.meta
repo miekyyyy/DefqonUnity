@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: e2f3ad7888928ff4e9570fcefff499d0
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 109633
+  packageName: SmartNS
+  packageVersion: 2.0.2
+  assetPath: Assets/SmartNS/Editor/SmartNSSettings.asset
+  uploadId: 408471

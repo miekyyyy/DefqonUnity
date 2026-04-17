@@ -1,6 +1,6 @@
-using DefqonEngine.Lighting.Runtime;
 using System.Collections.Generic;
 using UnityEngine;
+using DefqonEngine.Lighting.Runtime;
 
 namespace DefqonEngine.Lighting.Groups
 {
