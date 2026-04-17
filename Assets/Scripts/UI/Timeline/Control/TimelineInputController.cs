@@ -1,6 +1,10 @@
-﻿using DefqonEngine.Common.Data;
+﻿using DefqonEngine.Core.Presets;
+using DefqonEngine.Core.Timeline.Audio;
+using DefqonEngine.Core.Timeline.Events;
+using DefqonEngine.Sequencing.Data.Events;
+using DefqonEngine.Sequencing.Data.Presets;
 using DefqonEngine.UI.Timeline.Common;
-using DefqonEngine.UI.Timeline.Events;
+using DefqonEngine.UI.Timeline.Tracks;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
