@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 5da515bfcce2e304cbab0d826d56e36d
+TextScriptImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 109633
+  packageName: SmartNS
+  packageVersion: 2.0.2
+  assetPath: Assets/SmartNS/Editor/Documentation.txt
+  uploadId: 408471
