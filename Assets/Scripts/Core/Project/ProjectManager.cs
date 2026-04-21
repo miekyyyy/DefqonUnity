@@ -51,7 +51,12 @@ namespace DefqonEngine.Core.Project
         public void CreateNewProject()
         {
             var newProject = new DefqonProject(newProjectName, newProjectAudioFilePath);
-            projectSaveManager.SaveProject(newProject);
+            bool saved = projectSaveManager.SaveProject(newProject);
+            if (!saved)
+            {
+                Debug.Log("Project creation cancelled or save failed.");
+                return;
+            }
             LoadProjectData(newProject);
         }
 
