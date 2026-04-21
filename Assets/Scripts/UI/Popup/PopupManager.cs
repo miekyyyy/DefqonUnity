@@ -16,12 +16,6 @@ namespace DefqonEngine.UI.Popup
                 return;
             }
             Instance = this;
-
-            if (popups == null)
-            {
-                return;
-            }
-
             foreach (var popup in popups)
             {
                 popup.Close();
@@ -30,11 +24,6 @@ namespace DefqonEngine.UI.Popup
 
         public void OnPopupOpen(Popup popup)
         {
-            if (popups == null)
-            {
-                return;
-            }
-
             foreach (var closingPopup in popups)
             {
                 if(closingPopup == popup) continue;
@@ -44,11 +33,6 @@ namespace DefqonEngine.UI.Popup
 
         public void ClosePopups()
         {
-            if (popups == null)
-            {
-                return;
-            }
-
             foreach (var popup in popups)
             {
                 popup.Close();
