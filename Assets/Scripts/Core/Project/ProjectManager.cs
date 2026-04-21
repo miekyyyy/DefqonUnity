@@ -89,7 +89,7 @@ namespace DefqonEngine.Core.Project
         {
             CurrentProject = project;
             presetSaveManager.LoadPresets(project.presets);
-            timelineSaveManager.LoadTimeline(project.events);
+            timelineSaveManager.LoadTimeline(project.events, project.trackCount);
             audioSaveManager.LoadAudio(project.audioFilePath);
         }
     }
