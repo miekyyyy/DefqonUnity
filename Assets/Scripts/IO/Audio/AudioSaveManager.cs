@@ -68,7 +68,7 @@ namespace DefqonEngine.IO.Audio
                 case ".aif":
                 case ".aiff": return AudioType.AIFF;
                 default:
-                    Debug.LogWarning("Unsupported format, defaulting to WAV");
+                    Debug.LogWarning("Unsupported format, using AudioType.UNKNOWN");
                     return AudioType.UNKNOWN;
             }
         }
