@@ -1,11 +1,10 @@
 ﻿using DefqonEngine.Core.Timeline.Events;
 using DefqonEngine.Core.Timeline.Tracks;
-using DefqonEngine.IO.Presets;
+using DefqonEngine.IO.Project;
 using DefqonEngine.Sequencing.Data.Events;
-using DefqonEngine.UI.Timeline.Control;
-using DefqonEngine.UI.Timeline.Events;
 using Newtonsoft.Json;
 using SFB;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
@@ -17,7 +16,7 @@ namespace DefqonEngine.IO.Timeline
 
         public void SaveCurrentManager()
         {
-            var path = StandaloneFileBrowser.SaveFilePanel("Save Timeline", "", "events", "json");
+            var path = StandaloneFileBrowser.SaveFilePanel("Save Timeline", "", "events", "dfqtml");
             if (string.IsNullOrEmpty(path))
                 return;
             TimelineEventManager manager = TimelineEventManager.Instance;
@@ -25,21 +24,32 @@ namespace DefqonEngine.IO.Timeline
         }
         public void LoadToCurrentManager()
         {
-            var paths = StandaloneFileBrowser.OpenFilePanel("Load Timeline", "", "json", false);
+            var paths = StandaloneFileBrowser.OpenFilePanel("Load Timeline", "", "dfqtml", false);
             if (paths.Length == 0)
                 return;
 
-            TimelineEventManager manager = TimelineEventManager.Instance;
-            List<TimelineEvent> events = Load(paths[0]);
+            if (string.IsNullOrEmpty(paths[0]))
+                return;
+            LoadTimeline(Load(paths[0]));
+        }
+
+        public void LoadTimeline(List<TimelineEvent> events, int trackCount = 0)
+        {
             int maxTrackIndex = -1;
             foreach (var ev in events)
             {
                 if (ev.trackIndex > maxTrackIndex)
                     maxTrackIndex = ev.trackIndex;
             }
-            if (TimelineTrackManager.Instance.TrackCount <= maxTrackIndex)
-                TimelineTrackManager.Instance.AddTracks(maxTrackIndex + 1 - TimelineTrackManager.Instance.TrackCount);
-            manager.SetEvents(events);
+
+            int requiredTracks = Math.Max(trackCount, maxTrackIndex + 1);
+            int currentTracks = TimelineTrackManager.Instance.TrackCount;
+
+            if (currentTracks < requiredTracks)
+            {
+                TimelineTrackManager.Instance.AddTracks(requiredTracks - currentTracks);
+            }
+            TimelineEventManager.Instance.SetEvents(events);
         }
 
         public void Save(List<TimelineEvent> events, string path)
@@ -49,7 +59,7 @@ namespace DefqonEngine.IO.Timeline
             if (!Directory.Exists(dir))
                 Directory.CreateDirectory(dir);
 
-            string json = JsonConvert.SerializeObject(events, PresetSaveManager.settings);
+            string json = JsonConvert.SerializeObject(events, ProjectSaveManager.settings);
             File.WriteAllText(path, json);
 
             Debug.Log($"Timeline saved to {path}");
@@ -66,7 +76,7 @@ namespace DefqonEngine.IO.Timeline
             try
             {
                 string json = File.ReadAllText(path);
-                return JsonConvert.DeserializeObject<List<TimelineEvent>>(json, PresetSaveManager.settings)
+                return JsonConvert.DeserializeObject<List<TimelineEvent>>(json, ProjectSaveManager.settings)
                        ?? new List<TimelineEvent>();
             }
             catch (JsonException ex)

@@ -1,27 +1,18 @@
-﻿using UnityEngine;
-using UnityEngine.UI;
+﻿using DefqonEngine.UI.Timeline.Waveform;
+using UnityEngine;
 
 namespace DefqonEngine.Core.Timeline.Audio
 {
-    public class TimelineAudioController : MonoBehaviour
+    public class AudioPlaybackController : MonoBehaviour
     {
-        public static TimelineAudioController Instance { get; private set; }
+        public static AudioPlaybackController Instance { get; private set; }
         [SerializeField] AudioSource audioSource;
-        [SerializeField] Button playButton;
-        [SerializeField] Button pauseButton;
-        [SerializeField] Button stopButton;
 
         private void Awake()
         {
             Instance = this;
         }
 
-        void Start()
-        {
-            if (playButton != null) playButton.onClick.AddListener(Play);
-            if (pauseButton != null) pauseButton.onClick.AddListener(Pause);
-            if (stopButton != null) stopButton.onClick.AddListener(Stop);
-        }
 
         public void TogglePlayPause()
         {
@@ -86,6 +77,20 @@ namespace DefqonEngine.Core.Timeline.Audio
         public bool IsPlaying()
         {
             return audioSource != null && audioSource.isPlaying;
+        }
+
+        public bool SetAudioClip(AudioClip clip)
+        {
+            if (audioSource == null) return false;
+            audioSource.clip = clip;
+            WaveformDrawer.Instance.Refresh();
+            return true;
+        }
+
+        public AudioClip GetAudioClip()
+        {
+            if (audioSource == null) return null;
+            return audioSource.clip;
         }
     }
 }

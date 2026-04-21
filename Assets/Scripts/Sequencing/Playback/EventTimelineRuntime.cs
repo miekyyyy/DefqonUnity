@@ -20,7 +20,7 @@ namespace DefqonEngine.Sequencing.Playback
 
         void LateUpdate()
         {
-            _currentTime = TimelineAudioController.Instance.GetCurrentTime();
+            _currentTime = AudioPlaybackController.Instance.GetCurrentTime();
 
             var perTargetEvents = CollectActiveEvents();
 
