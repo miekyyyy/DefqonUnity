@@ -39,14 +39,14 @@ namespace DefqonEngine.IO.Project
                     return type;
                 }
 
-                throw new JsonSerializationException($"Type '{typeName}' is not allowed for preset deserialization.");
+                throw new JsonSerializationException($"Type '{typeName}' is not allowed for Defqon deserialization.");
             }
 
             public void BindToName(Type serializedType, out string assemblyName, out string typeName)
             {
                 if (!AllowedTypes.ContainsValue(serializedType))
                 {
-                    throw new JsonSerializationException($"Type '{serializedType.FullName}' is not allowed for preset serialization.");
+                    throw new JsonSerializationException($"Type '{serializedType.FullName}' is not allowed for Defqon serialization.");
                 }
 
                 assemblyName = null;
