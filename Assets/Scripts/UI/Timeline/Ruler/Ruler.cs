@@ -39,7 +39,7 @@ namespace DefqonEngine.UI.Timeline.Header
 
         void Update()
         {
-            TimeSpan time = TimeSpan.FromSeconds(TimelineAudioController.Instance.GetCurrentTime());
+            TimeSpan time = TimeSpan.FromSeconds(AudioPlaybackController.Instance.GetCurrentTime());
             timeDisplay.text = time.ToString("mm':'ss':'ff");
         }
 

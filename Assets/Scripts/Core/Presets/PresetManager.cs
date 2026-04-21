@@ -29,15 +29,23 @@ namespace DefqonEngine.Core.Presets
             }
 
             // Initialize standard buttons
-            AddButton(new EventPreset("Light", new LightEvent()), true);
-            AddButton(new EventPreset("Smoke", new SmokeEvent()), true);
+            LoadPreset(new EventPreset("Light", new LightEvent()), true);
+            LoadPreset(new EventPreset("Smoke", new SmokeEvent()), true);
         }
 
-        public void AddButton(EventPreset preset, bool isDefault = false)
+        public void LoadPreset(EventPreset preset, bool isDefault = false)
         {
             var button = Instantiate(buttonPrefab, parent.transform);
             button.Initialize(preset, isDefault);
             buttons.Add(button);
+        }
+
+           public void LoadPresets(List<EventPreset> presets)
+            {
+                foreach (var preset in presets)
+                {
+                    LoadPreset(preset);
+                }
         }
 
         public void SelectPreset(EventPreset preset)
@@ -57,6 +65,16 @@ namespace DefqonEngine.Core.Presets
             {
                 selectedButton.OnSelect();
             }
+        }
+
+        public List<EventPreset> GetAllPresets()
+        {
+            List<EventPreset> presets = new List<EventPreset>();
+            foreach (var button in buttons)
+            {
+                presets.Add(button.preset);
+            }
+            return presets;
         }
 
         public EventPreset GetSelectedPreset()

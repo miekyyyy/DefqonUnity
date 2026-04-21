@@ -23,7 +23,7 @@ namespace DefqonEngine.UI.Timeline.Control
             HandlePan();
             if (Input.GetKeyDown(KeyCode.Space))
             {
-                TimelineAudioController.Instance.TogglePlayPause();
+                AudioPlaybackController.Instance.TogglePlayPause();
             }
             if (Input.GetKeyDown(KeyCode.Delete))
             {
