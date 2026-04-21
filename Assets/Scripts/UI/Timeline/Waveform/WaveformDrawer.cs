@@ -34,7 +34,8 @@ namespace DefqonEngine.UI.Timeline.Waveform
         private RawImage rawImage;
 
         void Awake()
-        {maxTextureSize = SystemInfo.maxTextureSize;
+        {
+            maxTextureSize = SystemInfo.maxTextureSize;
             if (Instance != null && Instance != this)
             {
                 Destroy(gameObject);
