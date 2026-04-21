@@ -29,20 +29,16 @@ namespace DefqonEngine.UI.Timeline.Waveform
             public float max;
         }
 
-        private WaveformPoint[] waveform;
-        private Texture2D texture;
-        private RawImage rawImage;
-
         void Awake()
         {
             maxTextureSize = SystemInfo.maxTextureSize;
+            TileWidth = Mathf.Clamp(TileWidth, 1, maxTextureSize);
             if (Instance != null && Instance != this)
             {
                 Destroy(gameObject);
                 return;
             }
             Instance = this;
-            maxTextureSize = SystemInfo.maxTextureSize;
         }
 
         void Start()
@@ -214,7 +210,6 @@ namespace DefqonEngine.UI.Timeline.Waveform
             float pixelsPerSecond = TimelineView.Instance.pixelsPerSecond;
             float secondsPerSample = 1f / clip.frequency;
             float secondsPerPoint = samplesPerPoint * secondsPerSample;
-            float scrollOffset = TimelineView.Instance.scrollTime * pixelsPerSecond;
 
             foreach (var tile in tiles)
             {
