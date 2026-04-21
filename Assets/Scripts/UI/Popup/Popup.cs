@@ -5,7 +5,14 @@ namespace DefqonEngine.UI.Popup {
     {
         public void Open() {
             gameObject.SetActive(true);
-            PopupManager.Instance.OnPopupOpen(this);
+
+            var popupManager = PopupManager.Instance;
+            if (popupManager == null) {
+                Debug.LogWarning("Popup.Open() called but PopupManager.Instance is null.", this);
+                return;
+            }
+
+            popupManager.OnPopupOpen(this);
         }
         public void Close() {
             gameObject.SetActive(false);
