@@ -40,14 +40,35 @@ namespace DefqonEngine.Core.Presets
             buttons.Add(button);
         }
 
-           public void LoadPresets(List<EventPreset> presets)
+        private void ClearLoadedPresets()
+        {
+            for (int i = buttons.Count - 1; i >= 0; i--)
             {
-                foreach (var preset in presets)
+                var button = buttons[i];
+                if (button.isDefault)
                 {
-                    LoadPreset(preset);
+                    continue;
                 }
+
+                if (selectedPreset == button.preset)
+                {
+                    selectedPreset = null;
+                }
+
+                buttons.RemoveAt(i);
+                Destroy(button.gameObject);
+            }
         }
 
+        public void LoadPresets(List<EventPreset> presets)
+        {
+            ClearLoadedPresets();
+
+            foreach (var preset in presets)
+            {
+                LoadPreset(preset);
+            }
+        }
         public void SelectPreset(EventPreset preset)
         {
             foreach (var button in buttons)
