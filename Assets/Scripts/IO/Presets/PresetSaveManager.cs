@@ -1,5 +1,6 @@
 ﻿using DefqonEngine.Core.Presets;
 using DefqonEngine.Core.Timeline.Events;
+using DefqonEngine.IO.Project;
 using DefqonEngine.Sequencing.Data.Events;
 using DefqonEngine.Sequencing.Data.Presets;
 using Newtonsoft.Json;
@@ -14,48 +15,10 @@ namespace DefqonEngine.IO.Presets
 {
     public class PresetSaveManager : MonoBehaviour
     {
-        public static JsonSerializerSettings settings = new JsonSerializerSettings
-        {
-            TypeNameHandling = TypeNameHandling.Auto,
-            SerializationBinder = new PresetSerializationBinder(),
-            Formatting = Formatting.Indented
-        };
-
-        private sealed class PresetSerializationBinder : ISerializationBinder
-        {
-            private static readonly Dictionary<string, Type> AllowedTypes = new Dictionary<string, Type>
-            {
-                [typeof(EventPreset).FullName] = typeof(EventPreset),
-                [typeof(TimelineEvent).FullName] = typeof(TimelineEvent),
-                [typeof(LightEvent).FullName] = typeof(LightEvent),
-                [typeof(SmokeEvent).FullName] = typeof(SmokeEvent)
-            };
-
-            public Type BindToType(string assemblyName, string typeName)
-            {
-                if (AllowedTypes.TryGetValue(typeName, out var type))
-                {
-                    return type;
-                }
-
-                throw new JsonSerializationException($"Type '{typeName}' is not allowed for preset deserialization.");
-            }
-
-            public void BindToName(Type serializedType, out string assemblyName, out string typeName)
-            {
-                if (!AllowedTypes.ContainsValue(serializedType))
-                {
-                    throw new JsonSerializationException($"Type '{serializedType.FullName}' is not allowed for preset serialization.");
-                }
-
-                assemblyName = null;
-                typeName = serializedType.FullName;
-            }
-        }
         public void SavePreset()
         {
             //File saving
-            var path = StandaloneFileBrowser.SaveFilePanel("Save Preset", "", "preset", "json");
+            var path = StandaloneFileBrowser.SaveFilePanel("Save Preset", "", "preset", "dfqprs");
             if (string.IsNullOrEmpty(path) || TimelineEventManager.Instance.selectedEvent == null)
                 return;
 
@@ -69,7 +32,7 @@ namespace DefqonEngine.IO.Presets
         public void LoadPresets()
         {
             //Files loading
-            var paths = StandaloneFileBrowser.OpenFilePanel("Load Presets", "", "json", true);
+            var paths = StandaloneFileBrowser.OpenFilePanel("Load Presets", "", "dfqprs", true);
             if (paths.Length == 0)
                 return;
 
@@ -77,8 +40,31 @@ namespace DefqonEngine.IO.Presets
             {
                 var preset = Load(path);
                 if (preset != null)
-                    PresetManager.Instance.AddButton(preset);
+                    LoadPreset(preset);
             }
+        }
+
+        public void LoadPresets(List<EventPreset> presets)
+        {
+            if (presets == null || presets.Count == 0)
+            {
+                Debug.Log("No presets to load");
+                return;
+            }
+            foreach (var preset in presets)
+            {
+                LoadPreset(preset);
+            }
+        }
+
+        public void LoadPreset(EventPreset preset)
+        {
+            if (preset == null)
+            {
+                Debug.Log("Preset is null, cannot load");
+                return;
+            }
+            PresetManager.Instance.LoadPreset(preset);
         }
 
         public void Save(EventPreset preset, string path)
@@ -88,7 +74,7 @@ namespace DefqonEngine.IO.Presets
             if (!Directory.Exists(dir))
                 Directory.CreateDirectory(dir);
 
-            string json = JsonConvert.SerializeObject(preset, settings);
+            string json = JsonConvert.SerializeObject(preset, ProjectSaveManager.settings);
             File.WriteAllText(path, json);
 
             Debug.Log($"Preset saved to {path}");
@@ -106,7 +92,7 @@ namespace DefqonEngine.IO.Presets
             {
 
                 string json = File.ReadAllText(path);
-                return JsonConvert.DeserializeObject<EventPreset>(json, settings);
+                return JsonConvert.DeserializeObject<EventPreset>(json, ProjectSaveManager.settings);
             }
             catch (JsonException ex)
             {

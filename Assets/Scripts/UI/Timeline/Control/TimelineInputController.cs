@@ -23,7 +23,7 @@ namespace DefqonEngine.UI.Timeline.Control
             HandlePan();
             if (Input.GetKeyDown(KeyCode.Space))
             {
-                TimelineAudioController.Instance.TogglePlayPause();
+                AudioPlaybackController.Instance.TogglePlayPause();
             }
             if (Input.GetKeyDown(KeyCode.Delete))
             {
@@ -73,7 +73,7 @@ namespace DefqonEngine.UI.Timeline.Control
         {
             if (Input.GetMouseButton(2))
             {
-                float deltaX = Input.GetAxis("Mouse X") * 20f;
+                float deltaX = Input.GetAxis("Mouse X");
                 TimelineView.Instance.PanPixels(deltaX);
             }
         }

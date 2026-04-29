@@ -39,7 +39,7 @@ namespace DefqonEngine.UI.Timeline.Header
 
         void Update()
         {
-            TimeSpan time = TimeSpan.FromSeconds(TimelineAudioController.Instance.GetCurrentTime());
+            TimeSpan time = TimeSpan.FromSeconds(AudioPlaybackController.Instance.GetCurrentTime());
             timeDisplay.text = time.ToString("mm':'ss':'ff");
         }
 
@@ -52,7 +52,7 @@ namespace DefqonEngine.UI.Timeline.Header
         void UpdateRuler()
         {
             float startTime = TimelineView.Instance.scrollTime;
-            float endTime = TimelineView.Instance.scrollTime + (TimelineView.Instance.Width / TimelineView.Instance.pixelsPerSecond);
+            float endTime = TimelineView.Instance.VisibleEnd;
 
 
             // Deactiveer oude ticks/labels

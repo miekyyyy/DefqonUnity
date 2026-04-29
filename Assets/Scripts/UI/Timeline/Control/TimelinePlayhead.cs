@@ -14,16 +14,17 @@ namespace DefqonEngine.UI.Timeline.Control
         private bool isDragging;
         private bool isPlaying;
 
-        void LateUpdate()
+        void Update()
         {
             if (isDragging) return;
 
-            float x = TimelineView.Instance.TimeToX(TimelineAudioController.Instance.GetCurrentTime());
-            x = Mathf.Clamp(x, 0f, TimelineView.Instance.Width);
+            float time = AudioPlaybackController.Instance.GetCurrentTime();
+
+            float x = TimelineView.Instance.TimeToX(time);
 
             rect.anchoredPosition = new Vector2(x, rect.anchoredPosition.y);
 
-            HandleAutoScroll(x);
+            TimelineView.Instance.AutoScrollToTime(time, scrollMargin);
         }
 
         public void BeginDrag(BaseEventData eventData)
@@ -31,8 +32,8 @@ namespace DefqonEngine.UI.Timeline.Control
 
             isDragging = true; 
 
-            isPlaying = TimelineAudioController.Instance.IsPlaying();
-            TimelineAudioController.Instance.Pause();
+            isPlaying = AudioPlaybackController.Instance.IsPlaying();
+            AudioPlaybackController.Instance.Pause();
         }
 
         public void Drag(BaseEventData eventData)
@@ -52,7 +53,7 @@ namespace DefqonEngine.UI.Timeline.Control
 
             float time = TimelineView.Instance.XToTime(x);
 
-            TimelineAudioController.Instance.SetTime(time);
+            AudioPlaybackController.Instance.SetTime(time);
 
             rect.anchoredPosition = new Vector2(x, rect.anchoredPosition.y);
         }
@@ -61,7 +62,7 @@ namespace DefqonEngine.UI.Timeline.Control
         {
             isDragging = false;
             if (isPlaying)
-                TimelineAudioController.Instance.Play();
+                AudioPlaybackController.Instance.Play();
             isPlaying = false;
         }
 
@@ -74,21 +75,5 @@ namespace DefqonEngine.UI.Timeline.Control
             EndDrag(eventData);
         }
 
-        void HandleAutoScroll(float x)
-        {
-            float right = TimelineView.Instance.Width - scrollMargin;
-            float left = scrollMargin;
-
-            if (x > right)
-            {
-                float deltaTime = (x - right) / TimelineView.Instance.pixelsPerSecond;
-                TimelineView.Instance.SetScrollTime(TimelineView.Instance.scrollTime + deltaTime);
-            }
-            else if (x < left)
-            {
-                float deltaTime = (left - x) / TimelineView.Instance.pixelsPerSecond;
-                TimelineView.Instance.SetScrollTime(TimelineView.Instance.scrollTime - deltaTime);
-            }
-        }
     }
 }
