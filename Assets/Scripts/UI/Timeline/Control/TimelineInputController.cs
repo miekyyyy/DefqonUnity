@@ -73,7 +73,7 @@ namespace DefqonEngine.UI.Timeline.Control
         {
             if (Input.GetMouseButton(2))
             {
-                float deltaX = Input.GetAxis("Mouse X") * 20f;
+                float deltaX = Input.GetAxis("Mouse X");
                 TimelineView.Instance.PanPixels(deltaX);
             }
         }

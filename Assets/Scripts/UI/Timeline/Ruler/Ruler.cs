@@ -52,7 +52,7 @@ namespace DefqonEngine.UI.Timeline.Header
         void UpdateRuler()
         {
             float startTime = TimelineView.Instance.scrollTime;
-            float endTime = TimelineView.Instance.scrollTime + (TimelineView.Instance.Width / TimelineView.Instance.pixelsPerSecond);
+            float endTime = TimelineView.Instance.VisibleEnd;
 
 
             // Deactiveer oude ticks/labels
