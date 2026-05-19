@@ -1,6 +1,8 @@
 ﻿using DefqonEngine.Core.Timeline.Audio;
+using DefqonEngine.UI.Timeline.Control;
 using System;
 using UnityEngine;
+using static DefqonEngine.UI.Timeline.Control.TimelineInputController;
 
 namespace DefqonEngine.UI.Timeline.Common
 {
@@ -25,6 +27,12 @@ namespace DefqonEngine.UI.Timeline.Common
         private void Awake()
         {
             Instance = this;
+        }
+
+        private void Start()
+        {
+            TimelineInputController.Instance.OnZoom += Zoom;
+            TimelineInputController.Instance.OnPan += PanPixels;
         }
 
         // The time currently at the left edge of the timeline
@@ -130,14 +138,14 @@ namespace DefqonEngine.UI.Timeline.Common
             SetScrollTime(scrollTime - deltaTime);
         }
 
-        public void Zoom(float factor, float mouseX)
+        public void Zoom(ZoomData zoomData)
         {
             if (pixelsPerSecond <= 0f) return;
 
-            float timeUnderMouse = XToTime(mouseX);
+            float timeUnderMouse = XToTime(zoomData.zoomCenterX);
 
             // Nieuwe pixelsPerSecond
-            float newPPS = pixelsPerSecond * factor;
+            float newPPS = pixelsPerSecond * zoomData.zoomFactor;
 
             // Clamp: niet verder uitzoomen dan de clip
             if (AudioPlaybackController.Instance != null && AudioPlaybackController.Instance.GetAudioClip() != null)
@@ -146,16 +154,11 @@ namespace DefqonEngine.UI.Timeline.Common
                 newPPS = Mathf.Max(newPPS, minPPS);
             }
 
-            pixelsPerSecond = Mathf.Clamp(newPPS, 20f, 600f); // optioneel max zoom in
+            pixelsPerSecond = Mathf.Clamp(newPPS, 20f, 600f); // Max zoom in
 
             // Pas scrollTime aan zodat de tijd onder de muis blijft
-            float newScrollTime = timeUnderMouse - (mouseX / pixelsPerSecond);
+            float newScrollTime = timeUnderMouse - (zoomData.zoomCenterX / pixelsPerSecond);
             SetScrollTime(newScrollTime);
-        }
-
-        private void FixedUpdate()
-        {
-            Debug.Log($"Audio: {AudioPlaybackController.Instance.GetCurrentTime()} | Scroll: {scrollTime}");
         }
     }
 }

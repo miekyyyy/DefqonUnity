@@ -1,4 +1,4 @@
-﻿using System;
+﻿using DefqonEngine.Core.Project;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -16,8 +16,11 @@ namespace DefqonEngine.UI.Popup
                 return;
             }
             Instance = this;
+
+            ProjectManager.Instance.OnProjectLoaded += ClosePopups;
             foreach (var popup in popups)
             {
+                popup.OnPopupOpen += OnPopupOpen;
                 popup.Close();
             }
         }
@@ -26,7 +29,7 @@ namespace DefqonEngine.UI.Popup
         {
             foreach (var closingPopup in popups)
             {
-                if(closingPopup == popup) continue;
+                if (closingPopup == popup) continue;
                 closingPopup.Close();
             }
         }

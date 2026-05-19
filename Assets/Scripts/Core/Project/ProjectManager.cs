@@ -1,4 +1,5 @@
 using DefqonEngine.Core.Presets;
+using DefqonEngine.Core.Timeline.Audio;
 using DefqonEngine.Core.Timeline.Events;
 using DefqonEngine.Core.Timeline.Tracks;
 using DefqonEngine.IO.Audio;
@@ -6,6 +7,7 @@ using DefqonEngine.IO.Presets;
 using DefqonEngine.IO.Project;
 using DefqonEngine.IO.Timeline;
 using DefqonEngine.UI.Popup;
+using System;
 using UnityEngine;
 
 namespace DefqonEngine.Core.Project
@@ -23,6 +25,8 @@ namespace DefqonEngine.Core.Project
         private string newProjectName = "";
         private string newProjectAudioFilePath = "";
 
+        public event Action OnProjectLoaded;
+        public event Action OnProjectSaved;
 
         void Awake()
         {
@@ -58,6 +62,7 @@ namespace DefqonEngine.Core.Project
                 return;
             }
             LoadProjectData(newProject);
+            OnProjectLoaded?.Invoke();
         }
 
         public void SaveProject()
@@ -71,6 +76,7 @@ namespace DefqonEngine.Core.Project
             CurrentProject.presets = PresetManager.Instance.GetAllPresets();
             CurrentProject.trackCount = TimelineTrackManager.Instance.TrackCount;
             projectSaveManager.SaveProject(CurrentProject);
+            OnProjectSaved?.Invoke();
         }
 
         public void LoadProject()
@@ -82,15 +88,23 @@ namespace DefqonEngine.Core.Project
                 return;
             }
             LoadProjectData(project);
-            PopupManager.Instance.ClosePopups();
+            OnProjectLoaded?.Invoke();
         }
 
         private void LoadProjectData(DefqonProject project)
         {
+            CloseProject();
             CurrentProject = project;
             presetSaveManager.LoadPresets(project.presets);
             timelineSaveManager.LoadTimeline(project.events, project.trackCount);
             audioSaveManager.LoadAudio(project.audioFilePath);
+        }
+
+        private void CloseProject()
+        {
+            CurrentProject = null;
+            PresetManager.Instance.ClearLoadedPresets();
+            TimelineEventManager.Instance.ClearEvents();
         }
     }
 }

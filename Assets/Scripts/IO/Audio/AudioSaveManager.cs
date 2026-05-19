@@ -30,12 +30,15 @@ namespace DefqonEngine.IO.Audio
                 yield break;
             }
 
-            string url = "file://" + path;
+            string url = new System.Uri(path).AbsoluteUri;
 
             AudioType audioType = GetAudioType(path);
 
             using (UnityWebRequest www = UnityWebRequestMultimedia.GetAudioClip(url, audioType))
             {
+                var handler = (DownloadHandlerAudioClip)www.downloadHandler;
+                handler.streamAudio = false;
+
                 yield return www.SendWebRequest();
 
                 if (www.result != UnityWebRequest.Result.Success)

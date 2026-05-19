@@ -2,6 +2,7 @@
 using DefqonEngine.Sequencing.Data.Events;
 using DefqonEngine.Sequencing.Data.Presets;
 using DefqonEngine.UI.Presets;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -40,7 +41,7 @@ namespace DefqonEngine.Core.Presets
             buttons.Add(button);
         }
 
-        private void ClearLoadedPresets()
+        public void ClearLoadedPresets()
         {
             for (int i = buttons.Count - 1; i >= 0; i--)
             {

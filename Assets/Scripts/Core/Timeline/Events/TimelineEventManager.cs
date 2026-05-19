@@ -168,6 +168,12 @@ namespace DefqonEngine.Core.Timeline.Events
             throw new NotImplementedException($"Cloning is not implemented for timeline event runtime type '{source.GetType().Name}'.");
         }
 
+        public void ClearEvents()
+        {
+            foreach (var ev in new List<TimelineEvent>(events))
+                RemoveEvent(ev);
+        }
+
         public void RemoveEvent(TimelineEvent timelineEvent)
         {
             // Data

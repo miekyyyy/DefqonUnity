@@ -5,6 +5,7 @@ using DefqonEngine.Sequencing.Data.Events;
 using DefqonEngine.Sequencing.Data.Presets;
 using DefqonEngine.UI.Timeline.Common;
 using DefqonEngine.UI.Timeline.Tracks;
+using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -13,6 +14,10 @@ namespace DefqonEngine.UI.Timeline.Control
     public class TimelineInputController : MonoBehaviour
     {
         public static TimelineInputController Instance { get; private set; }
+
+        public event Action<ZoomData> OnZoom;
+        public event Action<float> OnPan;
+
         void Awake()
         {
             Instance = this;
@@ -65,8 +70,10 @@ namespace DefqonEngine.UI.Timeline.Control
                 null,
                 out localMouse
             );
-
-            TimelineView.Instance.Zoom(scroll > 0 ? 1.1f : 0.9f, localMouse.x);
+            OnZoom?.Invoke(new ZoomData { 
+                zoomFactor = scroll > 0 ? 1.1f : 0.9f, 
+                zoomCenterX = localMouse.x 
+            });
         }
 
         void HandlePan()
@@ -74,8 +81,14 @@ namespace DefqonEngine.UI.Timeline.Control
             if (Input.GetMouseButton(2))
             {
                 float deltaX = Input.GetAxis("Mouse X");
-                TimelineView.Instance.PanPixels(deltaX);
+                OnPan?.Invoke(deltaX);
             }
+        }
+
+        public struct ZoomData
+        {
+            public float zoomFactor;
+            public float zoomCenterX;
         }
     }
 }

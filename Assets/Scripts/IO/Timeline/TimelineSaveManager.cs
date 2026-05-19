@@ -42,7 +42,10 @@ namespace DefqonEngine.IO.Timeline
                     maxTrackIndex = ev.trackIndex;
             }
 
-            int requiredTracks = Math.Max(trackCount, maxTrackIndex + 1);
+            int requiredTracks = Mathf.Clamp(
+                Math.Max(trackCount, maxTrackIndex + 1),
+                0, 32);
+
             int currentTracks = TimelineTrackManager.Instance.TrackCount;
 
             if (currentTracks < requiredTracks)
