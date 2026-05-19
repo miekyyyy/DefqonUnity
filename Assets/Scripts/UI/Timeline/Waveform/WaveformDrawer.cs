@@ -3,6 +3,7 @@ using DefqonEngine.UI.Timeline.Common;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AdaptivePerformance.Provider;
 using UnityEngine.UI;
 
 namespace DefqonEngine.UI.Timeline.Waveform
@@ -180,6 +181,22 @@ namespace DefqonEngine.UI.Timeline.Waveform
             //    tile.image.rectTransform.anchorMax = Vector2.zero;
             //    tile.image.rectTransform.pivot = Vector2.zero;
             //}
+        }
+
+        Texture2D DrawWaveformTexture(WaveformPoint[] data)
+        {
+            if(data.Length == 0) return null;
+
+            int texWidth = data.Length;
+            int texHeight = Mathf.Max(1, Mathf.RoundToInt(((RectTransform)transform).rect.height));
+            Texture2D tex = new Texture2D(texWidth, texHeight, TextureFormat.RGBA32, false);
+
+            for (int x = 0; x < texWidth; x++)
+            {
+                tex.SetPixel(x, y, color);
+            }
+
+            return tex;
         }
 
         void DrawToTexture(Texture2D texture, WaveformPoint[] data)
