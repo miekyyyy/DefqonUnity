@@ -18,6 +18,8 @@ namespace DefqonEngine.UI.Timeline.Control
         public event Action<ZoomData> OnZoom;
         public event Action<float> OnPan;
 
+        public bool isTyping;
+
         void Awake()
         {
             Instance = this;
@@ -26,6 +28,8 @@ namespace DefqonEngine.UI.Timeline.Control
         {
             HandleZoom();
             HandlePan();
+
+            if (isTyping) return;
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 AudioPlaybackController.Instance.TogglePlayPause();
@@ -35,6 +39,8 @@ namespace DefqonEngine.UI.Timeline.Control
                 TimelineEventManager.Instance.RemoveEventSelected();
             }
         }
+
+        public void SetTyping(bool typing) => isTyping = typing;
 
         public void OnTrackRightClicked(TimelineTrack track, PointerEventData eventData)
         {
@@ -54,7 +60,7 @@ namespace DefqonEngine.UI.Timeline.Control
                 TimelineEventManager.Instance.CreateEvent<LightEvent>(track.trackIndex, 0, time);
                 return;
             }
-            TimelineEventManager.Instance.CreateEvent(selectedPreset, track.trackIndex, time);
+            TimelineEventManager.Instance.CreateEvent(selectedPreset, track.trackIndex, time, selectedPreset.timelineEvent.duration);
         }
 
         void HandleZoom()

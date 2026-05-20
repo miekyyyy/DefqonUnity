@@ -1,12 +1,10 @@
 ﻿using DefqonEngine.Core.Presets;
 using DefqonEngine.Core.Timeline.Events;
 using DefqonEngine.IO.Project;
-using DefqonEngine.Sequencing.Data.Events;
 using DefqonEngine.Sequencing.Data.Presets;
+using DefqonEngine.UI.Popup;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
 using SFB;
-using System;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
@@ -15,6 +13,10 @@ namespace DefqonEngine.IO.Presets
 {
     public class PresetSaveManager : MonoBehaviour
     {
+        private string presetName;
+        
+        public void SetPresetName(string name) => presetName = name;
+
         public void SavePreset()
         {
             //File saving
@@ -23,10 +25,11 @@ namespace DefqonEngine.IO.Presets
                 return;
 
             var preset = new EventPreset(
-                Path.GetFileNameWithoutExtension(path),
+                string.IsNullOrEmpty(presetName) ? Path.GetFileNameWithoutExtension(path) : presetName,
                 TimelineEventManager.Instance.selectedEvent
             );
             Save(preset, path);
+            PopupManager.Instance.ClosePopups();
         }
 
         public void LoadPresets()

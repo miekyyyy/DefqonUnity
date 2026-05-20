@@ -42,32 +42,41 @@ namespace DefqonEngine.UI.Timeline.Events
 
             if (side == ResizeSide.Left)
             {
-                float newStart = Mathf.Min(time, startStartTime + startDuration - 0.05f); // Zorg dat de duur minimaal 0.05 seconden blijft
-
-                newStart = Mathf.Max(0, newStart); // Zorg dat de starttijd niet negatief wordt
-
+                float snappedStart = TimelineView.Instance.SnapTime(
+                    time,
+                    SnapContext.ResizeStart,
+                    eventView.timelineEvent
+                );
+                snappedStart = Mathf.Clamp(snappedStart, 0, startStartTime + startDuration - 0.05f);
+                
                 var prev = TimelineEventManager.Instance.GetPreviousEvent(eventView.timelineEvent);
                 if (prev != null)
                 {
-                    newStart = Mathf.Max(newStart, prev.time + prev.duration);
+                    snappedStart = Mathf.Max(snappedStart, prev.time + prev.duration);
                 }
-                float delta = startStartTime - newStart;
+                float delta = startStartTime - snappedStart;
 
-                eventView.startTime = newStart;
+                eventView.startTime = snappedStart;
                 eventView.duration = startDuration + delta;
             }
             else
             {
-                float newDuration = Mathf.Max(0.05f, time - startStartTime);
+                float snappedEnd = TimelineView.Instance.SnapTime(
+                    time,
+                    SnapContext.ResizeEnd,
+                    eventView.timelineEvent
+                );
+
+                snappedEnd = Mathf.Max(snappedEnd, startStartTime + 0.05f);
 
                 var next = TimelineEventManager.Instance.GetNextEvent(eventView.timelineEvent);
                 if (next != null)
                 {
-                    float maxDuration = next.time - eventView.startTime;
-                    newDuration = Mathf.Min(newDuration, maxDuration);
+                    float maxEnd = next.time;
+                    snappedEnd = Mathf.Min(snappedEnd, maxEnd);
                 }
 
-                eventView.duration = newDuration;
+                eventView.duration = snappedEnd - startStartTime;
             }
         }
 

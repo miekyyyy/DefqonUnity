@@ -11,7 +11,7 @@ namespace DefqonEngine.UI.Timeline.Header
     public class Ruler : MonoBehaviour
     {
         [Header("References")]
-        [SerializeField] TextMeshProUGUI timeDisplay;
+        [SerializeField] TMP_InputField timeDisplay;
         public RectTransform tickContainer;
         public GameObject majorTickPrefab;
         public GameObject minorTickPrefab;
@@ -26,6 +26,7 @@ namespace DefqonEngine.UI.Timeline.Header
         private List<GameObject> majorTicks = new();
         private List<GameObject> minorTicks = new();
         private List<TMP_Text> labels = new();
+        private bool isEditingTime = false;
         IEnumerator Start()
         {
             yield return null; // wacht 1 frame
@@ -39,8 +40,11 @@ namespace DefqonEngine.UI.Timeline.Header
 
         void Update()
         {
-            TimeSpan time = TimeSpan.FromSeconds(AudioPlaybackController.Instance.GetCurrentTime());
-            timeDisplay.text = time.ToString("mm':'ss':'ff");
+            if (!isEditingTime)
+            {
+                TimeSpan time = TimeSpan.FromSeconds(AudioPlaybackController.Instance.GetCurrentTime());
+                timeDisplay.text = time.ToString("mm':'ss':'ff");
+            }
         }
 
         void Refresh()
@@ -123,6 +127,23 @@ namespace DefqonEngine.UI.Timeline.Header
             int min = Mathf.FloorToInt(time / 60f);
             int sec = Mathf.FloorToInt(time % 60f);
             return $"{min:00}:{sec:00}";
+        }
+
+        public void SetTime(string timeString)
+        {
+            string[] parts = timeString.Split(':');
+            if (parts.Length != 3) return;
+
+            int.TryParse(parts[0], out int min);
+            int.TryParse(parts[1], out int sec);
+            int.TryParse(parts[2], out int frame);
+            float time = min * 60f + sec + frame / 60f;
+            AudioPlaybackController.Instance.SetTime(time);
+        }
+
+        public void SetEditingTime(bool isEditing)
+        {
+            isEditingTime = isEditing;
         }
     }
 }
