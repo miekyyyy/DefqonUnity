@@ -14,18 +14,6 @@ namespace DefqonEngine.UI.Timeline.Control
         private bool isDragging;
         private bool isPlaying;
 
-<<<<<<< HEAD
-        void LateUpdate()
-        {
-            if (isDragging) return;
-
-            float x = TimelineView.Instance.TimeToX(TimelineAudioController.Instance.GetCurrentTime());
-            x = Mathf.Clamp(x, 0f, TimelineView.Instance.Width);
-
-            rect.anchoredPosition = new Vector2(x, rect.anchoredPosition.y);
-
-            HandleAutoScroll(x);
-=======
         void Update()
         {
             if (isDragging) return;
@@ -37,7 +25,6 @@ namespace DefqonEngine.UI.Timeline.Control
             rect.anchoredPosition = new Vector2(x, rect.anchoredPosition.y);
 
             TimelineView.Instance.AutoScrollToTime(time, scrollMargin);
->>>>>>> d921fedd28b702c5664981b56c3fd1bef1188ef1
         }
 
         public void BeginDrag(BaseEventData eventData)
@@ -45,13 +32,8 @@ namespace DefqonEngine.UI.Timeline.Control
 
             isDragging = true; 
 
-<<<<<<< HEAD
-            isPlaying = TimelineAudioController.Instance.IsPlaying();
-            TimelineAudioController.Instance.Pause();
-=======
             isPlaying = AudioPlaybackController.Instance.IsPlaying();
             AudioPlaybackController.Instance.Pause();
->>>>>>> d921fedd28b702c5664981b56c3fd1bef1188ef1
         }
 
         public void Drag(BaseEventData eventData)
@@ -71,11 +53,7 @@ namespace DefqonEngine.UI.Timeline.Control
 
             float time = TimelineView.Instance.XToTime(x);
 
-<<<<<<< HEAD
-            TimelineAudioController.Instance.SetTime(time);
-=======
             AudioPlaybackController.Instance.SetTime(time);
->>>>>>> d921fedd28b702c5664981b56c3fd1bef1188ef1
 
             rect.anchoredPosition = new Vector2(x, rect.anchoredPosition.y);
         }
@@ -84,11 +62,7 @@ namespace DefqonEngine.UI.Timeline.Control
         {
             isDragging = false;
             if (isPlaying)
-<<<<<<< HEAD
-                TimelineAudioController.Instance.Play();
-=======
                 AudioPlaybackController.Instance.Play();
->>>>>>> d921fedd28b702c5664981b56c3fd1bef1188ef1
             isPlaying = false;
         }
 
@@ -101,24 +75,5 @@ namespace DefqonEngine.UI.Timeline.Control
             EndDrag(eventData);
         }
 
-<<<<<<< HEAD
-        void HandleAutoScroll(float x)
-        {
-            float right = TimelineView.Instance.Width - scrollMargin;
-            float left = scrollMargin;
-
-            if (x > right)
-            {
-                float deltaTime = (x - right) / TimelineView.Instance.pixelsPerSecond;
-                TimelineView.Instance.SetScrollTime(TimelineView.Instance.scrollTime + deltaTime);
-            }
-            else if (x < left)
-            {
-                float deltaTime = (left - x) / TimelineView.Instance.pixelsPerSecond;
-                TimelineView.Instance.SetScrollTime(TimelineView.Instance.scrollTime - deltaTime);
-            }
-        }
-=======
->>>>>>> d921fedd28b702c5664981b56c3fd1bef1188ef1
     }
 }

@@ -1,5 +1,5 @@
 ﻿<Solution>
-  <Project Path="Assembly-CSharp-Editor-firstpass.csproj" />
   <Project Path="DefqonEngine.csproj" />
+  <Project Path="Assembly-CSharp-Editor-firstpass.csproj" />
   <Project Path="StandaloneFileBrowser.csproj" />
 </Solution>

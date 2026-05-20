@@ -71,13 +71,9 @@ namespace DefqonEngine.UI.Timeline.Events
         public void UpdateVisual()
         {
             float x = TimelineView.Instance.TimeToX(timelineEvent.time);
-<<<<<<< HEAD
-            float w = timelineEvent.duration * TimelineView.Instance.pixelsPerSecond;
-=======
             float xStart = TimelineView.Instance.TimeToX(timelineEvent.time);
             float xEnd = TimelineView.Instance.TimeToX(timelineEvent.time + timelineEvent.duration);
             float w = xEnd - xStart;
->>>>>>> d921fedd28b702c5664981b56c3fd1bef1188ef1
 
             rect.anchoredPosition = new Vector2(x, track.GetTrackY());
             rect.sizeDelta = new Vector2(w, rect.sizeDelta.y);

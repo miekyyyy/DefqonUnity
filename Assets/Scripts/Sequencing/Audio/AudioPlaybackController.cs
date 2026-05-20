@@ -1,4 +1,5 @@
 ﻿using DefqonEngine.UI.Timeline.Waveform;
+using System;
 using UnityEngine;
 
 namespace DefqonEngine.Core.Timeline.Audio
@@ -7,6 +8,8 @@ namespace DefqonEngine.Core.Timeline.Audio
     {
         public static AudioPlaybackController Instance { get; private set; }
         [SerializeField] AudioSource audioSource;
+
+        public event Action OnAudioSourceChanged;
 
         private void Awake()
         {
@@ -83,7 +86,7 @@ namespace DefqonEngine.Core.Timeline.Audio
         {
             if (audioSource == null) return false;
             audioSource.clip = clip;
-            WaveformDrawer.Instance.Refresh();
+            OnAudioSourceChanged?.Invoke();
             return true;
         }
 

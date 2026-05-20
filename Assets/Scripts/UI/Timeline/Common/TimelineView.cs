@@ -1,10 +1,8 @@
-<<<<<<< HEAD
-﻿using System;
-=======
 ﻿using DefqonEngine.Core.Timeline.Audio;
+using DefqonEngine.UI.Timeline.Control;
 using System;
->>>>>>> d921fedd28b702c5664981b56c3fd1bef1188ef1
 using UnityEngine;
+using static DefqonEngine.UI.Timeline.Control.TimelineInputController;
 
 namespace DefqonEngine.UI.Timeline.Common
 {
@@ -16,21 +14,11 @@ namespace DefqonEngine.UI.Timeline.Common
         public RectTransform panel;
 
         [Header("Zoom")]
-<<<<<<< HEAD
-        public float pixelsPerSecond = 100f;
-=======
         private float pixelsPerSecond = 100f;
->>>>>>> d921fedd28b702c5664981b56c3fd1bef1188ef1
 
         [Header("Scroll")]
         public float scrollTime = 0f;
 
-<<<<<<< HEAD
-        [Header("Audio")]
-        public AudioSource audioSource;
-
-=======
->>>>>>> d921fedd28b702c5664981b56c3fd1bef1188ef1
 
         public Action OnViewChanged;
 
@@ -41,8 +29,12 @@ namespace DefqonEngine.UI.Timeline.Common
             Instance = this;
         }
 
-<<<<<<< HEAD
-=======
+        private void Start()
+        {
+            TimelineInputController.Instance.OnZoom += Zoom;
+            TimelineInputController.Instance.OnPan += PanPixels;
+        }
+
         // The time currently at the left edge of the timeline
         public float VisibleStart => scrollTime;
 
@@ -60,26 +52,17 @@ namespace DefqonEngine.UI.Timeline.Common
         }
 
         // Time in seconds to X position in pixels, relative to the left edge of the timeline
->>>>>>> d921fedd28b702c5664981b56c3fd1bef1188ef1
         public float TimeToX(float time)
         {
             return (time - scrollTime) * pixelsPerSecond;
         }
 
-<<<<<<< HEAD
-=======
         // X position in pixels to time in seconds, relative to the left edge of the timeline
->>>>>>> d921fedd28b702c5664981b56c3fd1bef1188ef1
         public float XToTime(float x)
         {
             return (x / pixelsPerSecond) + scrollTime;
         }
 
-<<<<<<< HEAD
-        public void SetScrollTime(float newScrollTime)
-        {
-            if (audioSource == null || audioSource.clip == null)
-=======
         // Duration in seconds to width in pixels
         public float DurationToWidth(float duration)
         {
@@ -135,18 +118,13 @@ namespace DefqonEngine.UI.Timeline.Common
         public void SetScrollTime(float newScrollTime)
         {
             if (AudioPlaybackController.Instance == null || AudioPlaybackController.Instance.GetAudioClip() == null)
->>>>>>> d921fedd28b702c5664981b56c3fd1bef1188ef1
             {
                 newScrollTime = Mathf.Max(0f, newScrollTime);
             }
             else
             {
                 // Max scroll = clip length - visible timeline
-<<<<<<< HEAD
-                float maxScroll = Mathf.Max(0f, audioSource.clip.length - (Width / pixelsPerSecond));
-=======
                 float maxScroll = Mathf.Max(0f, AudioPlaybackController.Instance.GetAudioClip().length - (Width / pixelsPerSecond));
->>>>>>> d921fedd28b702c5664981b56c3fd1bef1188ef1
                 newScrollTime = Mathf.Clamp(newScrollTime, 0f, maxScroll);
             }
             scrollTime = newScrollTime;
@@ -160,41 +138,27 @@ namespace DefqonEngine.UI.Timeline.Common
             SetScrollTime(scrollTime - deltaTime);
         }
 
-        public void Zoom(float factor, float mouseX)
+        public void Zoom(ZoomData zoomData)
         {
             if (pixelsPerSecond <= 0f) return;
 
-            float timeUnderMouse = XToTime(mouseX);
+            float timeUnderMouse = XToTime(zoomData.zoomCenterX);
 
             // Nieuwe pixelsPerSecond
-            float newPPS = pixelsPerSecond * factor;
+            float newPPS = pixelsPerSecond * zoomData.zoomFactor;
 
             // Clamp: niet verder uitzoomen dan de clip
-<<<<<<< HEAD
-            if (audioSource != null && audioSource.clip != null)
-            {
-                float minPPS = Width / audioSource.clip.length;
-=======
             if (AudioPlaybackController.Instance != null && AudioPlaybackController.Instance.GetAudioClip() != null)
             {
                 float minPPS = Width / AudioPlaybackController.Instance.GetAudioClip().length;
->>>>>>> d921fedd28b702c5664981b56c3fd1bef1188ef1
                 newPPS = Mathf.Max(newPPS, minPPS);
             }
 
-            pixelsPerSecond = Mathf.Clamp(newPPS, 20f, 600f); // optioneel max zoom in
+            pixelsPerSecond = Mathf.Clamp(newPPS, 20f, 600f); // Max zoom in
 
             // Pas scrollTime aan zodat de tijd onder de muis blijft
-            float newScrollTime = timeUnderMouse - (mouseX / pixelsPerSecond);
+            float newScrollTime = timeUnderMouse - (zoomData.zoomCenterX / pixelsPerSecond);
             SetScrollTime(newScrollTime);
         }
-
-<<<<<<< HEAD
-=======
-        private void FixedUpdate()
-        {
-            Debug.Log($"Audio: {AudioPlaybackController.Instance.GetCurrentTime()} | Scroll: {scrollTime}");
-        }
->>>>>>> d921fedd28b702c5664981b56c3fd1bef1188ef1
     }
 }
