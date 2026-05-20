@@ -79,6 +79,21 @@ namespace DefqonEngine.Core.Project
             OnProjectSaved?.Invoke();
         }
 
+        public string SaveProjectWithReturn()
+        {
+            if (CurrentProject == null)
+            {
+                Debug.LogError("No project to save.");
+                return null;
+            }
+            CurrentProject.events = TimelineEventManager.Instance.events;
+            CurrentProject.presets = PresetManager.Instance.GetAllPresets();
+            CurrentProject.trackCount = TimelineTrackManager.Instance.TrackCount;
+            string path = projectSaveManager.SaveProjectReturnPath(CurrentProject);
+            OnProjectSaved?.Invoke();
+            return path;
+        }
+
         public void LoadProject()
         {
             var project = projectSaveManager.LoadProject();

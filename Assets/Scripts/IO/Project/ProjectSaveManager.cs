@@ -65,6 +65,17 @@ namespace DefqonEngine.IO.Project
             return true;
         }
 
+        public string SaveProjectReturnPath(DefqonProject project)
+        {
+            //File saving
+            var path = StandaloneFileBrowser.SaveFilePanel("Save Project", "", "project", "dfqprj");
+            if (string.IsNullOrEmpty(path) || project == null)
+                return null;
+
+            Save(project, path);
+            return path;
+        }
+
         public DefqonProject LoadProject()
         {
             //Files loading
