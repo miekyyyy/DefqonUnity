@@ -1,10 +1,11 @@
-﻿using DefqonEngine.IO.Presets;
+﻿using DefqonEngine.Core.Timeline.Events;
+using DefqonEngine.IO.Presets;
 using DefqonEngine.Sequencing.Data.Events;
 using DefqonEngine.Sequencing.Data.Presets;
 using DefqonEngine.UI.Presets;
-using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace DefqonEngine.Core.Presets
 {
@@ -16,6 +17,7 @@ namespace DefqonEngine.Core.Presets
         [SerializeField] GameObject parent;
         [SerializeField] PresetButton buttonPrefab;
         [SerializeField] PresetSaveManager saveManager;
+        [SerializeField] Button removeButton;
         bool isRemovingPreset;
 
         [Header("Colors")]
@@ -126,6 +128,32 @@ namespace DefqonEngine.Core.Presets
             }
             selectedPreset = null;
             isRemovingPreset = !isRemovingPreset;
+            if (isRemovingPreset)
+            {
+                removeButton.colors = new ColorBlock()
+                {
+                    normalColor = removingColor,
+                    highlightedColor = removingColor,
+                    pressedColor = removingColor,
+                    selectedColor = removingColor,
+                    disabledColor = removeButton.colors.disabledColor,
+                    colorMultiplier = removeButton.colors.colorMultiplier,
+                    fadeDuration = removeButton.colors.fadeDuration
+                };
+            }
+            else
+            {
+                removeButton.colors = new ColorBlock()
+                {
+                    normalColor = defaultColor,
+                    highlightedColor = defaultColor,
+                    pressedColor = defaultColor,
+                    selectedColor = defaultColor,
+                    disabledColor = removeButton.colors.disabledColor,
+                    colorMultiplier = removeButton.colors.colorMultiplier,
+                    fadeDuration = removeButton.colors.fadeDuration
+                };
+            }
             foreach (var button in buttons)
             {
                 if (isRemovingPreset)

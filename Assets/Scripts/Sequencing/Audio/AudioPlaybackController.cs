@@ -73,7 +73,7 @@ namespace DefqonEngine.Core.Timeline.Audio
 
         public float GetCurrentTime()
         {
-            if (audioSource == null) return 0f;
+            if (audioSource == null || audioSource.clip == null) return 0f;
             return audioSource.time;
         }
 

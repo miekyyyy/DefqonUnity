@@ -116,10 +116,10 @@ namespace DefqonEngine.UI.Timeline.Events
             );
 
             float x = Mathf.Max(0f, local.x - dragOffset);
-            float t = TimelineView.Instance.XToTime(x);
+            float rawTime = TimelineView.Instance.XToTime(x);
+            float snappedTime = TimelineView.Instance.SnapTime(rawTime, SnapContext.Move, timelineEvent, duration);
 
-            // Alleen visueel verplaatsen
-            timelineEvent.time = t;
+            timelineEvent.time = snappedTime;
             UpdateVisual();
         }
         public void OnEndDrag(PointerEventData eventData)

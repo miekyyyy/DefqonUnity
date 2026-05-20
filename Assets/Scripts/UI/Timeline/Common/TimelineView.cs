@@ -1,4 +1,6 @@
 ﻿using DefqonEngine.Core.Timeline.Audio;
+using DefqonEngine.Core.Timeline.Events;
+using DefqonEngine.Sequencing.Data.Events;
 using DefqonEngine.UI.Timeline.Control;
 using System;
 using UnityEngine;
@@ -19,9 +21,12 @@ namespace DefqonEngine.UI.Timeline.Common
         [Header("Scroll")]
         public float scrollTime = 0f;
 
+        [Header("Snapping")]
+        public float gridSize = 0.25f; // 1/4 seconde grid
+        public float eventSnapRange = 0.1f;
+        public SnappingMode snappingMode = SnappingMode.None;
 
         public Action OnViewChanged;
-
         public float Width => panel.rect.width;
 
         private void Awake()
@@ -159,6 +164,143 @@ namespace DefqonEngine.UI.Timeline.Common
             // Pas scrollTime aan zodat de tijd onder de muis blijft
             float newScrollTime = timeUnderMouse - (zoomData.zoomCenterX / pixelsPerSecond);
             SetScrollTime(newScrollTime);
+        }
+
+        public float SnapTime(float time, SnapContext context, TimelineEvent ignore = null, float duration = 0f)
+        {
+            switch (snappingMode)
+            {
+                case SnappingMode.Time:
+                    return SnapToGrid(time);
+                case SnappingMode.Events:
+                    return SnapToEvents(time, duration, ignore, context);
+                case SnappingMode.None:
+                default:
+                    return time;
+            }
+        }
+
+        private float SnapToGrid(float time)
+        {
+            return Mathf.Round(time / gridSize) * gridSize;
+        }
+
+        private float SnapToEvents(float time, float duration, TimelineEvent ignore, SnapContext context)
+        {
+            float best = time;
+            float bestDist = eventSnapRange;
+
+            foreach (var e in TimelineEventManager.Instance.events)
+            {
+                if (e == ignore) continue;
+
+                float start = e.time;
+                float end = e.time + e.duration;
+
+                if (context == SnapContext.ResizeStart)
+                {
+                    // snap start handle to both starts and ends
+                    float dStart = Mathf.Abs(start - time);
+                    if (dStart < bestDist)
+                    {
+                        bestDist = dStart;
+                        best = start;
+                    }
+
+                    float dEnd = Mathf.Abs(end - time);
+                    if (dEnd < bestDist)
+                    {
+                        bestDist = dEnd;
+                        best = end;
+                    }
+                }
+                else if (context == SnapContext.ResizeEnd)
+                {
+                    // snap end handle to both starts and ends
+                    float dStart = Mathf.Abs(start - time);
+                    if (dStart < bestDist)
+                    {
+                        bestDist = dStart;
+                        best = start;
+                    }
+
+                    float dEnd = Mathf.Abs(end - time);
+                    if (dEnd < bestDist)
+                    {
+                        bestDist = dEnd;
+                        best = end;
+                    }
+                }
+                else // Move
+                {
+                    // snap to starts and ends, from both start and the end of current event.
+                    float moveStartToStart = Mathf.Abs(start - time);
+                    float moveStartToEnd = Mathf.Abs(end - time);
+
+                    float moveEndToStart = Mathf.Abs((start - duration) - time);
+                    float moveEndToEnd = Mathf.Abs((end - duration) - time);
+
+                    if (moveStartToStart < bestDist)
+                    {
+                        bestDist = moveStartToStart;
+                        best = start;
+                    }
+
+                    if (moveStartToEnd < bestDist)
+                    {
+                        bestDist = moveStartToEnd;
+                        best = end;
+                    }
+
+                    if (moveEndToStart < bestDist)
+                    {
+                        bestDist = moveEndToStart;
+                        best = start - duration;
+                    }
+
+                    if (moveEndToEnd < bestDist)
+                    {
+                        bestDist = moveEndToEnd;
+                        best = end - duration;
+                    }
+                }
+
+                // Snap to playhead
+                float playheadTime = AudioPlaybackController.Instance != null ? AudioPlaybackController.Instance.GetCurrentTime() : 0f;
+
+                float dPlayheadStart = Mathf.Abs(playheadTime - time);
+                if (dPlayheadStart < bestDist)
+                {
+                    bestDist = dPlayheadStart;
+                    best = playheadTime;
+                }
+
+                // also allow “end-aligned feel” for duration-based operations
+                float dPlayheadEnd = Mathf.Abs(playheadTime - (time + duration));
+                if (dPlayheadEnd < bestDist)
+                {
+                    bestDist = dPlayheadEnd;
+                    best = playheadTime - duration;
+                }
+            }
+
+            return best;
+        }
+
+        public void UpdateSnappingMode()
+        {
+            switch (snappingMode)
+            {
+                case SnappingMode.None:
+                    snappingMode = SnappingMode.Time;
+                    break;
+                case SnappingMode.Time:
+                    snappingMode = SnappingMode.Events;
+                    break;
+                case SnappingMode.Events:
+                    snappingMode = SnappingMode.None;
+                    break;
+            }
         }
     }
 }
