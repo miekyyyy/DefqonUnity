@@ -29,17 +29,57 @@ namespace DefqonEngine.Core.Presets
             }
 
             // Initialize standard buttons
+<<<<<<< HEAD
             AddButton(new EventPreset("Light", new LightEvent()), true);
             AddButton(new EventPreset("Smoke", new SmokeEvent()), true);
         }
 
         public void AddButton(EventPreset preset, bool isDefault = false)
+=======
+            LoadPreset(new EventPreset("Light", new LightEvent()), true);
+            LoadPreset(new EventPreset("Smoke", new SmokeEvent()), true);
+        }
+
+        public void LoadPreset(EventPreset preset, bool isDefault = false)
+>>>>>>> d921fedd28b702c5664981b56c3fd1bef1188ef1
         {
             var button = Instantiate(buttonPrefab, parent.transform);
             button.Initialize(preset, isDefault);
             buttons.Add(button);
         }
 
+<<<<<<< HEAD
+=======
+        private void ClearLoadedPresets()
+        {
+            for (int i = buttons.Count - 1; i >= 0; i--)
+            {
+                var button = buttons[i];
+                if (button.isDefault)
+                {
+                    continue;
+                }
+
+                if (selectedPreset == button.preset)
+                {
+                    selectedPreset = null;
+                }
+
+                buttons.RemoveAt(i);
+                Destroy(button.gameObject);
+            }
+        }
+
+        public void LoadPresets(List<EventPreset> presets)
+        {
+            ClearLoadedPresets();
+
+            foreach (var preset in presets)
+            {
+                LoadPreset(preset);
+            }
+        }
+>>>>>>> d921fedd28b702c5664981b56c3fd1bef1188ef1
         public void SelectPreset(EventPreset preset)
         {
             foreach (var button in buttons)
@@ -59,6 +99,19 @@ namespace DefqonEngine.Core.Presets
             }
         }
 
+<<<<<<< HEAD
+=======
+        public List<EventPreset> GetAllPresets()
+        {
+            List<EventPreset> presets = new List<EventPreset>();
+            foreach (var button in buttons)
+            {
+                presets.Add(button.preset);
+            }
+            return presets;
+        }
+
+>>>>>>> d921fedd28b702c5664981b56c3fd1bef1188ef1
         public EventPreset GetSelectedPreset()
         {
             return selectedPreset;
