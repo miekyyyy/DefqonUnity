@@ -1,4 +1,5 @@
-﻿using DefqonEngine.Core.Timeline.Tracks;
+﻿using DefqonEngine.Core.Timeline.History;
+using DefqonEngine.Core.Timeline.Tracks;
 using DefqonEngine.Sequencing.Data.Events;
 using DefqonEngine.Sequencing.Data.Presets;
 using DefqonEngine.UI.Timeline.Events;
@@ -63,8 +64,13 @@ namespace DefqonEngine.Core.Timeline.Events
             SelectEvent(ev);
         }
 
-        public void AddEvent(TimelineEvent timelineEvent)
+        public void AddEvent(TimelineEvent timelineEvent, bool saveState = true)
         {
+            if (saveState)
+            {
+                TimelineHistory.Instance.SaveState("Adding Event");
+            }
+
             //Data
             events.Add(timelineEvent);
 
@@ -83,41 +89,12 @@ namespace DefqonEngine.Core.Timeline.Events
             OnEventAdded?.Invoke(timelineEvent);
         }
 
-        public void ReplaceEvent(String eventType)
+        public List<TimelineEvent> GetEventsCopy()
         {
-            if (!Enum.TryParse(eventType, out EventType parsedType))
-            {
-                Debug.LogError($"Invalid event type: {eventType}");
-                return;
-            }
-
-            if (selectedEvent == null)
-            {
-                Debug.LogWarning("No event selected to replace.");
-                return;
-            }
-
-            EventType type = parsedType;
-            TimelineEvent newEvent = type switch
-            {
-                EventType.Light => new LightEvent
-                {
-                    trackIndex = selectedEvent.trackIndex,
-                    targetId = selectedEvent.targetId,
-                    time = selectedEvent.time,
-                    duration = selectedEvent.duration
-                },
-                EventType.Smoke => new SmokeEvent
-                {
-                    trackIndex = selectedEvent.trackIndex,
-                    targetId = selectedEvent.targetId,
-                    time = selectedEvent.time,
-                    duration = selectedEvent.duration
-                },
-                _ => throw new NotImplementedException()
-            };
-            RemoveEvent(selectedEvent);
-            AddEvent(newEvent);
+            List<TimelineEvent> copy = new();
+            foreach (var ev in events)
+                copy.Add(CloneEvent(ev));
+            return copy;
         }
 
         public static T CloneEvent<T>(T source) where T : TimelineEvent, new()
@@ -171,11 +148,16 @@ namespace DefqonEngine.Core.Timeline.Events
         public void ClearEvents()
         {
             foreach (var ev in new List<TimelineEvent>(events))
-                RemoveEvent(ev);
+                RemoveEvent(ev, false);
         }
 
-        public void RemoveEvent(TimelineEvent timelineEvent)
+        public void RemoveEvent(TimelineEvent timelineEvent, bool saveState = true)
         {
+            if (saveState)
+            {
+                TimelineHistory.Instance.SaveState("Removing Event");
+            }
+
             // Data
             if (!events.Remove(timelineEvent))
                 return;
@@ -203,11 +185,11 @@ namespace DefqonEngine.Core.Timeline.Events
         {
             // Verwijder eerst alle bestaande events en views
             foreach (var ev in new List<TimelineEvent>(events))
-                RemoveEvent(ev);
+                RemoveEvent(ev, false);
 
             // Voeg nieuwe events toe met visuals
             foreach (var ev in incomingEvents)
-                AddEvent(ev);
+                AddEvent(ev, false);
             DeselectEvent();
         }
 
@@ -361,11 +343,11 @@ namespace DefqonEngine.Core.Timeline.Events
 
             // eerst verwijderen
             foreach (var r in toRemove)
-                RemoveEvent(r);
+                RemoveEvent(r, false);
 
             // daarna nieuwe delen toevoegen
             foreach (var a in toAdd)
-                AddEvent(a);
+                AddEvent(a, false);
 
             // daarna bestaande events updaten
             foreach (var m in modified)

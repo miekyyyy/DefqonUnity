@@ -91,12 +91,15 @@ namespace DefqonEngine.Core.Presets
             }
         }
 
-        public List<EventPreset> GetAllPresets()
+        public List<EventPreset> GetAllAddedPresets()
         {
             List<EventPreset> presets = new List<EventPreset>();
             foreach (var button in buttons)
             {
-                presets.Add(button.preset);
+                if (!button.isDefault)
+                {
+                    presets.Add(button.preset);
+                }
             }
             return presets;
         }

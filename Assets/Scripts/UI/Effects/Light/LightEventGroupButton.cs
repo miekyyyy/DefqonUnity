@@ -1,4 +1,4 @@
-﻿using DefqonEngine.Fixtures.Light;
+﻿using DefqonEngine.Stage.Fixtures.Light;
 using UnityEngine;
 using UnityEngine.UI;
 

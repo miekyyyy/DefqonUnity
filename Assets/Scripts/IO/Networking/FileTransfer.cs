@@ -5,7 +5,7 @@ using System.IO;
 using TMPro;
 using UnityEngine;
 
-namespace DefqonEngine.ScriptsNoAsmdef.Networking{
+namespace DefqonEngine.IO.Networking{
     
     public class FileTransfer : MonoBehaviour
     {

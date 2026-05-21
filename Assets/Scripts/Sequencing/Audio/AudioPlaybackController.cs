@@ -2,7 +2,7 @@
 using System;
 using UnityEngine;
 
-namespace DefqonEngine.Core.Timeline.Audio
+namespace DefqonEngine.Sequencing.Audio
 {
     public class AudioPlaybackController : MonoBehaviour
     {

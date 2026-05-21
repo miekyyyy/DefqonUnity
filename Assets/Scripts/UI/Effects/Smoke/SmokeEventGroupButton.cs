@@ -1,4 +1,4 @@
-﻿using DefqonEngine.Fixtures.Smoke;
+﻿using DefqonEngine.Stage.Fixtures.Smoke;
 using UnityEngine;
 using UnityEngine.UI;
 

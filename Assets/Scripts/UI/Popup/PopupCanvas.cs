@@ -1,12 +1,12 @@
-using System;
+﻿using System;
 using UnityEngine;
 
 namespace DefqonEngine.UI.Popup
 {
-    public class Popup : MonoBehaviour
+    public class PopupCanvas : MonoBehaviour
     {
-        public event Action<Popup> OnPopupOpen;
-        public event Action<Popup> OnPopupClose;
+        public event Action<PopupCanvas> OnPopupOpen;
+        public event Action<PopupCanvas> OnPopupClose;
         public void Open()
         {
             gameObject.SetActive(true);

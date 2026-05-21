@@ -1,6 +1,6 @@
 ﻿using DefqonEngine.Core.Presets;
-using DefqonEngine.Core.Timeline.Audio;
 using DefqonEngine.Core.Timeline.Events;
+using DefqonEngine.Sequencing.Audio;
 using DefqonEngine.Sequencing.Data.Events;
 using DefqonEngine.Sequencing.Data.Presets;
 using DefqonEngine.UI.Timeline.Common;
@@ -17,6 +17,12 @@ namespace DefqonEngine.UI.Timeline.Control
 
         public event Action<ZoomData> OnZoom;
         public event Action<float> OnPan;
+        public event Action OnCopy;
+        public event Action OnPaste;
+        public event Action OnUndo;
+        public event Action OnRedo;
+        public event Action OnMoveUp;
+        public event Action OnMoveDown;
 
         public bool isTyping;
 
@@ -37,6 +43,30 @@ namespace DefqonEngine.UI.Timeline.Control
             if (Input.GetKeyDown(KeyCode.Delete))
             {
                 TimelineEventManager.Instance.RemoveEventSelected();
+            }
+            if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.C))
+            {
+                OnCopy?.Invoke();
+            }
+            if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.V))
+            {
+                OnPaste?.Invoke();
+            }
+            if (Input.GetKey(KeyCode.LeftShift) && Input.GetKeyDown(KeyCode.Z))
+            {
+                OnUndo?.Invoke();
+            }
+            if (Input.GetKey(KeyCode.LeftShift) && Input.GetKeyDown(KeyCode.Y))
+            {
+                OnRedo?.Invoke();
+            }
+            if(Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.UpArrow))
+            {
+                OnMoveUp?.Invoke();
+            }
+            if(Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.DownArrow))
+            {
+                OnMoveDown?.Invoke();
             }
         }
 
@@ -76,9 +106,10 @@ namespace DefqonEngine.UI.Timeline.Control
                 null,
                 out localMouse
             );
-            OnZoom?.Invoke(new ZoomData { 
-                zoomFactor = scroll > 0 ? 1.1f : 0.9f, 
-                zoomCenterX = localMouse.x 
+            OnZoom?.Invoke(new ZoomData
+            {
+                zoomFactor = scroll > 0 ? 1.1f : 0.9f,
+                zoomCenterX = localMouse.x
             });
         }
 

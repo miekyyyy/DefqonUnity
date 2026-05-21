@@ -1,4 +1,5 @@
 ﻿using DefqonEngine.Core.Timeline.Events;
+using DefqonEngine.Core.Timeline.History;
 using DefqonEngine.UI.Timeline.Common;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -25,6 +26,8 @@ namespace DefqonEngine.UI.Timeline.Events
 
         public void OnBeginDrag(PointerEventData eventData)
         {
+            TimelineEventManager.Instance.SelectEvent(eventView.timelineEvent);
+            TimelineHistory.Instance.SaveState("Resizing Event");
             startStartTime = eventView.startTime;
             startDuration = eventView.duration;
         }
