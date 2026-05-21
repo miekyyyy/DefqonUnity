@@ -1,4 +1,5 @@
 ﻿using DefqonEngine.Core.Timeline.Events;
+using DefqonEngine.Core.Timeline.History;
 using DefqonEngine.Core.Timeline.Tracks;
 using DefqonEngine.Sequencing.Data.Events;
 using DefqonEngine.UI.Timeline.Common;
@@ -65,7 +66,7 @@ namespace DefqonEngine.UI.Timeline.Events
         void OnTrackRemoved(TimelineTrack removedTrack)
         {
             if (removedTrack == track)
-                TimelineEventManager.Instance.RemoveEvent(timelineEvent);
+                TimelineEventManager.Instance.RemoveEvent(timelineEvent, false);
         }
 
         public void UpdateVisual()
@@ -95,6 +96,9 @@ namespace DefqonEngine.UI.Timeline.Events
 
         public void OnBeginDrag(PointerEventData eventData)
         {
+            TimelineEventManager.Instance.SelectEvent(this.timelineEvent);
+            TimelineHistory.Instance.SaveState("Moving Event");
+
             RectTransformUtility.ScreenPointToLocalPointInRectangle(
                 TimelineView.Instance.panel,
                 eventData.position,

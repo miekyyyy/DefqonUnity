@@ -1,8 +1,7 @@
 ﻿using DefqonEngine.Core.Timeline.Events;
-using DefqonEngine.Fixtures.Light;
-using DefqonEngine.Fixtures.Management;
 using DefqonEngine.Sequencing.Data.Events;
-using DefqonEngine.UI.Timeline.Control;
+using DefqonEngine.Stage.Fixtures.Light;
+using DefqonEngine.Stage.Fixtures.Management;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -90,8 +89,6 @@ namespace DefqonEngine.UI.Effects.Light
         }
         public void LoadFromEvent(TimelineEvent timelineEvent)
         {
-            Debug.Log("Loading LightEvent data into editor...");
-
             if (timelineEvent is not LightEvent lightEvent)
             {
                 Debug.LogWarning("Selected event is not a LightEvent, cannot load color data.");

@@ -1,6 +1,6 @@
-﻿using DefqonEngine.Core.Timeline.Audio;
-using DefqonEngine.Core.Timeline.Events;
+﻿using DefqonEngine.Core.Timeline.Events;
 using DefqonEngine.Sequencing.Data.Events;
+using DefqonEngine.Sequencing.Audio;
 using DefqonEngine.UI.Timeline.Control;
 using System;
 using UnityEngine;

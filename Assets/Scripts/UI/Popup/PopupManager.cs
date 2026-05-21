@@ -7,7 +7,7 @@ namespace DefqonEngine.UI.Popup
     public class PopupManager : MonoBehaviour
     {
         public static PopupManager Instance { get; private set; }
-        public List<Popup> popups = new List<Popup>();
+        public List<PopupCanvas> popups = new List<PopupCanvas>();
         private void Awake()
         {
             if (Instance != null && Instance != this)
@@ -25,7 +25,7 @@ namespace DefqonEngine.UI.Popup
             }
         }
 
-        public void OnPopupOpen(Popup popup)
+        public void OnPopupOpen(PopupCanvas popup)
         {
             foreach (var closingPopup in popups)
             {

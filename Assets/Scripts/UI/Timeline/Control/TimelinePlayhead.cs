@@ -1,4 +1,4 @@
-﻿using DefqonEngine.Core.Timeline.Audio;
+﻿using DefqonEngine.Sequencing.Audio;
 using DefqonEngine.UI.Timeline.Common;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -30,7 +30,7 @@ namespace DefqonEngine.UI.Timeline.Control
         public void BeginDrag(BaseEventData eventData)
         {
 
-            isDragging = true; 
+            isDragging = true;
 
             isPlaying = AudioPlaybackController.Instance.IsPlaying();
             AudioPlaybackController.Instance.Pause();
@@ -38,7 +38,7 @@ namespace DefqonEngine.UI.Timeline.Control
 
         public void Drag(BaseEventData eventData)
         {
-            if(eventData is not PointerEventData)
+            if (eventData is not PointerEventData)
                 return;
             PointerEventData pointerEventData = (PointerEventData)eventData;
 

@@ -1,12 +1,10 @@
-using DefqonEngine.Core.Presets;
-using DefqonEngine.Core.Timeline.Audio;
+﻿using DefqonEngine.Core.Presets;
 using DefqonEngine.Core.Timeline.Events;
 using DefqonEngine.Core.Timeline.Tracks;
 using DefqonEngine.IO.Audio;
 using DefqonEngine.IO.Presets;
 using DefqonEngine.IO.Project;
 using DefqonEngine.IO.Timeline;
-using DefqonEngine.UI.Popup;
 using System;
 using UnityEngine;
 
@@ -73,10 +71,25 @@ namespace DefqonEngine.Core.Project
                 return;
             }
             CurrentProject.events = TimelineEventManager.Instance.events;
-            CurrentProject.presets = PresetManager.Instance.GetAllPresets();
+            CurrentProject.presets = PresetManager.Instance.GetAllAddedPresets();
             CurrentProject.trackCount = TimelineTrackManager.Instance.TrackCount;
             projectSaveManager.SaveProject(CurrentProject);
             OnProjectSaved?.Invoke();
+        }
+
+        public string SaveProjectWithReturn()
+        {
+            if (CurrentProject == null)
+            {
+                Debug.LogError("No project to save.");
+                return null;
+            }
+            CurrentProject.events = TimelineEventManager.Instance.events;
+            CurrentProject.presets = PresetManager.Instance.GetAllAddedPresets();
+            CurrentProject.trackCount = TimelineTrackManager.Instance.TrackCount;
+            string path = projectSaveManager.SaveProjectReturnPath(CurrentProject);
+            OnProjectSaved?.Invoke();
+            return path;
         }
 
         public void LoadProject()

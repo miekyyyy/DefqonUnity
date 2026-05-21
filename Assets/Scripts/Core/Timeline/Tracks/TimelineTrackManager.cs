@@ -1,4 +1,5 @@
-﻿using DefqonEngine.UI.Timeline.Tracks;
+﻿using DefqonEngine.Core.Timeline.History;
+using DefqonEngine.UI.Timeline.Tracks;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +16,8 @@ namespace DefqonEngine.Core.Timeline.Tracks
         public RectTransform labelsParent;     // Track Labels
         public TimelineTrack trackPrefab;
         public TimelineTrackLabel labelPrefab;
+        [Header("Settings")]
+        [SerializeField] float distBetweenTracks = 5f;
 
         private readonly List<TimelineTrack> tracks = new();
         private readonly Dictionary<TimelineTrack, TimelineTrackLabel> labels = new();
@@ -33,13 +36,18 @@ namespace DefqonEngine.Core.Timeline.Tracks
             List<TimelineTrack> newTracks = new List<TimelineTrack>();
             for (int i = 0; i < count; i++)
             {
-                newTracks.Add(AddTrack());
+                newTracks.Add(AddTrack(false));
             }
             return newTracks;
         }
 
-        public TimelineTrack AddTrack()
+        public TimelineTrack AddTrack(bool saveState = true)
         {
+            if (saveState)
+            {
+                TimelineHistory.Instance.SaveState("Adding 1 Track");
+            }
+
             var track = Instantiate(trackPrefab, tracksParent);
             track.trackIndex = tracks.Count;
 
@@ -55,71 +63,91 @@ namespace DefqonEngine.Core.Timeline.Tracks
             return track;
         }
 
-        public void RemoveTrack()
+        public void RemoveTrack(bool rebuild = true)
         {
+            TimelineHistory.Instance.SaveState("Removing Last Track");
+
             if (tracks.Count == 0) return;
             var track = tracks.Last();
-            RemoveTrack(track);
+            RemoveTrack(track, rebuild);
         }
 
-        public void RemoveTrack(TimelineTrack track)
+        void RemoveTrack(TimelineTrack track, bool rebuild = true)
         {
-            if (!tracks.Contains(track)) return;
+            if (!tracks.Contains(track))
+                return;
 
             tracks.Remove(track);
+
             Destroy(track.gameObject);
 
             // Destroy label
             if (labels.TryGetValue(track, out var label))
             {
                 labels.Remove(track);
+
                 if (label != null)
                     Destroy(label.gameObject);
             }
+
             OnTrackRemoved?.Invoke(track);
+
+            if (!rebuild) return;
             RebuildLayout();
         }
 
         public void ClearAll()
         {
-            // Destroy alle track GameObjects
-            foreach (var t in tracks)
-                if (t != null)
-                    Destroy(t.gameObject);
-
-            // Destroy alle labels
-            foreach (var l in labels.Values)
-                if (l != null)
-                    Destroy(l.gameObject);
-
-            tracks.Clear();
-            labels.Clear();
-
+            List<TimelineTrack> tracksToRemove = new List<TimelineTrack>(tracks);
+            foreach (var t in tracksToRemove)
+                RemoveTrack(t, false);
             RebuildLayout();
         }
-
         void RebuildLayout()
         {
             float y = 0f;
 
-            for (int i = tracks.Count - 1; i >= 0; i--)
+            for (int i = 0; i < tracks.Count; i++)
             {
                 var t = tracks[i];
                 var rect = t.GetComponent<RectTransform>();
 
-                rect.anchoredPosition = new Vector2(0, y);
-                y += rect.sizeDelta.y;
+                rect.anchoredPosition = new Vector2(0, -y);
+                y += rect.sizeDelta.y + distBetweenTracks;
 
-                // Update label pos als die bestaat
                 if (labels.TryGetValue(t, out var label))
                 {
                     var labelRect = label.GetComponent<RectTransform>();
-                    labelRect.anchoredPosition = new Vector2(labelRect.anchoredPosition.x, rect.anchoredPosition.y);
+                    labelRect.anchoredPosition = new Vector2(
+                        labelRect.anchoredPosition.x,
+                        rect.anchoredPosition.y);
                 }
             }
 
             tracksParent.sizeDelta = new Vector2(tracksParent.sizeDelta.x, y);
         }
+        //void RebuildLayout()
+        //{
+        //    float y = 0f;
+
+        //    for (int i = tracks.Count - 1; i >= 0; i--)
+        //    {
+        //        var t = tracks[i];
+        //        var rect = t.GetComponent<RectTransform>();
+
+        //        rect.anchoredPosition = new Vector2(0, y);
+        //        y += rect.sizeDelta.y;
+
+        //        // Update label pos als die bestaat
+        //        if (labels.TryGetValue(t, out var label))
+        //        {
+        //            var labelRect = label.GetComponent<RectTransform>();
+        //            labelRect.anchoredPosition = new Vector2(labelRect.anchoredPosition.x, rect.anchoredPosition.y);
+        //        }
+        //    }
+
+        //    tracksParent.sizeDelta = new Vector2(tracksParent.sizeDelta.x, y);
+        //}
 
         public TimelineTrack FindTrackByIndex(int index)
         {

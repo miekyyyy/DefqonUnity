@@ -1,7 +1,7 @@
-﻿using DefqonEngine.Fixtures.Management;
+﻿using DefqonEngine.Stage.Fixtures.Management;
 using System.Collections.Generic;
 
-namespace DefqonEngine.Fixtures.Smoke
+namespace DefqonEngine.Stage.Fixtures.Smoke
 {
     [System.Serializable]
     public class SmokeGroup

@@ -42,7 +42,6 @@ namespace DefqonEngine.UI.Effects.Common
         void UpdateEditor(TimelineEvent timelineEvent)
         {
             EventType eventType = timelineEvent.type;
-            Debug.Log($"[TimelineEventEditor] Updating editor for event type: {eventType}");
             eventEditors.ForEach(e => e.editorPanel.SetActive(false));
             GameObject editor = eventEditors.Find(e => e.eventType == eventType).editorPanel;
             editor.SetActive(true);

@@ -1,4 +1,4 @@
-﻿using DefqonEngine.Core.Timeline.Audio;
+﻿using DefqonEngine.Sequencing.Audio;
 using DefqonEngine.UI.Timeline.Common;
 using System;
 using System.Collections;
@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-namespace DefqonEngine.UI.Timeline.Header
+namespace DefqonEngine.UI.Timeline.Ruler
 {
     public class Ruler : MonoBehaviour
     {

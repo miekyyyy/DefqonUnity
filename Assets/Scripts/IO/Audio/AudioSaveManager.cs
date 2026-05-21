@@ -1,4 +1,4 @@
-﻿using DefqonEngine.Core.Timeline.Audio;
+﻿using DefqonEngine.Sequencing.Audio;
 using SFB;
 using System.Collections;
 using System.IO;

@@ -1,6 +1,5 @@
 {
   "dependencies": {
-    "com.daniel-geo.unityhackatime": "https://github.com/daniel-geo/unity-hackatime.git#package",
     "com.spoiledcat.git.ui": "1.0.62",
     "com.unity.ai.navigation": "2.0.12",
     "com.unity.collab-proxy": "2.12.4",

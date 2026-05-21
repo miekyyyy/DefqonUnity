@@ -1,8 +1,7 @@
 ﻿using DefqonEngine.Core.Timeline.Events;
-using DefqonEngine.Fixtures.Management;
-using DefqonEngine.Fixtures.Smoke;
 using DefqonEngine.Sequencing.Data.Events;
-using DefqonEngine.UI.Timeline.Control;
+using DefqonEngine.Stage.Fixtures.Management;
+using DefqonEngine.Stage.Fixtures.Smoke;
 using UnityEngine;
 
 namespace DefqonEngine.UI.Effects.Smoke

@@ -1,8 +1,8 @@
-﻿using DefqonEngine.Fixtures.Management;
+﻿using DefqonEngine.Stage.Fixtures.Management;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace DefqonEngine.Fixtures.Light
+namespace DefqonEngine.Stage.Fixtures.Light
 {
     [System.Serializable]
     public class LampGroup

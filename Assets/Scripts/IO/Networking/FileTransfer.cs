@@ -1,30 +1,50 @@
-﻿using Renci.SshNet;
+﻿using DefqonEngine.Core.Project;
+using DefqonEngine.IO.Project;
+using Renci.SshNet;
 using System.IO;
+using TMPro;
 using UnityEngine;
 
-namespace DefqonEngine.ScriptsNoAsmdef.Networking{
+namespace DefqonEngine.IO.Networking{
     
     public class FileTransfer : MonoBehaviour
     {
-        // File name only, stored in Unity's persistent data path
-        private string fileName = "myData.json";
-    
-        // Pi credentials
-        [field: SerializeField] public string Host { private get; set; } = "192.168.160.54";
-        [field: SerializeField] public string Username { private get; set; } = "stage";
-        [field: SerializeField] public string Password { private get; set; } = "";
-    
-        // Call this to send the file
+        [Header("Pi Credentials")]
+        [SerializeField] private string host = "192.168.160.54";
+        [SerializeField] private string username = "stage";
+        private string password = "";
+
+        [Header("Input Fields")]
+        [SerializeField] private TMP_InputField hostInput;
+        [SerializeField] private TMP_InputField usernameInput;
+        [SerializeField] private TMP_InputField passwordInput;
+
+        [Header("Settings")]
+        [SerializeField] private string remoteFileName = "project.json";
+        [SerializeField] private string remoteDirectory = "/home/stage/defqon_ws/data/projects/";
+
+        public void SetInputFields()
+        {
+            hostInput.text = host;
+            usernameInput.text = username;
+            passwordInput.text = password;
+        }
+        public void SetHost(string hostStr) => host = hostStr;
+        public void SetUsername(string usernameStr) => username = usernameStr;
+        public void SetPassword(string passwordStr) => password = passwordStr;
         public void test()
         {
             Debug.Log(Application.persistentDataPath);
         }
         public void UploadFile()
         {
+
             // Combine Unity's persistent path with your file name
-            string localFilePath = Path.Combine(Application.persistentDataPath, "Jsons/" + fileName);
-            string remoteFilePath = "/home/stage/defqon_ws/" + fileName; // Destination on Pi
-    
+            
+            string localFilePath = ProjectManager.Instance.SaveProjectWithReturn();
+            string remoteFilePath = Path.Combine(remoteDirectory, remoteFileName); // Destination on Pi with single file name
+            //string remoteFilePath = Path.Combine(remoteDirectory, Path.GetFileName(localFilePath)); // Destination on Pi with multiple file names
+
             if (!File.Exists(localFilePath))
             {
                 Debug.LogError($"Local file not found: {localFilePath}");
@@ -33,7 +53,7 @@ namespace DefqonEngine.ScriptsNoAsmdef.Networking{
     
             try
             {
-                using (var sftp = new SftpClient(Host, Username, Password))
+                using (var sftp = new SftpClient(host, username, password))
                 {
                     sftp.Connect();
                     using (var fileStream = new FileStream(localFilePath, FileMode.Open))

@@ -1,7 +1,7 @@
-﻿using DefqonEngine.Core.Timeline.Audio;
-using DefqonEngine.Core.Timeline.Events;
-using DefqonEngine.Fixtures.Management;
+﻿using DefqonEngine.Core.Timeline.Events;
+using DefqonEngine.Sequencing.Audio;
 using DefqonEngine.Sequencing.Data.Events;
+using DefqonEngine.Stage.Fixtures.Management;
 using System.Collections.Generic;
 using UnityEngine;
 using EventType = DefqonEngine.Sequencing.Data.Events.EventType;
