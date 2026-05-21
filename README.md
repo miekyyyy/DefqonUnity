@@ -1,4 +1,5 @@
 # Defqon Stage
+![Hackatime](https://hackatime.hackclub.com/api/v1/badge/U0AB4DTU9CY/POADefqon)
 
 Whats cooler than having your own mini stage at home?!
 
