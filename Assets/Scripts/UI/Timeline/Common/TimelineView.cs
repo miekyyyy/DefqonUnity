@@ -1,9 +1,13 @@
-﻿using DefqonEngine.Core.Timeline.Events;
-using DefqonEngine.Sequencing.Data.Events;
+﻿using DefqonEngine.Core.Project;
+using DefqonEngine.Core.Timeline.Events;
+using DefqonEngine.Core.Timeline.Tracks;
 using DefqonEngine.Sequencing.Audio;
+using DefqonEngine.Sequencing.Data.Events;
 using DefqonEngine.UI.Timeline.Control;
+using DefqonEngine.UI.Timeline.Waveform;
 using System;
 using UnityEngine;
+using UnityEngine.UI;
 using static DefqonEngine.UI.Timeline.Control.TimelineInputController;
 
 namespace DefqonEngine.UI.Timeline.Common
@@ -13,21 +17,28 @@ namespace DefqonEngine.UI.Timeline.Common
 
         public static TimelineView Instance { get; private set; }
         [Header("View")]
-        public RectTransform panel;
+        public RectTransform eventsPanel;
+        public RectTransform viewport;
+
+        [Header("Scrollbars")]
+        [SerializeField] private Scrollbar horizontalScrollbar;
+        [SerializeField] private Scrollbar verticalScrollbar;
 
         [Header("Zoom")]
         private float pixelsPerSecond = 100f;
 
         [Header("Scroll")]
         public float scrollTime = 0f;
+        private float verticalScroll;
 
         [Header("Snapping")]
         public float gridSize = 0.25f; // 1/4 seconde grid
         public float eventSnapRange = 0.1f;
         public SnappingMode snappingMode = SnappingMode.None;
 
+
         public Action OnViewChanged;
-        public float Width => panel.rect.width;
+        public float Width => eventsPanel.rect.width;
 
         private void Awake()
         {
@@ -38,6 +49,27 @@ namespace DefqonEngine.UI.Timeline.Common
         {
             TimelineInputController.Instance.OnZoom += Zoom;
             TimelineInputController.Instance.OnPan += PanPixels;
+            TimelineTrackManager.Instance.OnRebuildLayout += RefreshScrollbars;
+            WaveformDrawer.Instance.OnWaveformLoaded += RefreshScrollbars;
+
+            if (horizontalScrollbar != null)
+                horizontalScrollbar.onValueChanged.AddListener(OnHorizontalScrollbarChanged);
+
+            if (verticalScrollbar != null)
+                verticalScrollbar.onValueChanged.AddListener(OnVerticalScrollbarChanged);
+
+            RefreshScrollbars();
+        }
+        private void OnDestroy()
+        {
+            TimelineInputController.Instance.OnZoom -= Zoom;
+            TimelineInputController.Instance.OnPan -= PanPixels;
+
+            if (horizontalScrollbar != null)
+                horizontalScrollbar.onValueChanged.RemoveListener(OnHorizontalScrollbarChanged);
+
+            if (verticalScrollbar != null)
+                verticalScrollbar.onValueChanged.RemoveListener(OnVerticalScrollbarChanged);
         }
 
         // The time currently at the left edge of the timeline
@@ -104,6 +136,8 @@ namespace DefqonEngine.UI.Timeline.Common
 
         public void AutoScrollToTime(float time, float marginPixels)
         {
+            if (!AudioPlaybackController.Instance || !AudioPlaybackController.Instance.IsPlaying())
+                return;
             float marginTime = marginPixels / pixelsPerSecond;
             float visibleDuration = VisibleDuration;
 
@@ -122,18 +156,133 @@ namespace DefqonEngine.UI.Timeline.Common
 
         public void SetScrollTime(float newScrollTime)
         {
-            if (AudioPlaybackController.Instance == null || AudioPlaybackController.Instance.GetAudioClip() == null)
+            if (AudioPlaybackController.Instance == null ||
+                AudioPlaybackController.Instance.GetAudioClip() == null)
             {
                 newScrollTime = Mathf.Max(0f, newScrollTime);
             }
             else
             {
-                // Max scroll = clip length - visible timeline
-                float maxScroll = Mathf.Max(0f, AudioPlaybackController.Instance.GetAudioClip().length - (Width / pixelsPerSecond));
-                newScrollTime = Mathf.Clamp(newScrollTime, 0f, maxScroll);
+                float maxScroll = Mathf.Max(
+                    0f,
+                    AudioPlaybackController.Instance.GetAudioClip().length
+                    - (Width / pixelsPerSecond));
+
+                newScrollTime = Mathf.Clamp(
+                    newScrollTime,
+                    0f,
+                    maxScroll);
             }
+
             scrollTime = newScrollTime;
+
+            RefreshScrollbars();
             OnViewChanged?.Invoke();
+        }
+
+        private void OnHorizontalScrollbarChanged(float value)
+        {
+            var clip = AudioPlaybackController.Instance?.GetAudioClip();
+            if (clip == null) return;
+
+            float maxScroll =
+                Mathf.Max(0f, clip.length - VisibleDuration);
+
+            SetScrollTime(value * maxScroll);
+        }
+        private void RefreshHorizontalScrollbar()
+        {
+            if (horizontalScrollbar == null)
+                return;
+
+            var clip =
+                AudioPlaybackController.Instance?.GetAudioClip();
+
+            if (clip == null)
+            {
+                horizontalScrollbar.size = 1f;
+                horizontalScrollbar.value = 0f;
+                return;
+            }
+
+            float clipLength = clip.length;
+            float visible = VisibleDuration;
+
+            float maxScroll =
+                Mathf.Max(0f, clipLength - visible);
+
+            horizontalScrollbar.size =
+                Mathf.Clamp01(visible / clipLength);
+
+            horizontalScrollbar.SetValueWithoutNotify(
+                maxScroll <= 0f
+                    ? 0f
+                    : scrollTime / maxScroll);
+        }
+        public void RefreshScrollbars()
+        {
+            RefreshHorizontalScrollbar();
+            RefreshVerticalScrollbar();
+            ApplyVerticalScroll();
+        }
+        private void ApplyVerticalScroll()
+        {
+            var manager = TimelineTrackManager.Instance;
+            if (manager == null) return;
+
+            RectTransform tracksPanel = manager.tracksParent;
+
+            float contentHeight = tracksPanel.sizeDelta.y;
+            float viewportHeight = viewport.rect.height;
+
+            float maxScroll =
+                Mathf.Max(0f, contentHeight - viewportHeight);
+
+            float y = verticalScroll * maxScroll;
+
+            tracksPanel.anchoredPosition =
+                new Vector2(tracksPanel.anchoredPosition.x, y);
+            eventsPanel.anchoredPosition = tracksPanel.anchoredPosition;
+
+            // Move labels too
+            manager.labelsParent.anchoredPosition =
+                new Vector2(
+                    manager.labelsParent.anchoredPosition.x,
+                    y);
+        }
+        
+        private void OnVerticalScrollbarChanged(float value)
+        {
+            verticalScroll = value;
+            ApplyVerticalScroll();
+        }
+        private void RefreshVerticalScrollbar()
+        {
+            if (verticalScrollbar == null)
+                return;
+
+            var manager = TimelineTrackManager.Instance;
+            if (manager == null)
+                return;
+
+            float contentHeight =
+                manager.tracksParent.sizeDelta.y;
+
+            float viewportHeight =
+                eventsPanel.rect.height;
+
+            float maxScroll =
+                Mathf.Max(0f, contentHeight - viewportHeight);
+
+            verticalScrollbar.size =
+                contentHeight <= 0f
+                    ? 1f
+                    : Mathf.Clamp01(viewportHeight / contentHeight);
+
+            verticalScrollbar.SetValueWithoutNotify(
+                maxScroll <= 0f
+                    ? 0f
+                    : verticalScroll);
         }
 
 
@@ -164,6 +313,7 @@ namespace DefqonEngine.UI.Timeline.Common
             // Pas scrollTime aan zodat de tijd onder de muis blijft
             float newScrollTime = timeUnderMouse - (zoomData.zoomCenterX / pixelsPerSecond);
             SetScrollTime(newScrollTime);
+            RefreshScrollbars();
         }
 
         public float SnapTime(float time, SnapContext context, TimelineEvent ignore = null, float duration = 0f)

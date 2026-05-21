@@ -1,6 +1,7 @@
 ﻿using DefqonEngine.Sequencing.Audio;
 using DefqonEngine.UI.Popup;
 using DefqonEngine.UI.Timeline.Common;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -24,6 +25,7 @@ namespace DefqonEngine.UI.Timeline.Waveform
         [SerializeField] private WaveformPositioner positioner;
         [SerializeField] private PopupCanvas loadingPopUp;
         [SerializeField] private ProgressBar progressBar;
+        public event Action OnWaveformLoaded;
 
         private readonly List<WaveformTile> tiles = new();
         private Coroutine refreshRoutine;
@@ -116,6 +118,8 @@ namespace DefqonEngine.UI.Timeline.Waveform
             }
 
             positioner.UpdateContainerSize(transform);
+
+            OnWaveformLoaded?.Invoke();
         }
 
 

@@ -75,7 +75,7 @@ namespace DefqonEngine.UI.Timeline.Control
         public void OnTrackRightClicked(TimelineTrack track, PointerEventData eventData)
         {
             RectTransformUtility.ScreenPointToLocalPointInRectangle(
-                TimelineView.Instance.panel,
+                TimelineView.Instance.viewport,
                 eventData.position,
                 eventData.pressEventCamera,
                 out Vector2 local
@@ -101,7 +101,7 @@ namespace DefqonEngine.UI.Timeline.Control
 
             Vector2 localMouse;
             RectTransformUtility.ScreenPointToLocalPointInRectangle(
-                TimelineView.Instance.panel,
+                TimelineView.Instance.viewport,
                 Input.mousePosition,
                 null,
                 out localMouse
@@ -115,9 +115,9 @@ namespace DefqonEngine.UI.Timeline.Control
 
         void HandlePan()
         {
-            if (Input.GetMouseButton(2))
+            if (!Input.GetKey(KeyCode.LeftControl))
             {
-                float deltaX = Input.GetAxis("Mouse X");
+                float deltaX = Input.mouseScrollDelta.y * 100f;
                 OnPan?.Invoke(deltaX);
             }
         }

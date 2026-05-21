@@ -2,6 +2,8 @@
 using DefqonEngine.Core.Timeline.Tracks;
 using DefqonEngine.Sequencing.Data.Events;
 using DefqonEngine.Sequencing.Data.Presets;
+using DefqonEngine.UI.Timeline.Common;
+using DefqonEngine.UI.Timeline.Control;
 using DefqonEngine.UI.Timeline.Events;
 using DefqonEngine.UI.Timeline.Tracks;
 using System;
@@ -26,11 +28,15 @@ namespace DefqonEngine.Core.Timeline.Events
 
         // Views
         private Dictionary<TimelineEvent, TimelineEventView> views = new(); // Map van data naar view
-        public Transform eventsLayer;           // Parent voor alle event visuals
         public TimelineEventView viewPrefab;   // Prefab voor event views
 
         private void Awake() => Instance = this;
 
+        private void Start()
+        {
+            TimelineInputController.Instance.OnMoveUp += MoveEventUp;
+            TimelineInputController.Instance.OnMoveDown += MoveEventDown;
+        }
 
         #region Event CRUD
         public void CreateEvent<T>(int trackIndex, int targetId, float time, float duration = 1f) where T : TimelineEvent, new()
@@ -64,6 +70,20 @@ namespace DefqonEngine.Core.Timeline.Events
             SelectEvent(ev);
         }
 
+        public void CreateEvent(TimelineEvent timelineEvent, float time)
+        {
+            if (timelineEvent == null)
+            {
+                Debug.LogError("Invalid timeline event for creating event.");
+                return;
+            }
+            TimelineEvent ev = CloneEvent(timelineEvent);
+            ev.time = time;
+            AddEvent(ev);
+            ApplyTrim(ev, ev.time);
+            SelectEvent(ev);
+        }
+
         public void AddEvent(TimelineEvent timelineEvent, bool saveState = true)
         {
             if (saveState)
@@ -82,7 +102,7 @@ namespace DefqonEngine.Core.Timeline.Events
                 return;
             }
 
-            TimelineEventView view = Instantiate(viewPrefab, eventsLayer);
+            TimelineEventView view = Instantiate(viewPrefab, TimelineView.Instance.eventsPanel);
             view.Initialize(timelineEvent, track);
             views[timelineEvent] = view;
 
@@ -363,6 +383,24 @@ namespace DefqonEngine.Core.Timeline.Events
         float ClampDuration(float duration)
         {
             return Mathf.Max(0.05f, duration);
+        }
+
+        public void MoveEventUp()
+        {
+            if (selectedEvent == null)
+                return;
+            int newTrackIndex = selectedEvent.trackIndex - 1;
+            if (views.TryGetValue(selectedEvent, out var view))
+                view.ChangeTrack(newTrackIndex);
+        }
+
+        public void MoveEventDown()
+        {
+            if (selectedEvent == null)
+                return;
+            int newTrackIndex = selectedEvent.trackIndex + 1;
+            if (views.TryGetValue(selectedEvent, out var view))
+                view.ChangeTrack(newTrackIndex);
         }
         #endregion
     }

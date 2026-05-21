@@ -100,7 +100,7 @@ namespace DefqonEngine.UI.Timeline.Events
             TimelineHistory.Instance.SaveState("Moving Event");
 
             RectTransformUtility.ScreenPointToLocalPointInRectangle(
-                TimelineView.Instance.panel,
+                TimelineView.Instance.eventsPanel,
                 eventData.position,
                 eventData.pressEventCamera,
                 out Vector2 local
@@ -109,23 +109,61 @@ namespace DefqonEngine.UI.Timeline.Events
 
             rect.SetAsLastSibling(); // Zorg dat het event boven andere events komt tijdens het slepen
         }
-
         public void OnDrag(PointerEventData eventData)
         {
             RectTransformUtility.ScreenPointToLocalPointInRectangle(
-                TimelineView.Instance.panel,
+                TimelineView.Instance.eventsPanel,
                 eventData.position,
                 eventData.pressEventCamera,
                 out Vector2 local
             );
 
+            // X movement
             float x = Mathf.Max(0f, local.x - dragOffset);
+
             float rawTime = TimelineView.Instance.XToTime(x);
-            float snappedTime = TimelineView.Instance.SnapTime(rawTime, SnapContext.Move, timelineEvent, duration);
+            float snappedTime = TimelineView.Instance.SnapTime(
+                rawTime,
+                SnapContext.Move,
+                timelineEvent,
+                duration
+            );
 
             timelineEvent.time = snappedTime;
+
+            // Y movement
+            TimelineTrack closestTrack = null;
+            float closestDistance = float.MaxValue;
+            float trackHeight = ((RectTransform)track.transform).rect.height;
+
+            foreach (var t in TimelineTrackManager.Instance.Tracks)
+            {
+                float distance = Mathf.Abs(local.y - t.GetTrackY() + trackHeight / 2);
+                if (distance < closestDistance)
+                {
+                    closestDistance = distance;
+                    closestTrack = t;
+                }
+            }
+
+            if (closestTrack != null &&
+                closestTrack.trackIndex != timelineEvent.trackIndex)
+            {
+                ChangeTrack(closestTrack.trackIndex, false);
+            }
+
             UpdateVisual();
         }
+
+        public void ChangeTrack(int newTrackIndex, bool updateVisual = true)
+        {
+            if(TimelineTrackManager.Instance.Tracks.Count <= newTrackIndex || newTrackIndex < 0) return;
+            timelineEvent.trackIndex = newTrackIndex;
+            track = TimelineTrackManager.Instance.Tracks[newTrackIndex];
+            if (updateVisual)
+                UpdateVisual();
+        }
+
         public void OnEndDrag(PointerEventData eventData)
         {
             // Pas trimmen nadat het event los wordt gelaten, zodat andere events niet direct weg worden gehaald

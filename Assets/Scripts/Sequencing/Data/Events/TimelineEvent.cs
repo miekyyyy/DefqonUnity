@@ -7,7 +7,7 @@ namespace DefqonEngine.Sequencing.Data.Events
     public class TimelineEvent
     {
         [JsonProperty] public float time;
-        [JsonProperty] public float duration;
+        [JsonProperty] public float duration = 1f;
         [JsonProperty] public int trackIndex;
         [JsonProperty] public int targetId;
         [JsonProperty] public EventType type = EventType.Light;

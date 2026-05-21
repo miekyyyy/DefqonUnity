@@ -35,7 +35,7 @@ namespace DefqonEngine.UI.Timeline.Events
         public void OnDrag(PointerEventData eventData)
         {
             RectTransformUtility.ScreenPointToLocalPointInRectangle(
-                TimelineView.Instance.panel,
+                TimelineView.Instance.viewport,
                 eventData.position,
                 eventData.pressEventCamera,
                 out Vector2 local

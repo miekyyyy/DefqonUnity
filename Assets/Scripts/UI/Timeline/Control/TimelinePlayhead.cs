@@ -8,6 +8,7 @@ namespace DefqonEngine.UI.Timeline.Control
     public class TimelinePlayhead : MonoBehaviour
     {
         public RectTransform rect;
+        public RectTransform mask;
 
 
         public float scrollMargin = 50f;
@@ -43,7 +44,7 @@ namespace DefqonEngine.UI.Timeline.Control
             PointerEventData pointerEventData = (PointerEventData)eventData;
 
             if (!RectTransformUtility.ScreenPointToLocalPointInRectangle(
-                TimelineView.Instance.panel,
+                mask,
                 pointerEventData.position,
                 pointerEventData.pressEventCamera,
                 out Vector2 local))

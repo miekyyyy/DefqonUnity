@@ -24,6 +24,7 @@ namespace DefqonEngine.Core.Timeline.Tracks
 
         public event Action<TimelineTrack> OnTrackAdded;
         public event Action<TimelineTrack> OnTrackRemoved;
+        public event Action OnRebuildLayout;
         void Awake()
         {
             Instance = this;
@@ -125,29 +126,8 @@ namespace DefqonEngine.Core.Timeline.Tracks
             }
 
             tracksParent.sizeDelta = new Vector2(tracksParent.sizeDelta.x, y);
+            OnRebuildLayout?.Invoke();
         }
-        //void RebuildLayout()
-        //{
-        //    float y = 0f;
-
-        //    for (int i = tracks.Count - 1; i >= 0; i--)
-        //    {
-        //        var t = tracks[i];
-        //        var rect = t.GetComponent<RectTransform>();
-
-        //        rect.anchoredPosition = new Vector2(0, y);
-        //        y += rect.sizeDelta.y;
-
-        //        // Update label pos als die bestaat
-        //        if (labels.TryGetValue(t, out var label))
-        //        {
-        //            var labelRect = label.GetComponent<RectTransform>();
-        //            labelRect.anchoredPosition = new Vector2(labelRect.anchoredPosition.x, rect.anchoredPosition.y);
-        //        }
-        //    }
-
-        //    tracksParent.sizeDelta = new Vector2(tracksParent.sizeDelta.x, y);
-        //}
 
         public TimelineTrack FindTrackByIndex(int index)
         {

@@ -22,6 +22,7 @@ namespace DefqonEngine.IO.Networking{
         [Header("Settings")]
         [SerializeField] private string remoteFileName = "project.json";
         [SerializeField] private string remoteDirectory = "/home/stage/defqon_ws/data/projects/";
+        [SerializeField] private string musicRemoteDirectory = "/home/stage/defqon_ws/data/projects/audio/";
 
         public void SetInputFields()
         {
@@ -42,7 +43,9 @@ namespace DefqonEngine.IO.Networking{
             // Combine Unity's persistent path with your file name
             
             string localFilePath = ProjectManager.Instance.SaveProjectWithReturn();
+            string musicFilePath = ProjectManager.Instance.CurrentProject.audioFilePath;
             string remoteFilePath = Path.Combine(remoteDirectory, remoteFileName); // Destination on Pi with single file name
+            string remoteMusicFilePath = Path.Combine(musicRemoteDirectory, Path.GetFileName(musicFilePath)); // Destination on Pi for music file
             //string remoteFilePath = Path.Combine(remoteDirectory, Path.GetFileName(localFilePath)); // Destination on Pi with multiple file names
 
             if (!File.Exists(localFilePath))
@@ -59,6 +62,10 @@ namespace DefqonEngine.IO.Networking{
                     using (var fileStream = new FileStream(localFilePath, FileMode.Open))
                     {
                         sftp.UploadFile(fileStream, remoteFilePath);
+                    }
+                    using (var musicFileStream = new FileStream(musicFilePath, FileMode.Open))
+                    {
+                        sftp.UploadFile(musicFileStream, remoteMusicFilePath);
                     }
                     sftp.Disconnect();
                 }
