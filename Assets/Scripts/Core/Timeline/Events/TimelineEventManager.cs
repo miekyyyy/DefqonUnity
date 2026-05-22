@@ -8,6 +8,7 @@ using DefqonEngine.UI.Timeline.Events;
 using DefqonEngine.UI.Timeline.Tracks;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using EventType = DefqonEngine.Sequencing.Data.Events.EventType;
 
@@ -198,11 +199,20 @@ namespace DefqonEngine.Core.Timeline.Events
             OnEventRemoved?.Invoke(timelineEvent);
         }
 
-        public void RemoveEventSelected()
+        public void RemoveEventSelected(bool saveState = true)
         {
-            if (selectedEvents != null)
-                foreach (var ev in selectedEvents)
-                    RemoveEvent(ev);
+            if (saveState)
+            {
+                TimelineHistory.Instance.SaveState("Removing Event");
+            }
+
+            if (selectedEvents == null)
+                return;
+
+            var eventsToRemove = selectedEvents.ToList();
+
+            foreach (var ev in eventsToRemove)
+                RemoveEvent(ev, false);
         }
 
         public void SetEvents(List<TimelineEvent> incomingEvents)
