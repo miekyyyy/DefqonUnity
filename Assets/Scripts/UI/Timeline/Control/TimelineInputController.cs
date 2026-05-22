@@ -23,6 +23,11 @@ namespace DefqonEngine.UI.Timeline.Control
         public event Action OnRedo;
         public event Action OnMoveUp;
         public event Action OnMoveDown;
+        public event Action OnControlDown;
+        public event Action OnControlUp;
+
+        public bool isMouseOverUI;
+        public bool isControlPressed;
 
         public bool isTyping;
 
@@ -36,6 +41,17 @@ namespace DefqonEngine.UI.Timeline.Control
             HandlePan();
 
             if (isTyping) return;
+
+            if(Input.GetKeyDown(KeyCode.LeftControl) || Input.GetKeyDown(KeyCode.RightControl))
+            {
+                OnControlDown?.Invoke();
+            }
+            if (Input.GetKeyUp(KeyCode.LeftControl) || Input.GetKeyUp(KeyCode.RightControl))
+            {
+                OnControlUp?.Invoke();
+            }
+            isControlPressed = Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl);
+
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 AudioPlaybackController.Instance.TogglePlayPause();
@@ -44,11 +60,11 @@ namespace DefqonEngine.UI.Timeline.Control
             {
                 TimelineEventManager.Instance.RemoveEventSelected();
             }
-            if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.C))
+            if (isControlPressed && Input.GetKeyDown(KeyCode.C))
             {
                 OnCopy?.Invoke();
             }
-            if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.V))
+            if (isControlPressed && Input.GetKeyDown(KeyCode.V))
             {
                 OnPaste?.Invoke();
             }
@@ -60,11 +76,11 @@ namespace DefqonEngine.UI.Timeline.Control
             {
                 OnRedo?.Invoke();
             }
-            if(Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.UpArrow))
+            if(isControlPressed && Input.GetKeyDown(KeyCode.UpArrow))
             {
                 OnMoveUp?.Invoke();
             }
-            if(Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.DownArrow))
+            if(isControlPressed && Input.GetKeyDown(KeyCode.DownArrow))
             {
                 OnMoveDown?.Invoke();
             }

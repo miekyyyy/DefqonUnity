@@ -20,6 +20,8 @@ namespace DefqonEngine.Core.Timeline.Events
         public List<TimelineEvent> events = new();
         public List<TimelineEvent> selectedEvents = new();
 
+        bool hasTrackChanged;
+
         // Event callbacks
         public event Action<TimelineEvent> OnEventAdded;
         public event Action<TimelineEvent> OnEventRemoved;
@@ -36,6 +38,7 @@ namespace DefqonEngine.Core.Timeline.Events
         {
             TimelineInputController.Instance.OnMoveUp += MoveEventUp;
             TimelineInputController.Instance.OnMoveDown += MoveEventDown;
+            TimelineInputController.Instance.OnControlUp += FinishTrackChange;
         }
 
         #region Event CRUD
@@ -190,7 +193,7 @@ namespace DefqonEngine.Core.Timeline.Events
             }
 
             if (selectedEvents.Contains(timelineEvent))
-                DeselectEvent();
+                DeselectEvent(timelineEvent);
 
             OnEventRemoved?.Invoke(timelineEvent);
         }
@@ -219,6 +222,7 @@ namespace DefqonEngine.Core.Timeline.Events
         #region Selection
         public void SelectEvent(TimelineEvent ev)
         {
+            FinishTrackChange();
             if (Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl))
             {
                 if (selectedEvents.Contains(ev))
@@ -246,13 +250,14 @@ namespace DefqonEngine.Core.Timeline.Events
 
         public void DeselectEvent(TimelineEvent eventToRemove = null)
         {
+            FinishTrackChange();
             if (selectedEvents == null)
                 return;
             if (eventToRemove != null)
             {
                 if (views.TryGetValue(eventToRemove, out var view))
                     view.Deselect();
-                if(selectedEvents.Contains(eventToRemove))
+                if (selectedEvents.Contains(eventToRemove))
                     selectedEvents.Remove(eventToRemove);
             }
             else
@@ -427,7 +432,10 @@ namespace DefqonEngine.Core.Timeline.Events
             {
                 int newTrackIndex = e.trackIndex - 1;
                 if (views.TryGetValue(e, out var view))
-                    view.ChangeTrack(newTrackIndex);
+                {
+                    view.ChangeTrack(newTrackIndex, true);
+                    hasTrackChanged = true;
+                }
             }
         }
 
@@ -439,7 +447,28 @@ namespace DefqonEngine.Core.Timeline.Events
             {
                 int newTrackIndex = e.trackIndex + 1;
                 if (views.TryGetValue(e, out var view))
-                    view.ChangeTrack(newTrackIndex);
+                {
+                    view.ChangeTrack(newTrackIndex, true);
+                    hasTrackChanged = true;
+                }
+            }
+        }
+
+        public void FinishTrackChange()
+        {
+            Debug.Log("Finish track change");
+            if (selectedEvents == null)
+                return;
+            if(!hasTrackChanged)
+                return;
+
+            foreach (var e in selectedEvents)
+            {
+                if (views.TryGetValue(e, out var view))
+                {
+                    view.ChangeTrack(e.trackIndex, true, true);
+                    hasTrackChanged = false;
+                }
             }
         }
         #endregion

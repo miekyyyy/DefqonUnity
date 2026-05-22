@@ -5,13 +5,14 @@ using DefqonEngine.Sequencing.Data.Events;
 using DefqonEngine.UI.Timeline.Common;
 using DefqonEngine.UI.Timeline.Tracks;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace DefqonEngine.UI.Timeline.Events
 {
-    public class TimelineEventView : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerClickHandler
+    public class TimelineEventView : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerDownHandler, IPointerUpHandler
     {
         [Header("UI")]
         public RectTransform rect;
@@ -25,11 +26,15 @@ namespace DefqonEngine.UI.Timeline.Events
         public TimelineTrack track;
         public float minDuration = 0.1f;
         [SerializeField] float minWidthForHandles = 80f;
+        bool isDragging;
 
         private float dragOffset;
 
         private float beginDragTime;
         List<float> beginDragTimes = new List<float>();
+
+        private int beginDragTrackIndex;
+        List<int> beginDragTrackIndices = new List<int>();
 
         public float startTime
         {
@@ -92,13 +97,23 @@ namespace DefqonEngine.UI.Timeline.Events
                 handle.SetVisible(showVisuals);
         }
 
-        public void OnPointerClick(PointerEventData eventData)
+        public void OnPointerDown(PointerEventData eventData)
         {
-            TimelineEventManager.Instance.SelectEvent(timelineEvent);
+            isDragging = false;
+        }
+
+        public void OnPointerUp(PointerEventData eventData)
+        {
+            if (!isDragging)
+            {
+                TimelineEventManager.Instance.SelectEvent(timelineEvent);
+            }
+            isDragging = false;
         }
 
         public void OnBeginDrag(PointerEventData eventData)
         {
+            isDragging = true;
             if (!TimelineEventManager.Instance.selectedEvents.Contains(timelineEvent))
             {
                 TimelineEventManager.Instance.SelectEvent(this.timelineEvent);
@@ -113,12 +128,15 @@ namespace DefqonEngine.UI.Timeline.Events
             );
             dragOffset = local.x - rect.anchoredPosition.x;
             beginDragTime = timelineEvent.time;
+            beginDragTrackIndex = timelineEvent.trackIndex;
 
             beginDragTimes.Clear();
+            beginDragTrackIndices.Clear();
 
             foreach (var ev in TimelineEventManager.Instance.selectedEvents)
             {
                 beginDragTimes.Add(ev.time);
+                beginDragTrackIndices.Add(ev.trackIndex);
             }
 
             rect.SetAsLastSibling(); // Zorg dat het event boven andere events komt tijdens het slepen
@@ -169,28 +187,54 @@ namespace DefqonEngine.UI.Timeline.Events
                 }
             }
 
+
+
             if (closestTrack != null &&
                 closestTrack.trackIndex != timelineEvent.trackIndex)
             {
-                ChangeTrack(closestTrack.trackIndex, false);
+                int trackDelta = closestTrack.trackIndex - beginDragTrackIndex;
+                for (int i = 0; i < TimelineEventManager.Instance.selectedEvents.Count; i++)
+                {
+                    TimelineEvent t = TimelineEventManager.Instance.selectedEvents[i];
+                    TimelineEventView evView = TimelineEventManager.Instance.GetView(t);
+                    if (evView != null)
+                    {
+                        int newTrackPosition = Mathf.Clamp(beginDragTrackIndices[i] + trackDelta, 0, TimelineTrackManager.Instance.Tracks.Count - 1);
+                        evView.ChangeTrack(newTrackPosition, true);
+                    }
+                }
             }
 
             UpdateVisual();
         }
 
-        public void ChangeTrack(int newTrackIndex, bool updateVisual = true)
+        public void ChangeTrack(int newTrackIndex, bool updateVisual = true, bool trim = false)
         {
+            Debug.Log($"Changing track of event to {newTrackIndex}");
             if (TimelineTrackManager.Instance.Tracks.Count <= newTrackIndex || newTrackIndex < 0) return;
             timelineEvent.trackIndex = newTrackIndex;
             track = TimelineTrackManager.Instance.Tracks[newTrackIndex];
+            if (trim)
+            {
+                TimelineEventManager.Instance.ApplyTrim(timelineEvent, timelineEvent.time);
+            }
             if (updateVisual)
+            {
                 UpdateVisual();
+            }
         }
 
         public void OnEndDrag(PointerEventData eventData)
         {
-            // Pas trimmen nadat het event los wordt gelaten, zodat andere events niet direct weg worden gehaald
-            TimelineEventManager.Instance.ApplyTrim(timelineEvent, timelineEvent.time);
+            foreach (var e in TimelineEventManager.Instance.selectedEvents.ToList())
+            {
+                TimelineEventView evView = TimelineEventManager.Instance.GetView(e);
+                if (evView != null)
+                {
+                    evView.ChangeTrack(e.trackIndex, true, true);
+                }
+            }
+
             UpdateVisual();
         }
 
