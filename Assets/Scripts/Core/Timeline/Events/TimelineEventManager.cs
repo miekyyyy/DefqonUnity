@@ -223,7 +223,7 @@ namespace DefqonEngine.Core.Timeline.Events
         public void SelectEvent(TimelineEvent ev)
         {
             FinishTrackChange();
-            if (Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl))
+            if (TimelineInputController.Instance.isControlPressed)
             {
                 if (selectedEvents.Contains(ev))
                 {
