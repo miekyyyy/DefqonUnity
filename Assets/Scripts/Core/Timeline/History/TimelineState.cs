@@ -11,6 +11,6 @@ namespace DefqonEngine.Core.Timeline.History
 
         public List<TimelineEvent> events = new();
 
-        public int selectedEventIndex = -1;
+        public List<int> selectedEventIndexes = new();
     }
 }

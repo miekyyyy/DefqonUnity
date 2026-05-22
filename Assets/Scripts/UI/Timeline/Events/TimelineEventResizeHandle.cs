@@ -1,6 +1,8 @@
 ﻿using DefqonEngine.Core.Timeline.Events;
 using DefqonEngine.Core.Timeline.History;
+using DefqonEngine.Sequencing.Data.Events;
 using DefqonEngine.UI.Timeline.Common;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -15,8 +17,10 @@ namespace DefqonEngine.UI.Timeline.Events
         public TimelineEventView eventView;
         public ResizeSide side;
 
-        float startStartTime;
-        float startDuration;
+        List<float> startStartTimes = new();
+        List<float> startDurations = new();
+        float currentEventStartTime;
+        float currentEventDuration;
         [Header("Selections")]
         [SerializeField] Image visual;
         [SerializeField] Image hitArea;
@@ -26,10 +30,23 @@ namespace DefqonEngine.UI.Timeline.Events
 
         public void OnBeginDrag(PointerEventData eventData)
         {
-            TimelineEventManager.Instance.SelectEvent(eventView.timelineEvent);
+            if(!TimelineEventManager.Instance.selectedEvents.Contains(eventView.timelineEvent))
+            {
+                TimelineEventManager.Instance.SelectEvent(eventView.timelineEvent);
+            }
             TimelineHistory.Instance.SaveState("Resizing Event");
-            startStartTime = eventView.startTime;
-            startDuration = eventView.duration;
+
+            currentEventStartTime = eventView.timelineEvent.time;
+            currentEventDuration = eventView.timelineEvent.duration;
+
+            startStartTimes.Clear();
+            startDurations.Clear();
+
+            foreach (var ev in TimelineEventManager.Instance.selectedEvents)
+            {
+                startStartTimes.Add(ev.time);
+                startDurations.Add(ev.duration);
+            }
         }
 
         public void OnDrag(PointerEventData eventData)
@@ -50,17 +67,22 @@ namespace DefqonEngine.UI.Timeline.Events
                     SnapContext.ResizeStart,
                     eventView.timelineEvent
                 );
-                snappedStart = Mathf.Clamp(snappedStart, 0, startStartTime + startDuration - 0.05f);
-                
+                snappedStart = Mathf.Clamp(snappedStart, 0, currentEventStartTime + currentEventDuration - 0.05f);
+
                 var prev = TimelineEventManager.Instance.GetPreviousEvent(eventView.timelineEvent);
                 if (prev != null)
                 {
                     snappedStart = Mathf.Max(snappedStart, prev.time + prev.duration);
                 }
-                float delta = startStartTime - snappedStart;
+                float delta = currentEventStartTime - snappedStart;
 
-                eventView.startTime = snappedStart;
-                eventView.duration = startDuration + delta;
+                for (int i = 0; i < TimelineEventManager.Instance.selectedEvents.Count; i++)
+                {
+                    TimelineEvent ev = TimelineEventManager.Instance.selectedEvents[i];
+                    TimelineEventView evView = TimelineEventManager.Instance.GetView(ev);
+                    evView.startTime = snappedStart;
+                    evView.duration = startDurations[i] + delta;
+                }
             }
             else
             {
@@ -70,7 +92,7 @@ namespace DefqonEngine.UI.Timeline.Events
                     eventView.timelineEvent
                 );
 
-                snappedEnd = Mathf.Max(snappedEnd, startStartTime + 0.05f);
+                snappedEnd = Mathf.Max(snappedEnd, currentEventStartTime + 0.05f);
 
                 var next = TimelineEventManager.Instance.GetNextEvent(eventView.timelineEvent);
                 if (next != null)
@@ -79,7 +101,14 @@ namespace DefqonEngine.UI.Timeline.Events
                     snappedEnd = Mathf.Min(snappedEnd, maxEnd);
                 }
 
-                eventView.duration = snappedEnd - startStartTime;
+                eventView.duration = snappedEnd - currentEventStartTime;
+                float diff = eventView.duration - currentEventDuration;
+                for(int i = 0; i < TimelineEventManager.Instance.selectedEvents.Count; i++)
+                {
+                    TimelineEvent ev = TimelineEventManager.Instance.selectedEvents[i];
+                    TimelineEventView evView = TimelineEventManager.Instance.GetView(ev);
+                    evView.duration = startDurations[i] + diff;
+                }
             }
         }
 

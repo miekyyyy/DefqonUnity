@@ -28,6 +28,9 @@ namespace DefqonEngine.UI.Timeline.Events
 
         private float dragOffset;
 
+        private float beginDragTime;
+        List<float> beginDragTimes = new List<float>();
+
         public float startTime
         {
             get => timelineEvent.time;
@@ -91,12 +94,15 @@ namespace DefqonEngine.UI.Timeline.Events
 
         public void OnPointerClick(PointerEventData eventData)
         {
-            TimelineEventManager.Instance.SelectEvent(this.timelineEvent);
+            TimelineEventManager.Instance.SelectEvent(timelineEvent);
         }
 
         public void OnBeginDrag(PointerEventData eventData)
         {
-            TimelineEventManager.Instance.SelectEvent(this.timelineEvent);
+            if (!TimelineEventManager.Instance.selectedEvents.Contains(timelineEvent))
+            {
+                TimelineEventManager.Instance.SelectEvent(this.timelineEvent);
+            }
             TimelineHistory.Instance.SaveState("Moving Event");
 
             RectTransformUtility.ScreenPointToLocalPointInRectangle(
@@ -106,6 +112,14 @@ namespace DefqonEngine.UI.Timeline.Events
                 out Vector2 local
             );
             dragOffset = local.x - rect.anchoredPosition.x;
+            beginDragTime = timelineEvent.time;
+
+            beginDragTimes.Clear();
+
+            foreach (var ev in TimelineEventManager.Instance.selectedEvents)
+            {
+                beginDragTimes.Add(ev.time);
+            }
 
             rect.SetAsLastSibling(); // Zorg dat het event boven andere events komt tijdens het slepen
         }
@@ -128,6 +142,15 @@ namespace DefqonEngine.UI.Timeline.Events
                 timelineEvent,
                 duration
             );
+
+            float delta = beginDragTime - snappedTime;
+
+            for (int i = 0; i < TimelineEventManager.Instance.selectedEvents.Count; i++)
+            {
+                TimelineEvent ev = TimelineEventManager.Instance.selectedEvents[i];
+                TimelineEventView evView = TimelineEventManager.Instance.GetView(ev);
+                evView.startTime = beginDragTimes[i] - delta;
+            }
 
             timelineEvent.time = snappedTime;
 
@@ -157,7 +180,7 @@ namespace DefqonEngine.UI.Timeline.Events
 
         public void ChangeTrack(int newTrackIndex, bool updateVisual = true)
         {
-            if(TimelineTrackManager.Instance.Tracks.Count <= newTrackIndex || newTrackIndex < 0) return;
+            if (TimelineTrackManager.Instance.Tracks.Count <= newTrackIndex || newTrackIndex < 0) return;
             timelineEvent.trackIndex = newTrackIndex;
             track = TimelineTrackManager.Instance.Tracks[newTrackIndex];
             if (updateVisual)

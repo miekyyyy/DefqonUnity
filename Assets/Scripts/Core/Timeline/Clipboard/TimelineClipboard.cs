@@ -3,6 +3,7 @@ using DefqonEngine.Core.Timeline.History;
 using DefqonEngine.Sequencing.Audio;
 using DefqonEngine.Sequencing.Data.Events;
 using DefqonEngine.UI.Timeline.Control;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace DefqonEngine.Assets.Scripts.Core.Timeline.Clipboard
@@ -11,7 +12,7 @@ namespace DefqonEngine.Assets.Scripts.Core.Timeline.Clipboard
     {
         public static TimelineClipboard Instance { get; private set; }
 
-        public TimelineEvent copiedEvent;
+        public List<TimelineEvent> copiedEvents;
 
 
         private void Awake()
@@ -32,19 +33,25 @@ namespace DefqonEngine.Assets.Scripts.Core.Timeline.Clipboard
 
         public void CopyToClipboard()
         {
-            if (TimelineEventManager.Instance.selectedEvent != null)
+            if (TimelineEventManager.Instance.selectedEvents != null)
             {
-                copiedEvent = TimelineEventManager.CloneEvent(TimelineEventManager.Instance.selectedEvent);
+                foreach (var timelineEvent in TimelineEventManager.Instance.selectedEvents)
+                {
+                    copiedEvents.Add(TimelineEventManager.CloneEvent(timelineEvent));
+                }
             }
         }
 
         public void PasteFromClipboard()
         {
-            if (copiedEvent != null)
+            if (copiedEvents != null)
             {
                 TimelineHistory.Instance.SaveState("Pasting Event");
                 float time = AudioPlaybackController.Instance.GetCurrentTime();
-                TimelineEventManager.Instance.CreateEvent(copiedEvent, time);
+                foreach (var timelineEvent in copiedEvents)
+                {
+                    TimelineEventManager.Instance.CreateEvent(timelineEvent, time);
+                }
             }
         }
 
