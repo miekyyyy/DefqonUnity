@@ -73,19 +73,22 @@ namespace DefqonEngine.UI.Effects.Light
 
         private void UpdateLightEventColor()
         {
-            if (TimelineEventManager.Instance.selectedEvent == null)
+            if (TimelineEventManager.Instance.selectedEvents == null)
                 return;
 
-            if (TimelineEventManager.Instance.selectedEvent is not LightEvent lightEvent)
-                return;
+            foreach (var ev in TimelineEventManager.Instance.selectedEvents)
+            {
+                if (ev is not LightEvent lightEvent)
+                    return;
 
-            Color newColor = new Color(
-                valueRInput.value / 255f,
-                valueGInput.value / 255f,
-                valueBInput.value / 255f
-            );
+                Color newColor = new Color(
+                    valueRInput.value / 255f,
+                    valueGInput.value / 255f,
+                    valueBInput.value / 255f
+                );
 
-            lightEvent.color = newColor;
+                lightEvent.color = newColor;
+            }
         }
         public void LoadFromEvent(TimelineEvent timelineEvent)
         {
@@ -107,12 +110,15 @@ namespace DefqonEngine.UI.Effects.Light
 
         public void UpdateLightEventGroup(LampGroup lampGroup)
         {
-            if (TimelineEventManager.Instance.selectedEvent == null)
+            if (TimelineEventManager.Instance.selectedEvents == null)
                 return;
-            if (TimelineEventManager.Instance.selectedEvent is not LightEvent lightEvent)
-                return;
+            foreach (var ev in TimelineEventManager.Instance.selectedEvents)
+            {
+                if (ev is not LightEvent lightEvent)
+                    return;
 
-            lightEvent.targetId = lampGroup.id;
+                lightEvent.targetId = lampGroup.id;
+            }
         }
     }
 }

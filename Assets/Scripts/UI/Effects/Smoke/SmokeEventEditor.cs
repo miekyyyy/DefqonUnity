@@ -39,12 +39,15 @@ namespace DefqonEngine.UI.Effects.Smoke
 
         public void UpdateSmokeEventGroup(SmokeGroup smokeGroup)
         {
-            if (TimelineEventManager.Instance.selectedEvent == null)
+            if (TimelineEventManager.Instance.selectedEvents == null)
                 return;
-            if (TimelineEventManager.Instance.selectedEvent is not SmokeEvent smokeEvent)
-                return;
+            foreach (var ev in TimelineEventManager.Instance.selectedEvents)
+            {
+                if (ev is not SmokeEvent smokeEvent)
+                    return;
 
-            smokeEvent.targetId = smokeGroup.id;
+                smokeEvent.targetId = smokeGroup.id;
+            }
         }
     }
 }

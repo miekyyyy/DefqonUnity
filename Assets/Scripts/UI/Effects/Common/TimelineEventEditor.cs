@@ -37,6 +37,10 @@ namespace DefqonEngine.UI.Effects.Common
         void OnEventDeselected()
         {
             eventEditors.ForEach(e => e.editorPanel.SetActive(false));
+            if(TimelineEventManager.Instance != null && TimelineEventManager.Instance.selectedEvents.Count > 0)
+            {
+                UpdateEditor(TimelineEventManager.Instance.selectedEvents[TimelineEventManager.Instance.selectedEvents.Count - 1]);
+            }
         }
 
         void UpdateEditor(TimelineEvent timelineEvent)

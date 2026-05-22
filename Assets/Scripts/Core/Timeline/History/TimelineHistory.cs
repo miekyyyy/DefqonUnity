@@ -100,12 +100,16 @@ namespace DefqonEngine.Core.Timeline.History
             state.events = TimelineEventManager.Instance.GetEventsCopy();
 
             // Selection
-            if (TimelineEventManager.Instance.selectedEvent != null)
+            if (TimelineEventManager.Instance.selectedEvents != null)
             {
-                state.selectedEventIndex =
-                    TimelineEventManager.Instance.events
-                        .IndexOf(
-                            TimelineEventManager.Instance.selectedEvent);
+                foreach (var selectedEvent in TimelineEventManager.Instance.selectedEvents)
+                {
+                    int index = TimelineEventManager.Instance.events.IndexOf(selectedEvent);
+                    if (index != -1)
+                    {
+                        state.selectedEventIndexes.Add(index);
+                    }
+                }
             }
 
             return state;
@@ -134,17 +138,21 @@ namespace DefqonEngine.Core.Timeline.History
             }
 
             // Restore selection
-            if (state.selectedEventIndex >= 0 &&
-                state.selectedEventIndex < state.events.Count)
+            foreach (var index in state.selectedEventIndexes)
             {
-                TimelineEventManager.Instance.SelectEvent(
-                    TimelineEventManager.Instance.events[
-                        state.selectedEventIndex]);
-            }
-            else
-            {
-                TimelineEventManager.Instance.DeselectEvent();
+                if (index >= 0 &&
+                    index < state.events.Count)
+                {
+                    TimelineEventManager.Instance.SelectEvent(
+                        TimelineEventManager.Instance.events[
+                            index]);
+                }
+                else
+                {
+                    TimelineEventManager.Instance.DeselectEvent();
+                }
             }
         }
     }
+
 }

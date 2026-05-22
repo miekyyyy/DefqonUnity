@@ -21,12 +21,12 @@ namespace DefqonEngine.IO.Presets
         {
             //File saving
             var path = StandaloneFileBrowser.SaveFilePanel("Save Preset", "", "preset", "dfqprs");
-            if (string.IsNullOrEmpty(path) || TimelineEventManager.Instance.selectedEvent == null)
+            if (string.IsNullOrEmpty(path) || TimelineEventManager.Instance.selectedEvents == null || TimelineEventManager.Instance.selectedEvents.Count == 0)
                 return;
 
             var preset = new EventPreset(
                 string.IsNullOrEmpty(presetName) ? Path.GetFileNameWithoutExtension(path) : presetName,
-                TimelineEventManager.Instance.selectedEvent
+                TimelineEventManager.Instance.selectedEvents[TimelineEventManager.Instance.selectedEvents.Count - 1]
             );
             Save(preset, path);
             PopupManager.Instance.ClosePopups();
