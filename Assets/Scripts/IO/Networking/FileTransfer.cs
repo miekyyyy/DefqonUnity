@@ -14,13 +14,14 @@ namespace DefqonEngine.IO.Networking{
         [SerializeField] private string username = "stage";
         private string password = "";
 
-        [Header("Input Fields")]
+        [Header("UI Elements")]
         [SerializeField] private TMP_InputField hostInput;
         [SerializeField] private TMP_InputField usernameInput;
         [SerializeField] private TMP_InputField passwordInput;
+        [SerializeField] private TMP_Text statusText;
 
         [Header("Settings")]
-        [SerializeField] private string remoteFileName = "project.json";
+        [SerializeField] private string remoteFileName = "project.dfqprj";
         [SerializeField] private string remoteDirectory = "/home/stage/defqon_ws/data/projects/";
         [SerializeField] private string musicRemoteDirectory = "/home/stage/defqon_ws/data/projects/audio/";
 
@@ -37,6 +38,7 @@ namespace DefqonEngine.IO.Networking{
         {
             Debug.Log(Application.persistentDataPath);
         }
+        /*
         public void UploadFile()
         {
 
@@ -77,7 +79,84 @@ namespace DefqonEngine.IO.Networking{
                 Debug.LogError($"Error uploading file: {ex.Message}");
             }
         }
-    
+        */
+
+        public void UploadFile()
+        {
+            string localFilePath = ProjectManager.Instance.SaveProjectWithReturn();
+            string musicFilePath = ProjectManager.Instance.CurrentProject.audioFilePath;
+
+            string remoteFilePath = $"{remoteDirectory}{remoteFileName}";
+            string remoteMusicFilePath =
+                $"{musicRemoteDirectory}{Path.GetFileName(musicFilePath)}";
+
+            if (!File.Exists(localFilePath))
+            {
+                Debug.LogError($"Local project file not found: {localFilePath}");
+                return;
+            }
+
+            try
+            {
+                using (var sftp = new SftpClient(host, username, password))
+                {
+                    Debug.Log("Connecting to Pi...");
+                    sftp.Connect();
+
+                    if (!sftp.IsConnected)
+                    {
+                        Debug.LogError("Failed to connect.");
+                        return;
+                    }
+
+                    // Ensure folders exist
+                    if (!sftp.Exists(remoteDirectory))
+                        sftp.CreateDirectory(remoteDirectory);
+
+                    if (!sftp.Exists(musicRemoteDirectory))
+                        sftp.CreateDirectory(musicRemoteDirectory);
+
+                    // Upload project file
+                    using (var fileStream =
+                           new FileStream(localFilePath, FileMode.Open))
+                    {
+                        sftp.UploadFile(fileStream, remoteFilePath, true);
+                    }
+
+                    Debug.Log("Project uploaded.");
+
+                    // Upload music if exists
+                    if (!string.IsNullOrEmpty(musicFilePath)
+                        && File.Exists(musicFilePath))
+                    {
+                        using (var musicStream =
+                               new FileStream(musicFilePath, FileMode.Open))
+                        {
+                            sftp.UploadFile(
+                                musicStream,
+                                remoteMusicFilePath,
+                                true
+                            );
+                        }
+
+                        Debug.Log("Music uploaded.");
+                    }
+                    else
+                    {
+                        Debug.LogWarning("No music file found.");
+                    }
+
+                    sftp.Disconnect();
+                }
+
+                Debug.Log("Upload completed successfully.");
+            }
+            catch (System.Exception ex)
+            {
+                Debug.LogError($"Upload error: {ex}");
+            }
+        }
+
     }
     
 }

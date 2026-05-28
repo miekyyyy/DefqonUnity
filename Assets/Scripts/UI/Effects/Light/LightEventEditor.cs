@@ -2,6 +2,7 @@
 using DefqonEngine.Sequencing.Data.Events;
 using DefqonEngine.Stage.Fixtures.Light;
 using DefqonEngine.Stage.Fixtures.Management;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -25,7 +26,8 @@ namespace DefqonEngine.UI.Effects.Light
 
         [Header("Groups")]
         [SerializeField] GameObject groupParent;
-        [SerializeField] LightEventGroupButton groupButton;
+        [SerializeField] LightEventGroupButton groupButtonPrefab;
+        List<LightEventGroupButton> groupButtons = new List<LightEventGroupButton>();
 
         public void Awake()
         {
@@ -56,7 +58,9 @@ namespace DefqonEngine.UI.Effects.Light
             var available = LightManager.Instance.groupList;
             foreach (var g in available)
             {
-                Instantiate(groupButton, groupParent.transform).Initialize(g.group);
+                var button = Instantiate(groupButtonPrefab, groupParent.transform);
+                button.Initialize(g.group);
+                groupButtons.Add(button);
             }
         }
 
@@ -104,7 +108,11 @@ namespace DefqonEngine.UI.Effects.Light
             valueGInput.value = c.g * 255f;
             valueBInput.value = c.b * 255f;
 
-            //Force Sliders to update their display values
+            foreach (var button in groupButtons)
+            {
+                button.SetSelected(button.lampGroup.id == timelineEvent.targetId);
+            }
+
             UpdateColorDisplay();
         }
 
@@ -112,6 +120,11 @@ namespace DefqonEngine.UI.Effects.Light
         {
             if (TimelineEventManager.Instance.selectedEvents == null)
                 return;
+
+            foreach (var button in groupButtons)
+            {
+                button.SetSelected(button.lampGroup.id == lampGroup.id);
+            }
             foreach (var ev in TimelineEventManager.Instance.selectedEvents)
             {
                 if (ev is not LightEvent lightEvent)

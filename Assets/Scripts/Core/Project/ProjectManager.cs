@@ -6,6 +6,7 @@ using DefqonEngine.IO.Presets;
 using DefqonEngine.IO.Project;
 using DefqonEngine.IO.Timeline;
 using System;
+using TMPro;
 using UnityEngine;
 
 namespace DefqonEngine.Core.Project
@@ -22,6 +23,7 @@ namespace DefqonEngine.Core.Project
 
         private string newProjectName = "";
         private string newProjectAudioFilePath = "";
+        [SerializeField] private TMP_Text audioFilePath;
 
         public event Action OnProjectLoaded;
         public event Action OnProjectSaved;
@@ -42,6 +44,7 @@ namespace DefqonEngine.Core.Project
         public void SetNewProjectAudioFilePath()
         {
             newProjectAudioFilePath = audioSaveManager.LoadAudioDialog();
+            audioFilePath.text = string.IsNullOrEmpty(newProjectAudioFilePath) ? "Select file" : newProjectAudioFilePath;
         }
 
         public void ResetNewProjectSettings()
@@ -53,13 +56,14 @@ namespace DefqonEngine.Core.Project
         public void CreateNewProject()
         {
             var newProject = new DefqonProject(newProjectName, newProjectAudioFilePath);
-            bool saved = projectSaveManager.SaveProject(newProject);
-            if (!saved)
+            string path = projectSaveManager.SaveProjectWithDialog(newProject);
+            if (string.IsNullOrEmpty(path))
             {
                 Debug.Log("Project creation cancelled or save failed.");
                 return;
             }
             LoadProjectData(newProject);
+            projectSaveManager.AddToRecentProjects(newProject, path);
             OnProjectLoaded?.Invoke();
         }
 
@@ -73,7 +77,7 @@ namespace DefqonEngine.Core.Project
             CurrentProject.events = TimelineEventManager.Instance.events;
             CurrentProject.presets = PresetManager.Instance.GetAllAddedPresets();
             CurrentProject.trackCount = TimelineTrackManager.Instance.TrackCount;
-            projectSaveManager.SaveProject(CurrentProject);
+            projectSaveManager.SaveProjectTryLastPath(CurrentProject);
             OnProjectSaved?.Invoke();
         }
 
@@ -87,20 +91,26 @@ namespace DefqonEngine.Core.Project
             CurrentProject.events = TimelineEventManager.Instance.events;
             CurrentProject.presets = PresetManager.Instance.GetAllAddedPresets();
             CurrentProject.trackCount = TimelineTrackManager.Instance.TrackCount;
-            string path = projectSaveManager.SaveProjectReturnPath(CurrentProject);
+            string path = projectSaveManager.SaveProjectTryLastPath(CurrentProject);
             OnProjectSaved?.Invoke();
             return path;
         }
 
-        public void LoadProject()
+        public void LoadProjectEmpty()
         {
-            var project = projectSaveManager.LoadProject();
+            LoadProject(null);
+        }
+
+        public void LoadProject(string path = null)
+        {
+            var project = projectSaveManager.LoadProject(path);
             if (project == null)
             {
                 Debug.Log("Failed to load project.");
                 return;
             }
             LoadProjectData(project);
+
             OnProjectLoaded?.Invoke();
         }
 
