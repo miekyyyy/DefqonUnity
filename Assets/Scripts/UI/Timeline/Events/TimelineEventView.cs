@@ -210,7 +210,6 @@ namespace DefqonEngine.UI.Timeline.Events
 
         public void ChangeTrack(int newTrackIndex, bool updateVisual = true, bool trim = false)
         {
-            Debug.Log($"Changing track of event to {newTrackIndex}");
             if (TimelineTrackManager.Instance.Tracks.Count <= newTrackIndex || newTrackIndex < 0) return;
             timelineEvent.trackIndex = newTrackIndex;
             track = TimelineTrackManager.Instance.Tracks[newTrackIndex];

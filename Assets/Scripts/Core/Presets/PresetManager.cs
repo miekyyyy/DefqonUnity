@@ -21,8 +21,8 @@ namespace DefqonEngine.Core.Presets
         bool isRemovingPreset;
 
         [Header("Colors")]
-        [SerializeField] public Color defaultColor;
-        [SerializeField] public Color removingColor;
+        public Color defaultColor;
+        public Color removingColor;
 
         public void Awake()
         {

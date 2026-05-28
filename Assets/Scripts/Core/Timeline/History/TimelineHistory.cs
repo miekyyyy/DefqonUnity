@@ -27,7 +27,6 @@ namespace DefqonEngine.Core.Timeline.History
 
         public void SaveState(string description = "")
         {
-            Debug.Log($"Saving state: {description}");
             if (IsRestoring)
                 return;
 
@@ -40,8 +39,6 @@ namespace DefqonEngine.Core.Timeline.History
         {
             if (undoStack.Count == 0)
                 return;
-
-            Debug.Log($"Undoing, stackCount: {undoStack.Count}");
 
             IsRestoring = true;
 
@@ -59,7 +56,6 @@ namespace DefqonEngine.Core.Timeline.History
                 IsRestoring = false;
             }
 
-            Debug.Log($"Undo complete, undoStackCount: {undoStack.Count}, redoStackCount: {redoStack.Count}");
         }
 
         public void Redo()
@@ -67,7 +63,6 @@ namespace DefqonEngine.Core.Timeline.History
             if (redoStack.Count == 0)
                 return;
 
-            Debug.Log($"Redoing, stackCount: {redoStack.Count}");
 
             IsRestoring = true;
 
@@ -85,7 +80,6 @@ namespace DefqonEngine.Core.Timeline.History
                 IsRestoring = false;
             }
 
-            Debug.Log($"Redo complete, undoStackCount: {undoStack.Count}, redoStackCount: {redoStack.Count}");
         }
 
         public TimelineState CaptureState()

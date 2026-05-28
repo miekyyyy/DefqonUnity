@@ -466,7 +466,6 @@ namespace DefqonEngine.Core.Timeline.Events
 
         public void FinishTrackChange()
         {
-            Debug.Log("Finish track change");
             if (selectedEvents == null)
                 return;
             if(!hasTrackChanged)
