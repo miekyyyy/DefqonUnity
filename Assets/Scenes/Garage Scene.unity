@@ -1031,7 +1031,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &80999980
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1047,9 +1047,9 @@ RectTransform:
   - {fileID: 2050177980}
   m_Father: {fileID: 1144601478}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 890, y: -30}
   m_SizeDelta: {x: 180, y: 60}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &80999981
@@ -1146,6 +1146,7 @@ GameObject:
   - component: {fileID: 101164289}
   - component: {fileID: 101164288}
   - component: {fileID: 101164287}
+  - component: {fileID: 101164290}
   m_Layer: 5
   m_Name: EffectTypes
   m_TagString: Untagged
@@ -1242,6 +1243,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 101164285}
   m_CullTransparentMesh: 1
+--- !u!114 &101164290
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 101164285}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f702178c2a79f7d4b8898eb729d663e5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: DefqonEngine::DefqonEngine.UI.Common.ScrollbarHover
+  isHovering: 0
+  rect: {fileID: 594498285}
 --- !u!1 &123319465
 GameObject:
   m_ObjectHideFlags: 0
@@ -4390,7 +4405,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1049544055}
   m_HandleRect: {fileID: 1049544054}
   m_Direction: 2
-  m_Value: 0
+  m_Value: 1
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -13484,7 +13499,7 @@ RectTransform:
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 671.687, y: 120}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_Pivot: {x: 1, y: 1}
 --- !u!114 &666501489
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13882,7 +13897,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &710525146
 RectTransform:
   m_ObjectHideFlags: 0
@@ -13896,12 +13911,12 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1046138780}
-  m_Father: {fileID: 915670555}
+  m_Father: {fileID: 1397763282}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 40, y: -1090}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchoredPosition: {x: -60.000008, y: -2110}
+  m_SizeDelta: {x: 671.687, y: 120}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!114 &710525147
 MonoBehaviour:
@@ -14560,7 +14575,7 @@ RectTransform:
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 671.687, y: 120}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_Pivot: {x: 1, y: 1}
 --- !u!114 &760224309
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15797,11 +15812,6 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1019795518}
-  - {fileID: 710525146}
-  - {fileID: 1922527868}
-  - {fileID: 1777599942}
-  - {fileID: 1312815485}
   - {fileID: 1397763282}
   m_Father: {fileID: 1824661940}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -15910,7 +15920,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.00033688793}
+  m_AnchoredPosition: {x: 0, y: -0.000037442915}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &922586237
@@ -17230,13 +17240,13 @@ RectTransform:
   m_Children:
   - {fileID: 666501488}
   - {fileID: 760224308}
-  m_Father: {fileID: 915670555}
+  m_Father: {fileID: 1397763282}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.5}
-  m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 40, y: 680}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 1}
+  m_AnchoredPosition: {x: 176.03357, y: -340.00006}
   m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: 0, y: 0.5}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1019795519
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17524,9 +17534,9 @@ RectTransform:
   - {fileID: 1611587110}
   m_Father: {fileID: 710525146}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 335.8435, y: -60}
   m_SizeDelta: {x: 671.687, y: 120}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1046138781
@@ -17572,19 +17582,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1046138782}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 374315420}
-        m_TargetAssemblyTypeName: DefqonEngine.UI.Popup.Popup, DefqonEngine
-        m_MethodName: Open
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1046138782
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -24946,6 +24944,7 @@ GameObject:
   - component: {fileID: 1248972835}
   - component: {fileID: 1248972834}
   - component: {fileID: 1248972833}
+  - component: {fileID: 1248972836}
   m_Layer: 5
   m_Name: Effects
   m_TagString: Untagged
@@ -25042,6 +25041,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1248972831}
   m_CullTransparentMesh: 1
+--- !u!114 &1248972836
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1248972831}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f702178c2a79f7d4b8898eb729d663e5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: DefqonEngine::DefqonEngine.UI.Common.ScrollbarHover
+  isHovering: 0
+  rect: {fileID: 1901171377}
 --- !u!1 &1256399420
 GameObject:
   m_ObjectHideFlags: 0
@@ -25768,17 +25781,17 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1312815484}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 915670555}
+  m_Father: {fileID: 1397763282}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: -1314.8, y: -150}
-  m_SizeDelta: {x: 2, y: -380}
+  m_AnchoredPosition: {x: 618.5333, y: -1170}
+  m_SizeDelta: {x: 2, y: 1820}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1312815486
 MonoBehaviour:
@@ -26480,7 +26493,12 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1019795518}
+  - {fileID: 1312815485}
+  - {fileID: 1777599942}
+  - {fileID: 1922527868}
+  - {fileID: 710525146}
   m_Father: {fileID: 915670555}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
@@ -27348,7 +27366,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -0.00012195427}
+  m_AnchoredPosition: {x: 0, y: -0.000055308676}
   m_SizeDelta: {x: 0, y: 300}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &1496020513
@@ -38834,7 +38852,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1119876869}
   m_Direction: 2
   m_Value: 0
-  m_Size: 1
+  m_Size: 0.99997526
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -39083,6 +39101,7 @@ GameObject:
   - component: {fileID: 1657045259}
   - component: {fileID: 1657045258}
   - component: {fileID: 1657045257}
+  - component: {fileID: 1657045260}
   m_Layer: 5
   m_Name: EffectTypes (1)
   m_TagString: Untagged
@@ -39179,6 +39198,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1657045255}
   m_CullTransparentMesh: 1
+--- !u!114 &1657045260
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1657045255}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f702178c2a79f7d4b8898eb729d663e5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: DefqonEngine::DefqonEngine.UI.Common.ScrollbarHover
+  isHovering: 0
+  rect: {fileID: 1654738218}
 --- !u!1 &1661232407
 GameObject:
   m_ObjectHideFlags: 0
@@ -39426,7 +39459,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.00007782727}
+  m_AnchoredPosition: {x: 0, y: -0.00012207031}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1668996609
@@ -40024,6 +40057,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ece86c005b0187643a236b6ec800171c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: DefqonEngine::DefqonEngine.UI.Timeline.TimelineInputController
+  scrollbarHovers:
+  - {fileID: 1657045260}
+  - {fileID: 101164290}
+  - {fileID: 1785539090}
+  - {fileID: 1248972836}
   isMouseOverUI: 0
   isControlPressed: 0
   isTyping: 0
@@ -45101,12 +45139,12 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 915670555}
+  m_Father: {fileID: 1397763282}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -600, y: 542}
-  m_SizeDelta: {x: 1216.133, y: 100}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 1}
+  m_AnchoredPosition: {x: 1333.3334, y: -477.99976}
+  m_SizeDelta: {x: 1216.133, y: -100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1777599943
 MonoBehaviour:
@@ -45357,6 +45395,7 @@ GameObject:
   - component: {fileID: 1785539089}
   - component: {fileID: 1785539088}
   - component: {fileID: 1785539087}
+  - component: {fileID: 1785539090}
   m_Layer: 5
   m_Name: EffectTypes (1)
   m_TagString: Untagged
@@ -45453,6 +45492,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1785539085}
   m_CullTransparentMesh: 1
+--- !u!114 &1785539090
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1785539085}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f702178c2a79f7d4b8898eb729d663e5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: DefqonEngine::DefqonEngine.UI.Common.ScrollbarHover
+  isHovering: 0
+  rect: {fileID: 1901171377}
 --- !u!1 &1795825899
 GameObject:
   m_ObjectHideFlags: 0
@@ -51518,11 +51571,11 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 915670555}
+  m_Father: {fileID: 1397763282}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -800}
+  m_AnchoredPosition: {x: 1933.3336, y: -720}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &1922527869

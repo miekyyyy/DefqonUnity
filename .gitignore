@@ -118,3 +118,5 @@ InitTestScene*.unity*
 /Assets/NuGet.config
 /Assets/NuGet.config.meta
 /.nuget/
+/WebBuild
+/WinBuild

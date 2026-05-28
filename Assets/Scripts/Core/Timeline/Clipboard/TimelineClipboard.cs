@@ -12,7 +12,7 @@ namespace DefqonEngine.Assets.Scripts.Core.Timeline.Clipboard
     {
         public static TimelineClipboard Instance { get; private set; }
 
-        public List<TimelineEvent> copiedEvents;
+        public List<TimelineEvent> copiedEvents = new List<TimelineEvent>();
 
 
         private void Awake()

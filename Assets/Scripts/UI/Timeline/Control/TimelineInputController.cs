@@ -3,9 +3,11 @@ using DefqonEngine.Core.Timeline.Events;
 using DefqonEngine.Sequencing.Audio;
 using DefqonEngine.Sequencing.Data.Events;
 using DefqonEngine.Sequencing.Data.Presets;
+using DefqonEngine.UI.Common;
 using DefqonEngine.UI.Timeline.Common;
 using DefqonEngine.UI.Timeline.Tracks;
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -14,6 +16,8 @@ namespace DefqonEngine.UI.Timeline.Control
     public class TimelineInputController : MonoBehaviour
     {
         public static TimelineInputController Instance { get; private set; }
+
+        [SerializeField] List<ScrollbarHover> scrollbarHovers;
 
         public event Action<ZoomData> OnZoom;
         public event Action<float> OnPan;
@@ -40,9 +44,11 @@ namespace DefqonEngine.UI.Timeline.Control
             HandleZoom();
             HandlePan();
 
+            isMouseOverUI = scrollbarHovers.Exists(hover => hover.isHovering);
+
             if (isTyping) return;
 
-            if(Input.GetKeyDown(KeyCode.LeftControl) || Input.GetKeyDown(KeyCode.RightControl))
+            if (Input.GetKeyDown(KeyCode.LeftControl) || Input.GetKeyDown(KeyCode.RightControl))
             {
                 OnControlDown?.Invoke();
             }
@@ -68,6 +74,7 @@ namespace DefqonEngine.UI.Timeline.Control
             {
                 OnPaste?.Invoke();
             }
+#if UNITY_EDITOR
             if (Input.GetKey(KeyCode.LeftShift) && Input.GetKeyDown(KeyCode.Z))
             {
                 OnUndo?.Invoke();
@@ -76,11 +83,20 @@ namespace DefqonEngine.UI.Timeline.Control
             {
                 OnRedo?.Invoke();
             }
-            if(isControlPressed && Input.GetKeyDown(KeyCode.UpArrow))
+#endif
+            if (isControlPressed && Input.GetKeyDown(KeyCode.Z))
+            {
+                OnUndo?.Invoke();
+            }
+            if (isControlPressed && Input.GetKeyDown(KeyCode.Y))
+            {
+                OnRedo?.Invoke();
+            }
+            if (isControlPressed && Input.GetKeyDown(KeyCode.UpArrow))
             {
                 OnMoveUp?.Invoke();
             }
-            if(isControlPressed && Input.GetKeyDown(KeyCode.DownArrow))
+            if (isControlPressed && Input.GetKeyDown(KeyCode.DownArrow))
             {
                 OnMoveDown?.Invoke();
             }
@@ -111,7 +127,7 @@ namespace DefqonEngine.UI.Timeline.Control
 
         void HandleZoom()
         {
-            if (!Input.GetKey(KeyCode.LeftControl)) return;
+            if (!isControlPressed || isMouseOverUI) return;
             float scroll = Input.mouseScrollDelta.y;
             if (Mathf.Abs(scroll) < 0.01f) return;
 
@@ -131,11 +147,10 @@ namespace DefqonEngine.UI.Timeline.Control
 
         void HandlePan()
         {
-            if (!Input.GetKey(KeyCode.LeftControl))
-            {
-                float deltaX = Input.mouseScrollDelta.y * 100f;
-                OnPan?.Invoke(deltaX);
-            }
+            if (isMouseOverUI || isControlPressed) return;
+
+            float deltaX = Input.mouseScrollDelta.y * 100f;
+            OnPan?.Invoke(deltaX);
         }
 
         public struct ZoomData

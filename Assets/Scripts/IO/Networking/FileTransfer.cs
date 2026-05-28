@@ -1,12 +1,12 @@
 ﻿using DefqonEngine.Core.Project;
-using DefqonEngine.IO.Project;
 using Renci.SshNet;
 using System.IO;
 using TMPro;
 using UnityEngine;
 
-namespace DefqonEngine.IO.Networking{
-    
+namespace DefqonEngine.IO.Networking
+{
+
     public class FileTransfer : MonoBehaviour
     {
         [Header("Pi Credentials")]
@@ -158,5 +158,5 @@ namespace DefqonEngine.IO.Networking{
         }
 
     }
-    
+
 }

@@ -32,15 +32,19 @@ namespace DefqonEngine.Core.Presets
             }
 
             // Initialize standard buttons
-            LoadPreset(new EventPreset("Light", new LightEvent()), true);
+            LoadPreset(new EventPreset("Light", new LightEvent()), true, true);
             LoadPreset(new EventPreset("Smoke", new SmokeEvent()), true);
         }
 
-        public void LoadPreset(EventPreset preset, bool isDefault = false)
+        public void LoadPreset(EventPreset preset, bool isDefault = false, bool select = false)
         {
             var button = Instantiate(buttonPrefab, parent.transform);
             button.Initialize(preset, isDefault);
             buttons.Add(button);
+            if(select)
+            {
+                SelectPreset(preset);
+            }
         }
 
         public void ClearLoadedPresets()
